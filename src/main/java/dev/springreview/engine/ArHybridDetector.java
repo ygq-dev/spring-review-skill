@@ -10,6 +10,7 @@ import dev.springreview.tools.IssueCandidate;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * AR 规则专用检测器：基于 M09 依赖图。
@@ -56,7 +57,12 @@ public final class ArHybridDetector implements Detector {
                     out.add(new IssueCandidate(
                         rule.id(), rule.severity(), rule.confidence(),
                         "HYBRID", ps.path(), e.line(), e.column(),
-                        e.evidence(), rule.message(), rule.remediation(),
+                        e.evidence(),
+                        MessageTemplates.render(rule.message(), Map.of(
+                            "className", simpleName(typeName),
+                            "repositoryName", simpleName(e.to()),
+                            "file", ps.path())),
+                        rule.remediation(),
                         "CUSTOM", null,
                         "ar01:" + e.kind() + ":" + e.to()));
                 }
@@ -87,7 +93,12 @@ public final class ArHybridDetector implements Detector {
                     out.add(new IssueCandidate(
                         rule.id(), rule.severity(), rule.confidence(),
                         "HYBRID", ps.path(), e.line(), e.column(),
-                        e.evidence(), rule.message(), rule.remediation(),
+                        e.evidence(),
+                        MessageTemplates.render(rule.message(), Map.of(
+                            "className", simpleName(typeName),
+                            "targetPackage", simpleName(e.to()),
+                            "file", ps.path())),
+                        rule.remediation(),
                         "CUSTOM", null,
                         "ar02:" + e.kind() + ":" + e.to()));
                 }
@@ -101,6 +112,13 @@ public final class ArHybridDetector implements Detector {
             return null;
         }
         return ps.types().get(0).qualifiedName();
+    }
+
+    private static String simpleName(String qualified) {
+        if (qualified == null) {
+            return "";
+        }
+        return qualified.contains(".") ? qualified.substring(qualified.lastIndexOf('.') + 1) : qualified;
     }
 
     private static boolean isController(ParsedSource ps) {

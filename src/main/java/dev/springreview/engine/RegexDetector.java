@@ -9,7 +9,9 @@ import dev.springreview.tools.IssueCandidate;
 import org.slf4j.Logger;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.regex.PatternSyntaxException;
@@ -27,6 +29,11 @@ public final class RegexDetector implements Detector {
 
     @Override
     public boolean supports(Rule rule) {
+        // BUILD 类规则由 BuildFileDetector 专管（文件范围受限），
+        // 避免 RegexDetector 把构建类正则扫到所有 .java 上造成误报。
+        if ("BUILD".equals(rule.categoryL1())) {
+            return false;
+        }
         return "REGEX".equalsIgnoreCase(rule.detectionMethod()) && hasPattern(rule);
     }
 
@@ -63,10 +70,11 @@ public final class RegexDetector implements Detector {
                     if (evidence == null || evidence.isBlank()) {
                         evidence = rule.id() + " match";
                     }
+                    String message = MessageTemplates.render(rule.message(), varsFor(p, m, u.path()));
                     out.add(new IssueCandidate(
                         rule.id(), rule.severity(), rule.confidence(),
                         "REGEX", u.path(), lc[0], lc[1],
-                        evidence, rule.message(), rule.remediation(),
+                        evidence, message, rule.remediation(),
                         "CUSTOM", rule.toolRuleId(),
                         "regex:" + p.pattern()));
                     perFileHits++;
@@ -252,6 +260,30 @@ public final class RegexDetector implements Detector {
             return out;
         }
         return List.of(String.valueOf(v));
+    }
+
+    /** 从 pattern 文本提取命名组名（java.util.regex 无枚举 API），配合 matcher 取值。 */
+    private static final Pattern NAMED_GROUP = Pattern.compile("\\(\\?<([a-zA-Z][a-zA-Z0-9_]*)>");
+
+    /** 从正则命名组构造插值变量；另恒定提供 file 变量。 */
+    private static Map<String, String> varsFor(Pattern p, Matcher m, String path) {
+        Map<String, String> vars = new HashMap<>();
+        Matcher ng = NAMED_GROUP.matcher(p.pattern());
+        while (ng.find()) {
+            String name = ng.group(1);
+            try {
+                String g = m.group(name);
+                if (g != null && !g.isBlank()) {
+                    vars.put(name, g.trim());
+                }
+            } catch (IllegalArgumentException ex) {
+                LOG.debug("named group {} not matched in this hit", name);
+            }
+        }
+        if (path != null && !path.isBlank()) {
+            vars.put("file", path);
+        }
+        return vars;
     }
 
     private static int[] offsetToLineColumn(String text, int offset) {

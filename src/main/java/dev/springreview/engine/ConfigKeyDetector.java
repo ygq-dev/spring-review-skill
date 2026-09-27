@@ -8,6 +8,7 @@ import dev.springreview.tools.IssueCandidate;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 配置规则检测器：处理 RULE_ENGINE + category_l1 ∈ {CF, CLOUD, OBS}。
@@ -97,7 +98,8 @@ public final class ConfigKeyDetector implements Detector {
         out.add(new IssueCandidate(
             rule.id(), rule.severity(), rule.confidence(),
             "RULE_ENGINE", u.path(), line, 1,
-            ev, rule.message() + " (" + note + ")",
+            ev, MessageTemplates.render(rule.message(), Map.of(
+            "file", u.path() == null ? "" : u.path())) + " (" + note + ")",
             rule.remediation(),
             "CUSTOM", rule.toolRuleId(),
             "config:" + note));

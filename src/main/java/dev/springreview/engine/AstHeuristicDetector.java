@@ -8,6 +8,7 @@ import dev.springreview.tools.IssueCandidate;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * AST 规则的通用回退检测器。
@@ -44,12 +45,17 @@ public final class AstHeuristicDetector implements Detector {
                         break;
                     }
                     if (annotations.contains(a) || annotations.contains("@" + a)) {
+                        Map<String, String> vars = Map.of(
+                            "className", t.simpleName(),
+                            "annotation", "@" + a,
+                            "file", ps.path());
                         out.add(new IssueCandidate(
                             rule.id(), rule.severity(), rule.confidence(),
                             "AST", ps.path(),
                             t.beginLine(), 1,
                             "@" + a + " on " + t.simpleName(),
-                            rule.message(), rule.remediation(),
+                            MessageTemplates.render(rule.message(), vars),
+                            rule.remediation(),
                             "CUSTOM", rule.toolRuleId(),
                             "ast.annotation:" + a));
                         perFileHits++;

@@ -8,6 +8,7 @@ import dev.springreview.tools.IssueCandidate;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * BUILD 规则检测器：pom.xml / build.gradle。
@@ -40,7 +41,11 @@ public final class BuildFileDetector implements Detector {
                     out.add(new IssueCandidate(
                         rule.id(), rule.severity(), rule.confidence(),
                         "REGEX", path, i + 1, 1,
-                        line.trim(), rule.message(), rule.remediation(),
+                        line.trim(),
+                        MessageTemplates.render(rule.message(), Map.of(
+                            "dependency", line.trim(),
+                            "file", path)),
+                        rule.remediation(),
                         "CUSTOM", rule.toolRuleId(),
                         "build:" + pattern));
                 }
