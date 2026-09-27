@@ -35,8 +35,28 @@ public final class IssueAggregator {
                                       Map<String, Long> tokenUsage) {
         Logs.module("M13");
         Map<String, Issue> dedup = new LinkedHashMap<>();
+        int boundaryDropped = 0;
         for (IssueCandidate c : candidates) {
-            Issue issue = toIssue(c);
+            // §8 边界与豁免：生成代码/第三方跳过；测试路径豁免非安全类、SEC 降级
+            BoundaryPolicy.Decision decision = BoundaryPolicy.decide(
+                c.file(), categoryOf(c.ruleId(), ruleSet), c.confidence());
+            IssueCandidate effective = c;
+            switch (decision) {
+                case SKIP_GENERATED_OR_VENDOR, DROP_EXEMPT -> {
+                    boundaryDropped++;
+                    continue;
+                }
+                case DOWNGRADE -> effective = new IssueCandidate(
+                    c.ruleId(), c.severity(), "MEDIUM",
+                    c.detectionMethod(), c.file(), c.line(), c.column(),
+                    c.evidence(), c.message() + BoundaryPolicy.downgradeNote(),
+                    c.remediation(), c.sourceTool(), c.toolRuleId(), c.rawEvidence());
+                case KEEP -> {
+                }
+                default -> {
+                }
+            }
+            Issue issue = toIssue(effective);
             if (issue == null) {
                 continue;
             }
@@ -46,6 +66,9 @@ public final class IssueAggregator {
             if (existing == null || rank(issue.confidence()) > rank(existing.confidence())) {
                 dedup.put(key, issue);
             }
+        }
+        if (boundaryDropped > 0) {
+            LOG.info("boundary policy dropped {} candidates (test-exempt/generated/vendor)", boundaryDropped);
         }
         List<Issue> unique = new ArrayList<>(dedup.values());
         unique.sort(issueComparator());

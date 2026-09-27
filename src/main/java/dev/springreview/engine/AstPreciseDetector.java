@@ -25,6 +25,7 @@ import dev.springreview.tools.IssueCandidate;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -443,10 +444,26 @@ public final class AstPreciseDetector implements Detector {
         for (CatchClause cc : cu.findAll(CatchClause.class)) {
             com.github.javaparser.ast.stmt.BlockStmt body = cc.getBody();
             if (body.getStatements().isEmpty()) {
-                addHit(out, rule, ps.path(),
-                    cc.getBegin().map(p -> p.line).orElse(0),
-                    cc.getBegin().map(p -> p.column).orElse(0),
-                    "empty catch: " + cc.getParameter().getTypeAsString());
+                boolean documented = !body.getAllContainedComments().isEmpty()
+                    || !body.getOrphanComments().isEmpty();
+                int lineNo = cc.getBegin().map(p -> p.line).orElse(0);
+                int colNo = cc.getBegin().map(p -> p.column).orElse(0);
+                if (documented) {
+                    // 有注释说明意图：按规则规格仍是"无有效处理逻辑"，但降置信度交人工复核
+                    String evidence = "commented empty catch: " + cc.getParameter().getTypeAsString();
+                    out.add(new IssueCandidate(
+                        rule.id(), rule.severity(), "MEDIUM",
+                        "AST", ps.path(), Math.max(1, lineNo), Math.max(1, colNo),
+                        evidence,
+                        MessageTemplates.render(rule.message(), Map.of("file", ps.path()))
+                            + "（catch 块含注释说明意图，建议人工确认）",
+                        rule.remediation(),
+                        "CUSTOM", rule.toolRuleId(),
+                        "ast:" + evidence));
+                } else {
+                    addHit(out, rule, ps.path(), lineNo, colNo,
+                        "empty catch: " + cc.getParameter().getTypeAsString());
+                }
             }
         }
     }
