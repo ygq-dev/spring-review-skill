@@ -25,15 +25,13 @@ reports/
 *.log
 .srs-tmp/
 
-# ---------- 密钥 ----------
+# ---------- 密钥 / 本地配置 ----------
 .env
 .env.local
 *.secret
 *-secrets.*
+*.local.json
 
 # ---------- 工具本地安装 ----------
 tools/
-!tools/README.mdreal-projects.local.json
-
-# 本地配置文件
-*.local.json
+!tools/README.md
