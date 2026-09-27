@@ -33,5 +33,5 @@ reports/
 *.local.json
 
 # ---------- 工具本地安装 ----------
-tools/
+/tools/
 !tools/README.md
