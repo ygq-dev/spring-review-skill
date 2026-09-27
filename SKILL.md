@@ -6,6 +6,7 @@ description: >-
   Spring MVC 规范、SQL 注入、硬编码密钥、分层依赖、异常处理、
   资源泄漏、日志可观测性等问题时使用。
 version: 1.0.0
+
 ---
 
 # Spring Review Skill
@@ -27,6 +28,27 @@ version: 1.0.0
 - 审查 `git diff`：审查工作区、暂存区或指定 base/head 之间的 Java/Spring 变更。
 - 审查指定模块：审查 Maven/Gradle 模块中的 Java/Spring 代码。
 - 审查指定文件：审查用户给定 Java/Spring 文件列表。
+
+### 3.1 执行入口（如何运行）
+
+本 Skill 的审查能力由仓库内 Java CLI 承载，agent 按以下顺序执行：
+
+```bash
+# 1. 构建（首次或代码变更后；仓库根目录执行）
+mvn -q -B -DskipTests package
+
+# 2. 查看全部参数
+java -jar target/spring-review-skill-*.jar --help
+
+# 3. 典型调用（审查 git diff，默认离线）
+java -jar target/spring-review-skill-*.jar \
+  --mode DIFF --repo <目标仓库路径> \
+  --base <base-ref> --head <head-ref> \
+  --offline \
+  --output-dir reports
+```
+
+报告输出于 `reports/latest/review-report.json` 与 `review-report.md`。构建与运行的完整前置条件（Java 17+、Maven 3.8+）见 README《快速开始》。LLM 语义规则需要配置 API Key 环境变量并去掉 `--offline`，静态分析完全本地执行。
 
 ## 4. 非能力范围
 
@@ -116,12 +138,19 @@ Markdown 报告：
 - 豁免与跳过说明
 - 人工确认项
 
-退出码约定：
+退出码约定（与 `ExitCodes.java`、README 严格一致）：
 
-- `0`：报告生成成功，且无 `BLOCKER`、`CRITICAL`。
-- `1`：存在 `BLOCKER`、`CRITICAL`，或存在必须人工确认的问题。
-- `2`：输入非法、Schema 校验失败、工具或模型失败导致降级。
-- `3`：仅存在 `MINOR`、`INFO` 级别问题。
+| 码   | 常量        | 含义                                          |
+| ---- | ----------- | --------------------------------------------- |
+| 0    | SUCCESS     | 报告生成成功，且未达到 `--fail-on` 阈值       |
+| 1    | FAIL_ON_HIT | 存在达到 `--fail-on`（默认 `CRITICAL`）的问题 |
+| 2    | CLI_CONFIG  | CLI 参数 / 配置错误                           |
+| 3    | SCOPE       | 审查范围 / 代码收集失败                       |
+| 4    | RULE_LOAD   | 规则库加载失败                                |
+| 5    | REPORT      | 报告生成 / 输出 / Schema 校验失败             |
+| 6    | INTERNAL    | 未分类内部错误                                |
+
+调用方（agent 或 CI）判定规则：`0` 视为通过；`1` 视为"审查完成且有达到阈值的问题"，按报告内容决定是否阻塞；`2~6` 一律视为工具本身失败，不得当作审查结论使用。
 
 ## 8. 边界与豁免
 

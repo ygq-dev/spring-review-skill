@@ -17,7 +17,7 @@ build/
 Thumbs.db
 
 # ---------- 输出 ----------
-reports/
+/reports/*
 !reports/README.md
 
 # ---------- 临时 ----------
@@ -33,5 +33,5 @@ reports/
 *.local.json
 
 # ---------- 工具本地安装 ----------
-/tools/
+/tools/*
 !tools/README.md
