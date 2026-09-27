@@ -81,3 +81,9 @@ jobs:
         run: |
           echo "review reached failOn; see reports/latest/review-report.md" >&2
           exit 1
+          
+      - name: Fail if review tool errored (exit 2-6)
+        if: steps.review.outputs.exit_code != '0' && steps.review.outputs.exit_code != '1'
+        run: |
+          echo "spring-review tool failed with exit_code=${{ steps.review.outputs.exit_code }}; tool errors must fail the workflow" >&2
+          exit 1
