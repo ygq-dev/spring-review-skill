@@ -1,0 +1,127 @@
+rule_id: SRS-CF-01-001
+name: 生产配置包含 dev/test 或调试开关
+description: |
+  检测生产配置文件包含 dev/test profile、调试开关或开发专用参数。
+  检测方式：规则引擎扫描 application-prod/生产 profile 配置。
+  边界：本地开发配置和测试资源不报。
+category_l1: CF
+category_l2: "01"
+tags:
+  - config
+  - production
+  - security
+status: ACTIVE
+severity: CRITICAL
+confidence: HIGH
+detection_method: RULE_ENGINE
+tool: CUSTOM
+parameters:
+  forbidden_keys:
+    - 'show-sql'
+    - 'h2-console'
+    - 'devtools'
+enabled: true
+applies_to:
+  java_version: "17+"
+  spring_boot_version: "3.x"
+  build_tool:
+    - maven
+    - gradle
+  module_type:
+    - web
+    - api
+    - batch
+    - cloud
+  framework:
+    - spring-boot
+  exclude:
+    - "**/src/test/**"
+    - "**/application-dev.*"
+    - "**/application-test.*"
+message: "生产配置 {file} 包含开发/调试项 {key}。"
+remediation: "移除生产配置中的调试开关，使用 profile 隔离开发配置。"
+positive_example: |
+  生产配置仅包含生产连接与安全参数。
+negative_example: |
+  application-prod.yml 中启用 show-sql 或 devtools。
+false_positive_notes: "若调试开关由环境变量强制关闭且默认关闭，可人工豁免。"
+sources:
+  - type: INTERNAL_EXPERIENCE
+    ref: "生产配置基线"
+    version: "1.0.0"
+rule_version: "1.0.0"
+metadata_version: "1.0.0"
+schema_version: "1.0.0"
+owner: "config-team"
+created_at: "2026-09-23"
+updated_at: "2026-09-23"
+change_log:
+  - version: "1.0.0"
+    date: "2026-09-23"
+    description: "初始版本"
+test_cases: []
+coverage: "规则引擎扫描生产 profile 配置文件"
+---
+
+rule_id: SRS-CF-02-001
+name: "@Value 缺少默认值或配置校验"
+description: |
+  检测 @Value 注入缺少默认值或未使用 @ConfigurationProperties 校验。
+  检测方式：AST 分析注解与参数。
+  边界：必填配置显式失败可接受；非 Spring 管理类不报。
+category_l1: CF
+category_l2: "02"
+tags:
+  - config
+  - configuration-properties
+  - validation
+status: ACTIVE
+severity: MAJOR
+confidence: MEDIUM
+detection_method: AST
+tool: CUSTOM
+parameters:
+  annotations:
+    - "@Value"
+  require_default: false
+  require_validation: true
+enabled: true
+applies_to:
+  java_version: "17+"
+  spring_boot_version: "3.x"
+  build_tool:
+    - maven
+    - gradle
+  module_type:
+    - web
+    - api
+    - batch
+    - cloud
+  framework:
+    - spring-boot
+    - spring-context
+  exclude:
+    - "**/test/**"
+message: "@Value 注入 {field} 缺少默认值或配置校验。"
+remediation: "使用 @ConfigurationProperties + @Validated，或为 @Value 提供默认值并校验。"
+positive_example: |
+  配置属性类使用 @ConfigurationProperties 和校验注解。
+negative_example: |
+  @Value("${app.timeout}") 无默认值且无校验。
+false_positive_notes: "启动时快速失败是合理设计；仅当缺少校验导致运行时错误时告警。"
+sources:
+  - type: FRAMEWORK_DOC
+    ref: "Spring Boot Externalized Configuration"
+    version: "3.x"
+rule_version: "1.0.0"
+metadata_version: "1.0.0"
+schema_version: "1.0.0"
+owner: "config-team"
+created_at: "2026-09-23"
+updated_at: "2026-09-23"
+change_log:
+  - version: "1.0.0"
+    date: "2026-09-23"
+    description: "初始版本"
+test_cases: []
+coverage: "AST 扫描 @Value 与配置属性类"

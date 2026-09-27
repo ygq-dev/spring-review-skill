@@ -1,0 +1,31 @@
+{
+  "id": "TC-WEB-003",
+  "rule_id": "SRS-WEB-03-001",
+  "category": "WEB",
+  "subcategory": "03",
+  "title": "全局异常处理缺失或返回堆栈",
+  "description": "检测 @ControllerAdvice/@ExceptionHandler 缺失或控制器返回异常堆栈。",
+  "input": {
+    "type": "fixture_ref",
+    "path": "tests/fixtures/TC-WEB-003/input.java",
+    "content": null,
+    "language": "java",
+    "encoding": "utf-8"
+  },
+  "expected": {
+    "triggered": true,
+    "severity": "MAJOR",
+    "message_contains": ["全局异常", "堆栈", "@ControllerAdvice"],
+    "location_hint": {
+      "file": "tests/fixtures/TC-WEB-003/input.java",
+      "line_start": 13,
+      "line_end": 13,
+      "symbol": "ErrorController.error"
+    }
+  },
+  "positive_case": "examples/WEB/positive/SRS-WEB-03-001_positive.java",
+  "negative_case": "examples/WEB/negative/SRS-WEB-03-001_negative.java",
+  "tags": ["WEB", "SRS-WEB-03-001", "RULE_ENGINE", "CUSTOM", "exception-handler", "stacktrace"],
+  "version": "1.0.0",
+  "status": "ACTIVE"
+}

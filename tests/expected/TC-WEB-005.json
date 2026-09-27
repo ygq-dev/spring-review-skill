@@ -1,0 +1,18 @@
+{
+  "version": "1.0.0",
+  "generated_at": "2026-09-24T00:00:00Z",
+  "generated_by": "manual/1.0.0",
+  "case_id": "TC-WEB-005",
+  "rule_id": "SRS-WEB-05-001",
+  "expected": {
+    "triggered": true,
+    "severity": "MAJOR",
+    "message_contains": ["@Async", "异常", "超时"],
+    "location_hint": {
+      "file": "tests/fixtures/TC-WEB-005/input.java",
+      "line_start": 9,
+      "line_end": 12,
+      "symbol": "AsyncController.run"
+    }
+  }
+}

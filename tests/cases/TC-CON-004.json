@@ -1,0 +1,31 @@
+{
+  "id": "TC-CON-004",
+  "rule_id": "SRS-CON-04-001",
+  "category": "CON",
+  "subcategory": "04",
+  "title": "线程池未设置拒绝策略/队列无界",
+  "description": "验证无界队列且未设置拒绝策略的线程池风险。",
+  "input": {
+    "type": "fixture_ref",
+    "path": "tests/fixtures/TC-CON-004/input.java",
+    "content": null,
+    "language": "java",
+    "encoding": "utf-8"
+  },
+  "expected": {
+    "triggered": true,
+    "severity": "MAJOR",
+    "message_contains": ["ThreadPoolExecutor", "拒绝策略", "无界队列"],
+    "location_hint": {
+      "file": "tests/fixtures/TC-CON-004/input.java",
+      "line_start": 7,
+      "line_end": 13,
+      "symbol": "ExecutorConfig.executor"
+    }
+  },
+  "positive_case": "examples/CON/positive/SRS-CON-04-001_positive.java",
+  "negative_case": "examples/CON/negative/SRS-CON-04-001_negative.java",
+  "tags": ["CON", "CON-04", "ThreadPoolExecutor", "rejection-policy"],
+  "version": "1.0.0",
+  "status": "ACTIVE"
+}

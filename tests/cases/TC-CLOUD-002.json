@@ -1,0 +1,31 @@
+{
+  "id": "TC-CLOUD-002",
+  "rule_id": "SRS-CLOUD-02-001",
+  "category": "CLOUD",
+  "subcategory": "02",
+  "title": "健康检查依赖未隔离",
+  "description": "反例 liveness 分组包含 db，与 readiness 未隔离外部依赖，应触发 SRS-CLOUD-02-001。",
+  "input": {
+    "type": "fixture_ref",
+    "path": "tests/fixtures/TC-CLOUD-002/input.yml",
+    "content": null,
+    "language": "yaml",
+    "encoding": "utf-8"
+  },
+  "expected": {
+    "triggered": true,
+    "severity": "MAJOR",
+    "message_contains": ["liveness", "db", "readiness"],
+    "location_hint": {
+      "file": "tests/fixtures/TC-CLOUD-002/input.yml",
+      "line_start": 5,
+      "line_end": 6,
+      "symbol": "management.endpoint.health.group.liveness"
+    }
+  },
+  "positive_case": "examples/CLOUD/positive/SRS-CLOUD-02-001_positive.yml",
+  "negative_case": "examples/CLOUD/negative/SRS-CLOUD-02-001_negative.yml",
+  "tags": ["CLOUD", "02", "fixture", "negative", "pending-detection-evaluation"],
+  "version": "1.0.0",
+  "status": "ACTIVE"
+}

@@ -1,0 +1,482 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://spring-review-skill.dev/schema/review-report.schema.json",
+  "title": "Spring Review Skill 单次审查输出报告",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "report_id",
+    "schema_version",
+    "generated_at",
+    "scope",
+    "summary",
+    "issues",
+    "tool_runs",
+    "metrics"
+  ],
+  "properties": {
+    "report_id": {
+      "type": "string",
+      "pattern": "^RPT-\\d{4}-\\d{4}$",
+      "description": "单次审查报告唯一标识",
+      "examples": ["RPT-2026-0001"]
+    },
+    "schema_version": {
+      "type": "string",
+      "pattern": "^\\d+\\.\\d+\\.\\d+$",
+      "description": "报告 Schema 版本",
+      "examples": ["1.0.0"]
+    },
+    "generated_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "生成时间，RFC 3339",
+      "examples": ["2026-01-01T12:00:00Z"]
+    },
+    "scope": {
+      "$ref": "#/$defs/scope"
+    },
+    "summary": {
+      "$ref": "#/$defs/summary"
+    },
+    "issues": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/issue"
+      }
+    },
+    "tool_runs": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/tool_run"
+      }
+    },
+    "metrics": {
+      "$ref": "#/$defs/metrics"
+    },
+    "metadata": {
+      "type": "object",
+      "description": "扩展元数据，可选",
+      "additionalProperties": true
+    }
+  },
+  "allOf": [
+    {
+  	  "if": {
+    	"properties": {
+      	  "scope": {
+        	"properties": { "mode": { "enum": ["MODULE", "FILES"] } },
+        	"required": ["mode"]
+      	  }
+    	},
+    	"required": ["scope"]
+  	  },
+  	  "then": {
+    	"properties": {
+      	  "scope": {
+        	"properties": { "paths": { "minItems": 1 } }
+      	  }
+    	}
+  	  }
+	},
+    {
+      "if": {
+        "properties": {
+          "scope": {
+            "properties": {
+              "mode": {
+                "const": "DIFF"
+              }
+            },
+            "required": ["mode"]
+          }
+        },
+        "required": ["scope"]
+      },
+      "then": {
+        "properties": {
+          "scope": {
+            "properties": {
+              "base_ref": {
+                "minLength": 1
+              },
+              "head_ref": {
+                "minLength": 1
+              }
+            }
+          }
+        }
+      }
+    }
+  ],
+  "$defs": {
+    "severity": {
+      "type": "string",
+      "enum": ["BLOCKER", "CRITICAL", "MAJOR", "MINOR", "INFO"]
+    },
+    "confidence": {
+      "type": "string",
+      "enum": ["HIGH", "MEDIUM", "LOW"]
+    },
+    "detection_method": {
+      "type": "string",
+      "enum": [
+        "STATIC_ANALYSIS",
+        "AST",
+        "ARCH_TEST",
+        "RULE_ENGINE",
+        "REGEX",
+        "HEURISTIC",
+        "HYBRID",
+        "MANUAL"
+      ]
+    },
+    "tool": {
+      "type": "string",
+      "enum": ["CHECKSTYLE", "PMD", "ARCHUNIT", "SPOTBUGS", "CUSTOM"]
+    },
+    "category": {
+      "type": "string",
+      "enum": [
+        "AR",
+        "CF",
+        "DI",
+        "WEB",
+        "DAO",
+        "SEC",
+        "CON",
+        "PERF",
+        "OBS",
+        "EXC",
+        "RES",
+        "TEST",
+        "BUILD",
+        "STYLE",
+        "NULL",
+        "I18N",
+        "MIG",
+        "CLOUD"
+      ]
+    },
+    "issue_status": {
+      "type": "string",
+      "enum": ["OPEN", "FIXED", "IGNORED", "FALSE_POSITIVE", "WONTFIX"]
+    },
+    "tool_status": {
+      "type": "string",
+      "enum": ["SUCCESS", "FAILED", "SKIPPED", "TIMEOUT"]
+    },
+    "rule_id": {
+      "type": "string",
+      "pattern": "^SRS-(AR|CF|DI|WEB|DAO|SEC|CON|PERF|OBS|EXC|RES|TEST|BUILD|STYLE|NULL|I18N|MIG|CLOUD)-\\d{2}-\\d{3}$"
+    },
+    "test_case_id": {
+      "type": "string",
+      "pattern": "^TC-(AR|CF|DI|WEB|DAO|SEC|CON|PERF|OBS|EXC|RES|TEST|BUILD|STYLE|NULL|I18N|MIG|CLOUD)-\\d{3}$"
+    },
+    "by_severity": {
+      "type": "object",
+      "propertyNames": {
+        "$ref": "#/$defs/severity"
+      },
+      "additionalProperties": {
+        "type": "integer",
+        "minimum": 0
+      }
+    },
+    "by_category": {
+      "type": "object",
+      "propertyNames": {
+        "$ref": "#/$defs/category"
+      },
+      "additionalProperties": {
+        "type": "integer",
+        "minimum": 0
+      }
+    },
+    "token_usage": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["total_tokens"],
+      "properties": {
+        "input_tokens": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "output_tokens": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "total_tokens": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "cost_usd": {
+          "type": "number",
+          "minimum": 0
+        }
+      }
+    },
+    "scope": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "mode",
+        "project",
+        "base_ref",
+        "head_ref",
+        "paths",
+        "diff_lines"
+      ],
+      "properties": {
+        "mode": {
+          "type": "string",
+          "enum": ["DIFF", "MODULE", "FILES"]
+        },
+        "project": {
+          "type": "string",
+          "minLength": 1
+        },
+        "base_ref": {
+          "type": "string"
+        },
+        "head_ref": {
+          "type": "string"
+        },
+        "paths": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "diff_lines": {
+          "type": "integer",
+          "minimum": 0
+        }
+      }
+    },
+    "summary": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "total_issues",
+        "by_severity",
+        "by_category",
+        "blocking",
+        "duration_ms",
+        "token_usage"
+      ],
+      "properties": {
+        "total_issues": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "by_severity": {
+          "$ref": "#/$defs/by_severity"
+        },
+        "by_category": {
+          "$ref": "#/$defs/by_category"
+        },
+        "blocking": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "duration_ms": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "token_usage": {
+          "$ref": "#/$defs/token_usage"
+        }
+      }
+    },
+    "issue": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "issue_id",
+        "rule_id",
+        "severity",
+        "confidence",
+        "detection_method",
+        "file",
+        "line",
+        "column",
+        "evidence",
+        "message",
+        "remediation"
+      ],
+      "properties": {
+        "issue_id": {
+          "type": "string",
+          "pattern": "^ISSUE-[0-9A-F]{8}$"
+        },
+        "rule_id": {
+          "$ref": "#/$defs/rule_id"
+        },
+        "severity": {
+          "$ref": "#/$defs/severity"
+        },
+        "confidence": {
+          "$ref": "#/$defs/confidence"
+        },
+        "detection_method": {
+          "$ref": "#/$defs/detection_method"
+        },
+        "file": {
+          "type": "string",
+          "minLength": 1
+        },
+        "line": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "column": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "evidence": {
+          "type": "string",
+          "minLength": 1
+        },
+        "message": {
+          "type": "string",
+          "minLength": 1
+        },
+        "remediation": {
+          "type": "string",
+          "minLength": 1
+        },
+        "tool": {
+          "$ref": "#/$defs/tool"
+        },
+        "tool_rule_id": {
+          "type": "string"
+        },
+        "test_case_id": {
+          "$ref": "#/$defs/test_case_id"
+        },
+        "snippet": {
+          "type": "string"
+        },
+        "fingerprint": {
+          "type": "string"
+        },
+        "first_seen_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "last_seen_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "issue_status": {
+          "$ref": "#/$defs/issue_status"
+        },
+        "tags": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      },
+      "dependentRequired": {
+        "first_seen_at": ["last_seen_at"],
+        "last_seen_at": ["first_seen_at"]
+      }
+    },
+    "tool_run": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "tool",
+        "tool_version",
+        "status",
+        "started_at",
+        "ended_at",
+        "duration_ms",
+        "exit_code"
+      ],
+      "properties": {
+        "tool": {
+          "$ref": "#/$defs/tool"
+        },
+        "tool_version": {
+          "type": "string",
+          "minLength": 1
+        },
+        "status": {
+          "$ref": "#/$defs/tool_status"
+        },
+        "started_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "ended_at": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "duration_ms": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "exit_code": {
+          "type": "integer"
+        },
+        "issues_count": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "error_message": {
+          "type": "string"
+        }
+      }
+    },
+    "metrics": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "total_files_scanned",
+        "total_lines_scanned",
+        "duration_ms",
+        "tool_success_rate"
+      ],
+      "properties": {
+        "total_files_scanned": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "total_lines_scanned": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "duration_ms": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "tool_success_rate": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "cache_hit_rate": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "llm_calls": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "by_severity": {
+          "$ref": "#/$defs/by_severity"
+        },
+        "by_category": {
+          "$ref": "#/$defs/by_category"
+        }
+      }
+    }
+  }
+}

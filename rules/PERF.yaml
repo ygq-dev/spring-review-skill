@@ -1,0 +1,81 @@
+rule_id: SRS-PERF-01-001
+name: "循环内远程调用"
+description: "在方法体 AST/文本启发式扫描中识别 for、while、do 循环体及其嵌套块内的远程调用迹象，包括 RestTemplate、WebClient、Feign、@FeignClient 方法调用和常见 HTTP 客户端调用；结合循环边界、调用深度与是否存在批量接口标记疑似循环内远程调用。边界：不跨方法追踪调用链，不解析动态代理与反射，不确认实际网络开销，仅作为性能风险提示。"
+category_l1: PERF
+category_l2: "01"
+status: ACTIVE
+severity: MAJOR
+confidence: MEDIUM
+detection_method: HEURISTIC
+tool: CUSTOM
+parameters: {}
+enabled: true
+applies_to:
+  java_version: ">=17"
+  spring_boot_version: ">=3.0.0"
+  build_tool: ["maven", "gradle"]
+  module_type: ["all"]
+  framework: ["spring-web"]
+  exclude: []
+message: "检测到循环内可能存在远程调用，可能导致延迟放大、连接耗尽与吞吐下降。"
+remediation: "将远程调用移出循环，改用批量接口、缓存、并行聚合或先收集参数再批量请求。"
+positive_example: "先收集循环所需参数，在循环外调用一次批量远程接口。"
+negative_example: "在 for 或 while 循环体内直接调用远程 HTTP 服务或 Feign 客户端。"
+false_positive_notes: "待 B 阶段评估可检测性；循环内调用可能为本地缓存、内存服务或已批量化封装，需人工确认。"
+sources:
+  - type: INTERNAL_EXPERIENCE
+    ref: "内部性能审查经验：循环内远程调用导致延迟放大"
+    version: "1.0"
+rule_version: "1.0.0"
+metadata_version: "1.0.0"
+schema_version: "1.0.0"
+owner: "spring-review-skill"
+created_at: "2026-09-24"
+updated_at: "2026-09-24"
+change_log:
+  - version: "1.0.0"
+    date: "2026-09-24"
+    description: "B6 初始规则元数据"
+test_cases: []
+coverage: "当前覆盖规则定义、检测策略与误报边界；测试用例与工具配置待后续阶段补充。"
+---
+rule_id: SRS-PERF-02-001
+name: "大集合全量加载或分页缺失"
+description: "通过 AST 识别数据访问方法返回 List、Collection、Stream 或数组且未传入分页参数（Pageable、Slice、limit、offset、分页对象）的查询调用，以及循环内逐条查询导致的全量加载迹象。边界：不推断运行时数据量，不分析 SQL 语义与索引，不覆盖原生 SQL 动态拼接和存储过程。"
+category_l1: PERF
+category_l2: "02"
+status: ACTIVE
+severity: MAJOR
+confidence: MEDIUM
+detection_method: AST
+tool: CUSTOM
+parameters: {}
+enabled: true
+applies_to:
+  java_version: ">=17"
+  spring_boot_version: ">=3.0.0"
+  build_tool: ["maven", "gradle"]
+  module_type: ["all"]
+  framework: ["spring-data"]
+  exclude: []
+message: "检测到可能的大集合全量加载或分页缺失，存在内存与数据库压力风险。"
+remediation: "为查询增加分页参数或流式处理，限制返回条数，避免在循环中逐条查询。"
+positive_example: "查询方法接收 Pageable 或 limit/offset 并只返回当前页数据。"
+negative_example: "Repository 查询直接返回全表 List 且调用方未限制数据量。"
+false_positive_notes: "若查询明确受限于小数据集、已由数据库优化或调用方保证数据量，可能误报；需结合上下文确认。"
+sources:
+  - type: INTERNAL_EXPERIENCE
+    ref: "内部性能审查经验：大集合全量加载导致内存与数据库压力"
+    version: "1.0"
+rule_version: "1.0.0"
+metadata_version: "1.0.0"
+schema_version: "1.0.0"
+owner: "spring-review-skill"
+created_at: "2026-09-24"
+updated_at: "2026-09-24"
+change_log:
+  - version: "1.0.0"
+    date: "2026-09-24"
+    description: "B6 初始规则元数据"
+test_cases: []
+coverage: "当前覆盖规则定义、检测策略与误报边界；测试用例与工具配置待后续阶段补充。"

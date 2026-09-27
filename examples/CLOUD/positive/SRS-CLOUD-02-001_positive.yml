@@ -1,0 +1,8 @@
+management:
+  endpoint:
+    health:
+      group:
+        liveness:
+          include: ping
+        readiness:
+          include: db,ping

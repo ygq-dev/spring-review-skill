@@ -1,0 +1,31 @@
+{
+  "id": "TC-DI-007",
+  "rule_id": "SRS-DI-07-001",
+  "category": "DI",
+  "subcategory": "07",
+  "title": "@Around 未调用 proceed()-反例触发",
+  "description": "验证 @Around 未调用 proceed() 时命中目标规则。",
+  "input": {
+    "type": "fixture_ref",
+    "path": "tests/fixtures/TC-DI-007/input.java",
+    "content": null,
+    "language": "java",
+    "encoding": "utf-8"
+  },
+  "expected": {
+    "triggered": true,
+    "severity": "MAJOR",
+    "message_contains": ["@Around", "proceed"],
+    "location_hint": {
+      "file": "tests/fixtures/TC-DI-007/input.java",
+      "line_start": 9,
+      "line_end": 11,
+      "symbol": "Di07NegativeAspect.around"
+    }
+  },
+  "positive_case": "examples/DI/positive/SRS-DI-07-001_positive.java",
+  "negative_case": "examples/DI/negative/SRS-DI-07-001_negative.java",
+  "tags": ["DI", "07", "fixture", "negative"],
+  "version": "1.0.0",
+  "status": "ACTIVE"
+}

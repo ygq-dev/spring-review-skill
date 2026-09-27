@@ -1,0 +1,18 @@
+{
+  "version": "1.0.0",
+  "generated_at": "2026-09-24T00:00:00Z",
+  "generated_by": "manual/1.0.0",
+  "case_id": "TC-OBS-001",
+  "rule_id": "SRS-OBS-01-001",
+  "expected": {
+    "triggered": true,
+    "severity": "MINOR",
+    "message_contains": ["日志", "占位符", "字符串拼接"],
+    "location_hint": {
+      "file": "tests/fixtures/TC-OBS-001/input.java",
+      "line_start": 10,
+      "line_end": 10,
+      "symbol": "UserService.logUser"
+    }
+  }
+}

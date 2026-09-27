@@ -1,0 +1,18 @@
+{
+  "version": "1.0.0",
+  "generated_at": "2026-09-24T00:00:00Z",
+  "generated_by": "manual/1.0.0",
+  "case_id": "TC-PERF-001",
+  "rule_id": "SRS-PERF-01-001",
+  "expected": {
+    "triggered": true,
+    "severity": "MAJOR",
+    "message_contains": ["循环", "远程调用", "RestTemplate"],
+    "location_hint": {
+      "file": "tests/fixtures/TC-PERF-001/input.java",
+      "line_start": 11,
+      "line_end": 11,
+      "symbol": "RemoteCallInLoop.fetchAll"
+    }
+  }
+}

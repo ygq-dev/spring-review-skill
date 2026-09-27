@@ -1,0 +1,31 @@
+{
+  "id": "TC-TEST-001",
+  "rule_id": "SRS-TEST-01-001",
+  "category": "TEST",
+  "subcategory": "01",
+  "title": "测试依赖真实外部服务或数据库",
+  "description": "检测 @SpringBootTest、@DataJpaTest 等测试类直接连接真实外部服务或数据库。",
+  "input": {
+    "type": "fixture_ref",
+    "path": "tests/fixtures/TC-TEST-001/input.java",
+    "content": null,
+    "language": "java",
+    "encoding": "utf-8"
+  },
+  "expected": {
+    "triggered": true,
+    "severity": "MAJOR",
+    "message_contains": ["@SpringBootTest", "真实数据库", "外部服务"],
+    "location_hint": {
+      "file": "tests/fixtures/TC-TEST-001/input.java",
+      "line_start": 6,
+      "line_end": 6,
+      "symbol": "UserRepositoryRealDbTest"
+    }
+  },
+  "positive_case": "examples/TEST/positive/SRS-TEST-01-001_positive.java",
+  "negative_case": "examples/TEST/negative/SRS-TEST-01-001_negative.java",
+  "tags": ["TEST", "01", "fixture", "negative"],
+  "version": "1.0.0",
+  "status": "ACTIVE"
+}

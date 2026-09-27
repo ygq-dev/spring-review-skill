@@ -1,0 +1,64 @@
+rule_id: SRS-MIG-01-001
+name: 使用 javax.* 未迁移 jakarta.*
+description: |
+  检测源码或依赖中仍使用 javax.* 包，未迁移到 jakarta.*。
+  检测方式：正则扫描导入、包声明和配置。
+  边界：javax.sql、javax.crypto 等 JDK 保留包不报。
+category_l1: MIG
+category_l2: "01"
+tags:
+  - migration
+  - jakarta
+  - javax
+status: ACTIVE
+severity: CRITICAL
+confidence: HIGH
+detection_method: REGEX
+tool: CUSTOM
+parameters:
+  patterns:
+    - 'import\s+javax\.(servlet|persistence|validation|annotation|transaction)\b'
+enabled: true
+applies_to:
+  java_version: "17+"
+  spring_boot_version: "3.x"
+  build_tool:
+    - maven
+    - gradle
+  module_type:
+    - web
+    - api
+    - batch
+    - cloud
+    - all
+  framework:
+    - spring-boot
+    - spring-mvc
+    - spring-data
+    - spring-security
+  exclude:
+    - "**/test/**"
+    - "**/generated/**"
+message: "检测到 javax.* 导入 {importName}，Spring Boot 3.x 需迁移到 jakarta.*。"
+remediation: "替换 javax.* 为 jakarta.*，并更新依赖到 Jakarta EE 9+ 兼容版本。"
+positive_example: |
+  使用 jakarta.servlet 与 jakarta.persistence。
+negative_example: |
+  仍导入 javax.servlet.http.HttpServletRequest。
+false_positive_notes: "JDK 自带 javax.sql、javax.crypto 等不报；第三方旧依赖需人工确认。"
+sources:
+  - type: FRAMEWORK_DOC
+    ref: "Spring Boot 3.0 Migration Guide"
+    version: "3.x"
+rule_version: "1.0.0"
+metadata_version: "1.0.0"
+schema_version: "1.0.0"
+owner: "migration-team"
+created_at: "2026-09-23"
+updated_at: "2026-09-23"
+change_log:
+  - version: "1.0.0"
+    date: "2026-09-23"
+    description: "初始版本"
+test_cases: []
+coverage: "正则扫描源码导入与依赖坐标"

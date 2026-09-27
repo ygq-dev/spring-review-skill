@@ -1,0 +1,31 @@
+{
+  "id": "TC-WEB-005",
+  "rule_id": "SRS-WEB-05-001",
+  "category": "WEB",
+  "subcategory": "05",
+  "title": "异步接口未处理超时/异常",
+  "description": "检测 @Async、WebAsyncTask、DeferredResult 未配置超时或异常处理。",
+  "input": {
+    "type": "fixture_ref",
+    "path": "tests/fixtures/TC-WEB-005/input.java",
+    "content": null,
+    "language": "java",
+    "encoding": "utf-8"
+  },
+  "expected": {
+    "triggered": true,
+    "severity": "MAJOR",
+    "message_contains": ["@Async", "异常", "超时"],
+    "location_hint": {
+      "file": "tests/fixtures/TC-WEB-005/input.java",
+      "line_start": 9,
+      "line_end": 12,
+      "symbol": "AsyncController.run"
+    }
+  },
+  "positive_case": "examples/WEB/positive/SRS-WEB-05-001_positive.java",
+  "negative_case": "examples/WEB/negative/SRS-WEB-05-001_negative.java",
+  "tags": ["WEB", "SRS-WEB-05-001", "AST", "CUSTOM", "async", "timeout"],
+  "version": "1.0.0",
+  "status": "ACTIVE"
+}

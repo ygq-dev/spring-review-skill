@@ -1,0 +1,18 @@
+{
+  "version": "1.0.0",
+  "generated_at": "2026-09-24T00:00:00Z",
+  "generated_by": "manual/1.0.0",
+  "case_id": "TC-TEST-002",
+  "rule_id": "SRS-TEST-02-001",
+  "expected": {
+    "triggered": true,
+    "severity": "MINOR",
+    "message_contains": ["@SpringBootTest", "全量上下文", "滥用"],
+    "location_hint": {
+      "file": "tests/fixtures/TC-TEST-002/input.java",
+      "line_start": 5,
+      "line_end": 5,
+      "symbol": "FirstFullContextTest"
+    }
+  }
+}

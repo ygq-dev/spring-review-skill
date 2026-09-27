@@ -1,0 +1,31 @@
+{
+  "id": "TC-MIG-001",
+  "rule_id": "SRS-MIG-01-001",
+  "category": "MIG",
+  "subcategory": "01",
+  "title": "使用 javax.* 未迁移 jakarta.*",
+  "description": "反例源码仍使用 javax.servlet，应触发 SRS-MIG-01-001。",
+  "input": {
+    "type": "fixture_ref",
+    "path": "tests/fixtures/TC-MIG-001/input.java",
+    "content": null,
+    "language": "java",
+    "encoding": "utf-8"
+  },
+  "expected": {
+    "triggered": true,
+    "severity": "CRITICAL",
+    "message_contains": ["javax.servlet", "jakarta"],
+    "location_hint": {
+      "file": "tests/fixtures/TC-MIG-001/input.java",
+      "line_start": 3,
+      "line_end": 3,
+      "symbol": "LegacyServlet"
+    }
+  },
+  "positive_case": "examples/MIG/positive/SRS-MIG-01-001_positive.java",
+  "negative_case": "examples/MIG/negative/SRS-MIG-01-001_negative.java",
+  "tags": ["MIG", "01", "fixture", "negative"],
+  "version": "1.0.0",
+  "status": "ACTIVE"
+}

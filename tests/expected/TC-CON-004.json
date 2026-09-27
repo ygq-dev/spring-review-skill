@@ -1,0 +1,18 @@
+{
+  "version": "1.0.0",
+  "generated_at": "2026-09-24T00:00:00Z",
+  "generated_by": "manual/1.0.0",
+  "case_id": "TC-CON-004",
+  "rule_id": "SRS-CON-04-001",
+  "expected": {
+    "triggered": true,
+    "severity": "MAJOR",
+    "message_contains": ["ThreadPoolExecutor", "拒绝策略", "无界队列"],
+    "location_hint": {
+      "file": "tests/fixtures/TC-CON-004/input.java",
+      "line_start": 7,
+      "line_end": 13,
+      "symbol": "ExecutorConfig.executor"
+    }
+  }
+}

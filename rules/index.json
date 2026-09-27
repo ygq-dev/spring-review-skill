@@ -1,0 +1,875 @@
+{
+  "version": "1.0.0",
+  "generated_at": "2026-09-24T00:00:00Z",
+  "generated_by": "manual/1.0.0",
+  "count": 55,
+  "items": [
+    {
+      "id": "SRS-AR-01-001",
+      "category": "AR",
+      "subcategory": "01",
+      "file": "rules/AR.yaml",
+      "status": "ACTIVE",
+      "severity": "CRITICAL",
+      "version": "1.0.0",
+      "title": "分层依赖倒置",
+      "confidence": "HIGH",
+      "detection_method": "HYBRID",
+      "tool": [
+        "CUSTOM"
+      ],
+      "tags": [
+        "architecture",
+        "layering"
+      ]
+    },
+    {
+      "id": "SRS-AR-02-001",
+      "category": "AR",
+      "subcategory": "02",
+      "file": "rules/AR.yaml",
+      "status": "ACTIVE",
+      "severity": "MAJOR",
+      "version": "1.0.0",
+      "title": "领域层依赖 Web/基础设施",
+      "confidence": "HIGH",
+      "detection_method": "ARCH_TEST",
+      "tool": [
+        "ARCHUNIT"
+      ],
+      "tags": [
+        "architecture",
+        "domain-isolation"
+      ]
+    },
+    {
+      "id": "SRS-BUILD-01-001",
+      "category": "BUILD",
+      "subcategory": "01",
+      "file": "rules/BUILD.yaml",
+      "status": "ACTIVE",
+      "severity": "MAJOR",
+      "version": "1.0.0",
+      "title": "依赖版本冲突/重复声明",
+      "confidence": "MEDIUM",
+      "detection_method": "RULE_ENGINE",
+      "tool": [
+        "CUSTOM"
+      ],
+      "tags": [
+        "build",
+        "dependency-management"
+      ]
+    },
+    {
+      "id": "SRS-BUILD-02-001",
+      "category": "BUILD",
+      "subcategory": "02",
+      "file": "rules/BUILD.yaml",
+      "status": "ACTIVE",
+      "severity": "CRITICAL",
+      "version": "1.0.0",
+      "title": "SNAPSHOT 依赖进入生产构建",
+      "confidence": "HIGH",
+      "detection_method": "REGEX",
+      "tool": [
+        "CUSTOM"
+      ],
+      "tags": [
+        "build",
+        "release",
+        "dependency-version"
+      ]
+    },
+    {
+      "id": "SRS-CF-01-001",
+      "category": "CF",
+      "subcategory": "01",
+      "file": "rules/CF.yaml",
+      "status": "ACTIVE",
+      "severity": "CRITICAL",
+      "version": "1.0.0",
+      "title": "生产配置包含 dev/test 或调试开关",
+      "confidence": "HIGH",
+      "detection_method": "RULE_ENGINE",
+      "tool": [
+        "CUSTOM"
+      ],
+      "tags": [
+        "config",
+        "production",
+        "security"
+      ]
+    },
+    {
+      "id": "SRS-CF-02-001",
+      "category": "CF",
+      "subcategory": "02",
+      "file": "rules/CF.yaml",
+      "status": "ACTIVE",
+      "severity": "MAJOR",
+      "version": "1.0.0",
+      "title": "@Value 缺少默认值或配置校验",
+      "confidence": "MEDIUM",
+      "detection_method": "AST",
+      "tool": [
+        "CUSTOM"
+      ],
+      "tags": [
+        "config",
+        "configuration-properties",
+        "validation"
+      ]
+    },
+    {
+      "id": "SRS-CLOUD-01-001",
+      "category": "CLOUD",
+      "subcategory": "01",
+      "file": "rules/CLOUD.yaml",
+      "status": "ACTIVE",
+      "severity": "MAJOR",
+      "version": "1.0.0",
+      "title": "缺少优雅停机配置",
+      "confidence": "MEDIUM",
+      "detection_method": "RULE_ENGINE",
+      "tool": [
+        "CUSTOM"
+      ],
+      "tags": [
+        "cloud",
+        "graceful-shutdown",
+        "lifecycle"
+      ]
+    },
+    {
+      "id": "SRS-CLOUD-02-001",
+      "category": "CLOUD",
+      "subcategory": "02",
+      "file": "rules/CLOUD.yaml",
+      "status": "ACTIVE",
+      "severity": "MAJOR",
+      "version": "1.0.0",
+      "title": "健康检查依赖未隔离",
+      "confidence": "MEDIUM",
+      "detection_method": "HYBRID",
+      "tool": [
+        "CUSTOM"
+      ],
+      "tags": [
+        "cloud",
+        "health-check",
+        "readiness"
+      ]
+    },
+    {
+      "id": "SRS-CON-01-001",
+      "category": "CON",
+      "subcategory": "01",
+      "file": "rules/CON_.yaml",
+      "status": "ACTIVE",
+      "severity": "BLOCKER",
+      "version": "1.0.0",
+      "title": "SimpleDateFormat 静态共享",
+      "confidence": "HIGH",
+      "detection_method": "AST",
+      "tool": [
+        "SPOTBUGS"
+      ]
+    },
+    {
+      "id": "SRS-CON-02-001",
+      "category": "CON",
+      "subcategory": "02",
+      "file": "rules/CON_.yaml",
+      "status": "ACTIVE",
+      "severity": "CRITICAL",
+      "version": "1.0.0",
+      "title": "非线程安全集合作为单例字段",
+      "confidence": "HIGH",
+      "detection_method": "AST",
+      "tool": [
+        "SPOTBUGS"
+      ]
+    },
+    {
+      "id": "SRS-CON-03-001",
+      "category": "CON",
+      "subcategory": "03",
+      "file": "rules/CON_.yaml",
+      "status": "ACTIVE",
+      "severity": "MAJOR",
+      "version": "1.0.0",
+      "title": "未同步的懒初始化单例",
+      "confidence": "MEDIUM",
+      "detection_method": "AST",
+      "tool": [
+        "SPOTBUGS"
+      ]
+    },
+    {
+      "id": "SRS-CON-04-001",
+      "category": "CON",
+      "subcategory": "04",
+      "file": "rules/CON_.yaml",
+      "status": "ACTIVE",
+      "severity": "MAJOR",
+      "version": "1.0.0",
+      "title": "线程池未设置拒绝策略/队列无界",
+      "confidence": "HIGH",
+      "detection_method": "AST",
+      "tool": [
+        "CUSTOM"
+      ]
+    },
+    {
+      "id": "SRS-CON-05-001",
+      "category": "CON",
+      "subcategory": "05",
+      "file": "rules/CON_.yaml",
+      "status": "ACTIVE",
+      "severity": "CRITICAL",
+      "version": "1.0.0",
+      "title": "@Transactional 跨线程失效未处理",
+      "confidence": "MEDIUM",
+      "detection_method": "HYBRID",
+      "tool": [
+        "CUSTOM"
+      ]
+    },
+    {
+      "id": "SRS-DAO-01-001",
+      "category": "DAO",
+      "subcategory": "01",
+      "file": "rules/DAO.yaml",
+      "status": "ACTIVE",
+      "severity": "BLOCKER",
+      "version": "1.0.0",
+      "title": "@Transactional 不得标注在 private/final 方法",
+      "confidence": "HIGH",
+      "detection_method": "AST",
+      "tool": [
+        "CUSTOM"
+      ]
+    },
+    {
+      "id": "SRS-DAO-02-001",
+      "category": "DAO",
+      "subcategory": "02",
+      "file": "rules/DAO.yaml",
+      "status": "ACTIVE",
+      "severity": "CRITICAL",
+      "version": "1.0.0",
+      "title": "避免同类自调用导致事务失效",
+      "confidence": "HIGH",
+      "detection_method": "AST",
+      "tool": [
+        "CUSTOM"
+      ]
+    },
+    {
+      "id": "SRS-DAO-03-001",
+      "category": "DAO",
+      "subcategory": "03",
+      "file": "rules/DAO.yaml",
+      "status": "ACTIVE",
+      "severity": "MINOR",
+      "version": "1.0.0",
+      "title": "只读查询应设置 readOnly=true",
+      "confidence": "MEDIUM",
+      "detection_method": "AST",
+      "tool": [
+        "CUSTOM"
+      ]
+    },
+    {
+      "id": "SRS-DAO-04-001",
+      "category": "DAO",
+      "subcategory": "04",
+      "file": "rules/DAO.yaml",
+      "status": "ACTIVE",
+      "severity": "CRITICAL",
+      "version": "1.0.0",
+      "title": "避免事务内执行远程/IO/消息调用",
+      "confidence": "MEDIUM",
+      "detection_method": "HYBRID",
+      "tool": [
+        "CUSTOM"
+      ]
+    },
+    {
+      "id": "SRS-DAO-05-001",
+      "category": "DAO",
+      "subcategory": "05",
+      "file": "rules/DAO.yaml",
+      "status": "ACTIVE",
+      "severity": "MAJOR",
+      "version": "1.0.0",
+      "title": "避免循环内查询导致 N+1",
+      "confidence": "MEDIUM",
+      "detection_method": "HEURISTIC",
+      "tool": [
+        "CUSTOM"
+      ]
+    },
+    {
+      "id": "SRS-DI-01-001",
+      "category": "DI",
+      "subcategory": "01",
+      "file": "rules/DI.yaml",
+      "status": "ACTIVE",
+      "severity": "MAJOR",
+      "version": "1.0.0",
+      "title": "禁止字段注入",
+      "confidence": "HIGH",
+      "detection_method": "AST",
+      "tool": [
+        "CUSTOM"
+      ]
+    },
+    {
+      "id": "SRS-DI-02-001",
+      "category": "DI",
+      "subcategory": "02",
+      "file": "rules/DI.yaml",
+      "status": "ACTIVE",
+      "severity": "MAJOR",
+      "version": "1.0.0",
+      "title": "必需依赖应为构造器注入且 final",
+      "confidence": "HIGH",
+      "detection_method": "AST",
+      "tool": [
+        "CUSTOM"
+      ]
+    },
+    {
+      "id": "SRS-DI-03-001",
+      "category": "DI",
+      "subcategory": "03",
+      "file": "rules/DI.yaml",
+      "status": "ACTIVE",
+      "severity": "CRITICAL",
+      "version": "1.0.0",
+      "title": "检测构造器/字段循环依赖",
+      "confidence": "HIGH",
+      "detection_method": "HYBRID",
+      "tool": [
+        "CUSTOM"
+      ]
+    },
+    {
+      "id": "SRS-DI-04-001",
+      "category": "DI",
+      "subcategory": "04",
+      "file": "rules/DI.yaml",
+      "status": "ACTIVE",
+      "severity": "CRITICAL",
+      "version": "1.0.0",
+      "title": "单例 Bean 中非线程安全可变状态",
+      "confidence": "HIGH",
+      "detection_method": "AST",
+      "tool": [
+        "SPOTBUGS"
+      ]
+    },
+    {
+      "id": "SRS-DI-05-001",
+      "category": "DI",
+      "subcategory": "05",
+      "file": "rules/DI.yaml",
+      "status": "ACTIVE",
+      "severity": "MAJOR",
+      "version": "1.0.0",
+      "title": "@Scope 与注入点生命周期不匹配",
+      "confidence": "MEDIUM",
+      "detection_method": "HYBRID",
+      "tool": [
+        "CUSTOM"
+      ]
+    },
+    {
+      "id": "SRS-DI-06-001",
+      "category": "DI",
+      "subcategory": "06",
+      "file": "rules/DI.yaml",
+      "status": "ACTIVE",
+      "severity": "MAJOR",
+      "version": "1.0.0",
+      "title": "多个 @Aspect 未指定 @Order",
+      "confidence": "MEDIUM",
+      "detection_method": "AST",
+      "tool": [
+        "CUSTOM"
+      ]
+    },
+    {
+      "id": "SRS-DI-07-001",
+      "category": "DI",
+      "subcategory": "07",
+      "file": "rules/DI.yaml",
+      "status": "ACTIVE",
+      "severity": "MAJOR",
+      "version": "1.0.0",
+      "title": "@Around 未调用 proceed()",
+      "confidence": "HIGH",
+      "detection_method": "AST",
+      "tool": [
+        "CUSTOM"
+      ]
+    },
+    {
+      "id": "SRS-EXC-01-001",
+      "category": "EXC",
+      "subcategory": "01",
+      "file": "rules/EXC.yaml",
+      "status": "ACTIVE",
+      "severity": "MAJOR",
+      "version": "1.0.0",
+      "title": "禁止捕获 Exception 后吞没异常",
+      "confidence": "HIGH",
+      "detection_method": "AST",
+      "tool": [
+        "PMD"
+      ]
+    },
+    {
+      "id": "SRS-EXC-02-001",
+      "category": "EXC",
+      "subcategory": "02",
+      "file": "rules/EXC.yaml",
+      "status": "ACTIVE",
+      "severity": "MAJOR",
+      "version": "1.0.0",
+      "title": "禁止 catch 后仅 printStackTrace",
+      "confidence": "HIGH",
+      "detection_method": "REGEX",
+      "tool": [
+        "PMD"
+      ]
+    },
+    {
+      "id": "SRS-EXC-03-001",
+      "category": "EXC",
+      "subcategory": "03",
+      "file": "rules/EXC.yaml",
+      "status": "ACTIVE",
+      "severity": "CRITICAL",
+      "version": "1.0.0",
+      "title": "事务回滚异常类型配置应正确",
+      "confidence": "HIGH",
+      "detection_method": "AST",
+      "tool": [
+        "CUSTOM"
+      ]
+    },
+    {
+      "id": "SRS-EXC-04-001",
+      "category": "EXC",
+      "subcategory": "04",
+      "file": "rules/EXC.yaml",
+      "status": "ACTIVE",
+      "severity": "MAJOR",
+      "version": "1.0.0",
+      "title": "禁止对外异常响应暴露堆栈或内部类",
+      "confidence": "MEDIUM",
+      "detection_method": "AST",
+      "tool": [
+        "CUSTOM"
+      ]
+    },
+    {
+      "id": "SRS-EXC-05-001",
+      "category": "EXC",
+      "subcategory": "05",
+      "file": "rules/EXC.yaml",
+      "status": "ACTIVE",
+      "severity": "CRITICAL",
+      "version": "1.0.0",
+      "title": "异步或定时任务异常必须兜底处理",
+      "confidence": "MEDIUM",
+      "detection_method": "AST",
+      "tool": [
+        "CUSTOM"
+      ]
+    },
+    {
+      "id": "SRS-I18N-01-001",
+      "category": "I18N",
+      "subcategory": "01",
+      "file": "rules/I18N.yaml",
+      "status": "ACTIVE",
+      "severity": "MINOR",
+      "version": "1.0.0",
+      "title": "硬编码文案未外部化",
+      "confidence": "MEDIUM",
+      "detection_method": "REGEX",
+      "tool": [
+        "CUSTOM"
+      ]
+    },
+    {
+      "id": "SRS-MIG-01-001",
+      "category": "MIG",
+      "subcategory": "01",
+      "file": "rules/MIG.yaml",
+      "status": "ACTIVE",
+      "severity": "CRITICAL",
+      "version": "1.0.0",
+      "title": "使用 javax.* 未迁移 jakarta.*",
+      "confidence": "HIGH",
+      "detection_method": "REGEX",
+      "tool": [
+        "CUSTOM"
+      ],
+      "tags": [
+        "migration",
+        "jakarta",
+        "javax"
+      ]
+    },
+    {
+      "id": "SRS-NULL-01-001",
+      "category": "NULL",
+      "subcategory": "01",
+      "file": "rules/NULL.yaml",
+      "status": "ACTIVE",
+      "severity": "MINOR",
+      "version": "1.0.0",
+      "title": "Optional 作为字段/参数",
+      "confidence": "MEDIUM",
+      "detection_method": "AST",
+      "tool": [
+        "PMD"
+      ]
+    },
+    {
+      "id": "SRS-NULL-02-001",
+      "category": "NULL",
+      "subcategory": "02",
+      "file": "rules/NULL.yaml",
+      "status": "ACTIVE",
+      "severity": "MAJOR",
+      "version": "1.0.0",
+      "title": "可能返回 null 的集合/数组",
+      "confidence": "MEDIUM",
+      "detection_method": "AST",
+      "tool": [
+        "SPOTBUGS"
+      ]
+    },
+    {
+      "id": "SRS-OBS-01-001",
+      "category": "OBS",
+      "subcategory": "01",
+      "file": "rules/OBS.yaml",
+      "status": "ACTIVE",
+      "severity": "MINOR",
+      "version": "1.0.0",
+      "title": "日志占位符拼接字符串",
+      "confidence": "HIGH",
+      "detection_method": "AST",
+      "tool": [
+        "PMD"
+      ]
+    },
+    {
+      "id": "SRS-OBS-02-001",
+      "category": "OBS",
+      "subcategory": "02",
+      "file": "rules/OBS.yaml",
+      "status": "ACTIVE",
+      "severity": "CRITICAL",
+      "version": "1.0.0",
+      "title": "Actuator 端点未授权暴露",
+      "confidence": "HIGH",
+      "detection_method": "RULE_ENGINE",
+      "tool": [
+        "CUSTOM"
+      ]
+    },
+    {
+      "id": "SRS-OBS-03-001",
+      "category": "OBS",
+      "subcategory": "03",
+      "file": "rules/OBS.yaml",
+      "status": "ACTIVE",
+      "severity": "MAJOR",
+      "version": "1.0.0",
+      "title": "日志或事务切点表达式过宽",
+      "confidence": "MEDIUM",
+      "detection_method": "AST",
+      "tool": [
+        "CUSTOM"
+      ]
+    },
+    {
+      "id": "SRS-PERF-01-001",
+      "category": "PERF",
+      "subcategory": "01",
+      "file": "rules/PERF.yaml",
+      "status": "ACTIVE",
+      "severity": "MAJOR",
+      "version": "1.0.0",
+      "title": "循环内远程调用",
+      "confidence": "MEDIUM",
+      "detection_method": "HEURISTIC",
+      "tool": [
+        "CUSTOM"
+      ]
+    },
+    {
+      "id": "SRS-PERF-02-001",
+      "category": "PERF",
+      "subcategory": "02",
+      "file": "rules/PERF.yaml",
+      "status": "ACTIVE",
+      "severity": "MAJOR",
+      "version": "1.0.0",
+      "title": "大集合全量加载或分页缺失",
+      "confidence": "MEDIUM",
+      "detection_method": "AST",
+      "tool": [
+        "CUSTOM"
+      ]
+    },
+    {
+      "id": "SRS-RES-01-001",
+      "category": "RES",
+      "subcategory": "01",
+      "file": "rules/RES.yaml",
+      "status": "ACTIVE",
+      "severity": "MAJOR",
+      "version": "1.0.0",
+      "title": "禁止未关闭 InputStream 或 Connection",
+      "confidence": "HIGH",
+      "detection_method": "AST",
+      "tool": [
+        "SPOTBUGS"
+      ]
+    },
+    {
+      "id": "SRS-RES-02-001",
+      "category": "RES",
+      "subcategory": "02",
+      "file": "rules/RES.yaml",
+      "status": "ACTIVE",
+      "severity": "CRITICAL",
+      "version": "1.0.0",
+      "title": "事务中手动连接必须释放",
+      "confidence": "MEDIUM",
+      "detection_method": "AST",
+      "tool": [
+        "SPOTBUGS"
+      ]
+    },
+    {
+      "id": "SRS-SEC-01-001",
+      "category": "SEC",
+      "subcategory": "01",
+      "file": "rules/SEC.yaml",
+      "status": "ACTIVE",
+      "severity": "BLOCKER",
+      "version": "1.0.0",
+      "title": "硬编码密钥/密码/token",
+      "confidence": "HIGH",
+      "detection_method": "REGEX",
+      "tool": [
+        "CUSTOM"
+      ]
+    },
+    {
+      "id": "SRS-SEC-02-001",
+      "category": "SEC",
+      "subcategory": "02",
+      "file": "rules/SEC.yaml",
+      "status": "ACTIVE",
+      "severity": "CRITICAL",
+      "version": "1.0.0",
+      "title": "日志输出敏感信息",
+      "confidence": "HIGH",
+      "detection_method": "REGEX",
+      "tool": [
+        "CUSTOM"
+      ]
+    },
+    {
+      "id": "SRS-SEC-03-001",
+      "category": "SEC",
+      "subcategory": "03",
+      "file": "rules/SEC.yaml",
+      "status": "ACTIVE",
+      "severity": "BLOCKER",
+      "version": "1.0.0",
+      "title": "SQL 拼接",
+      "confidence": "HIGH",
+      "detection_method": "AST",
+      "tool": [
+        "PMD"
+      ]
+    },
+    {
+      "id": "SRS-SEC-04-001",
+      "category": "SEC",
+      "subcategory": "04",
+      "file": "rules/SEC.yaml",
+      "status": "ACTIVE",
+      "severity": "CRITICAL",
+      "version": "1.0.0",
+      "title": "关闭 CSRF 且无豁免说明",
+      "confidence": "MEDIUM",
+      "detection_method": "AST",
+      "tool": [
+        "CUSTOM"
+      ]
+    },
+    {
+      "id": "SRS-SEC-05-001",
+      "category": "SEC",
+      "subcategory": "05",
+      "file": "rules/SEC.yaml",
+      "status": "ACTIVE",
+      "severity": "BLOCKER",
+      "version": "1.0.0",
+      "title": "不安全反序列化/SpEL 执行",
+      "confidence": "MEDIUM",
+      "detection_method": "HYBRID",
+      "tool": [
+        "SPOTBUGS"
+      ]
+    },
+    {
+      "id": "SRS-STYLE-01-001",
+      "category": "STYLE",
+      "subcategory": "01",
+      "file": "rules/STYLE.yaml",
+      "status": "ACTIVE",
+      "severity": "MINOR",
+      "version": "1.0.0",
+      "title": "命名不符合 Java/Spring 约定",
+      "confidence": "HIGH",
+      "detection_method": "STATIC_ANALYSIS",
+      "tool": [
+        "CHECKSTYLE"
+      ]
+    },
+    {
+      "id": "SRS-STYLE-02-001",
+      "category": "STYLE",
+      "subcategory": "02",
+      "file": "rules/STYLE.yaml",
+      "status": "ACTIVE",
+      "severity": "MINOR",
+      "version": "1.0.0",
+      "title": "方法过长/复杂度过高",
+      "confidence": "HIGH",
+      "detection_method": "STATIC_ANALYSIS",
+      "tool": [
+        "PMD"
+      ]
+    },
+    {
+      "id": "SRS-TEST-01-001",
+      "category": "TEST",
+      "subcategory": "01",
+      "file": "rules/TEST.yaml",
+      "status": "ACTIVE",
+      "severity": "MAJOR",
+      "version": "1.0.0",
+      "title": "测试依赖真实外部服务或数据库",
+      "confidence": "MEDIUM",
+      "detection_method": "AST",
+      "tool": [
+        "CUSTOM"
+      ]
+    },
+    {
+      "id": "SRS-TEST-02-001",
+      "category": "TEST",
+      "subcategory": "02",
+      "file": "rules/TEST.yaml",
+      "status": "ACTIVE",
+      "severity": "MINOR",
+      "version": "1.0.0",
+      "title": "@SpringBootTest 全量上下文滥用",
+      "confidence": "MEDIUM",
+      "detection_method": "AST",
+      "tool": [
+        "CUSTOM"
+      ]
+    },
+    {
+      "id": "SRS-WEB-01-001",
+      "category": "WEB",
+      "subcategory": "01",
+      "file": "rules/WEB.yaml",
+      "status": "ACTIVE",
+      "severity": "CRITICAL",
+      "version": "1.0.0",
+      "title": "Controller 中保存请求态可变字段",
+      "confidence": "HIGH",
+      "detection_method": "AST",
+      "tool": [
+        "CUSTOM"
+      ]
+    },
+    {
+      "id": "SRS-WEB-02-001",
+      "category": "WEB",
+      "subcategory": "02",
+      "file": "rules/WEB.yaml",
+      "status": "ACTIVE",
+      "severity": "MAJOR",
+      "version": "1.0.0",
+      "title": "请求参数缺少 @Valid/@Validated",
+      "confidence": "HIGH",
+      "detection_method": "AST",
+      "tool": [
+        "CUSTOM"
+      ]
+    },
+    {
+      "id": "SRS-WEB-03-001",
+      "category": "WEB",
+      "subcategory": "03",
+      "file": "rules/WEB.yaml",
+      "status": "ACTIVE",
+      "severity": "MAJOR",
+      "version": "1.0.0",
+      "title": "全局异常处理缺失或返回堆栈",
+      "confidence": "MEDIUM",
+      "detection_method": "RULE_ENGINE",
+      "tool": [
+        "CUSTOM"
+      ]
+    },
+    {
+      "id": "SRS-WEB-04-001",
+      "category": "WEB",
+      "subcategory": "04",
+      "file": "rules/WEB.yaml",
+      "status": "ACTIVE",
+      "severity": "CRITICAL",
+      "version": "1.0.0",
+      "title": "跨域配置过宽",
+      "confidence": "HIGH",
+      "detection_method": "AST",
+      "tool": [
+        "CUSTOM"
+      ]
+    },
+    {
+      "id": "SRS-WEB-05-001",
+      "category": "WEB",
+      "subcategory": "05",
+      "file": "rules/WEB.yaml",
+      "status": "ACTIVE",
+      "severity": "MAJOR",
+      "version": "1.0.0",
+      "title": "异步接口未处理超时/异常",
+      "confidence": "MEDIUM",
+      "detection_method": "AST",
+      "tool": [
+        "CUSTOM"
+      ]
+    }
+  ]
+}

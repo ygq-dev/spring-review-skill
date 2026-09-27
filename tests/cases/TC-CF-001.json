@@ -1,0 +1,31 @@
+{
+  "id": "TC-CF-001",
+  "rule_id": "SRS-CF-01-001",
+  "category": "CF",
+  "subcategory": "01",
+  "title": "生产配置启用 show-sql/devtools/debug 应触发配置风险",
+  "description": "验证 application-prod 配置中包含调试开关时命中目标规则。",
+  "input": {
+    "type": "fixture_ref",
+    "path": "tests/fixtures/TC-CF-001/input.yml",
+    "content": null,
+    "language": "yaml",
+    "encoding": "utf-8"
+  },
+  "expected": {
+    "triggered": true,
+    "severity": "CRITICAL",
+    "message_contains": ["show-sql", "devtools", "debug"],
+    "location_hint": {
+      "file": "tests/fixtures/TC-CF-001/input.yml",
+      "line_start": 9,
+      "line_end": 9,
+      "symbol": "spring.jpa.show-sql"
+    }
+  },
+  "positive_case": "examples/CF/positive/SRS-CF-01-001_positive.yml",
+  "negative_case": "examples/CF/negative/SRS-CF-01-001_negative.yml",
+  "tags": ["configuration", "prod", "debug"],
+  "version": "1.0.0",
+  "status": "ACTIVE"
+}

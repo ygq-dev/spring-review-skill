@@ -1,0 +1,31 @@
+{
+  "id": "TC-OBS-002",
+  "rule_id": "SRS-OBS-02-001",
+  "category": "OBS",
+  "subcategory": "02",
+  "title": "Actuator 端点未授权暴露",
+  "description": "检测 management.endpoints.web.exposure.include=* 且无授权。",
+  "input": {
+    "type": "fixture_ref",
+    "path": "tests/fixtures/TC-OBS-002/input.yml",
+    "content": null,
+    "language": "yaml",
+    "encoding": "utf-8"
+  },
+  "expected": {
+    "triggered": true,
+    "severity": "CRITICAL",
+    "message_contains": ["Actuator", "端点", "未授权", "exposure.include"],
+    "location_hint": {
+      "file": "tests/fixtures/TC-OBS-002/input.yml",
+      "line_start": 5,
+      "line_end": 5,
+      "symbol": "management.endpoints.web.exposure.include"
+    }
+  },
+  "positive_case": "examples/OBS/positive/SRS-OBS-02-001_positive.yml",
+  "negative_case": "examples/OBS/negative/SRS-OBS-02-001_negative.yml",
+  "tags": ["OBS", "02", "fixture", "negative"],
+  "version": "1.0.0",
+  "status": "ACTIVE"
+}

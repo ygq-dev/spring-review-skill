@@ -1,0 +1,31 @@
+{
+  "id": "TC-BUILD-002",
+  "rule_id": "SRS-BUILD-02-001",
+  "category": "BUILD",
+  "subcategory": "02",
+  "title": "SNAPSHOT 依赖进入生产构建",
+  "description": "反例依赖版本包含 -SNAPSHOT，应触发 SRS-BUILD-02-001。",
+  "input": {
+    "type": "fixture_ref",
+    "path": "tests/fixtures/TC-BUILD-002/input.xml",
+    "content": null,
+    "language": "xml",
+    "encoding": "utf-8"
+  },
+  "expected": {
+    "triggered": true,
+    "severity": "CRITICAL",
+    "message_contains": ["internal-lib", "-SNAPSHOT"],
+    "location_hint": {
+      "file": "tests/fixtures/TC-BUILD-002/input.xml",
+      "line_start": 10,
+      "line_end": 10,
+      "symbol": "project.dependencies.internal-lib"
+    }
+  },
+  "positive_case": "examples/BUILD/positive/SRS-BUILD-02-001_positive.xml",
+  "negative_case": "examples/BUILD/negative/SRS-BUILD-02-001_negative.xml",
+  "tags": ["BUILD", "02", "fixture", "negative"],
+  "version": "1.0.0",
+  "status": "ACTIVE"
+}

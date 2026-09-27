@@ -1,0 +1,31 @@
+{
+  "id": "TC-CON-001",
+  "rule_id": "SRS-CON-01-001",
+  "category": "CON",
+  "subcategory": "01",
+  "title": "SimpleDateFormat 静态共享",
+  "description": "验证静态共享 SimpleDateFormat 被识别为并发风险。",
+  "input": {
+    "type": "fixture_ref",
+    "path": "tests/fixtures/TC-CON-001/input.java",
+    "content": null,
+    "language": "java",
+    "encoding": "utf-8"
+  },
+  "expected": {
+    "triggered": true,
+    "severity": "BLOCKER",
+    "message_contains": ["SimpleDateFormat", "线程", "静态"],
+    "location_hint": {
+      "file": "tests/fixtures/TC-CON-001/input.java",
+      "line_start": 5,
+      "line_end": 5,
+      "symbol": "DateUtil.SDF"
+    }
+  },
+  "positive_case": "examples/CON/positive/SRS-CON-01-001_positive.java",
+  "negative_case": "examples/CON/negative/SRS-CON-01-001_negative.java",
+  "tags": ["CON", "CON-01", "SimpleDateFormat", "thread-safety"],
+  "version": "1.0.0",
+  "status": "ACTIVE"
+}

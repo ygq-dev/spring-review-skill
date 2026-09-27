@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ruleset name="Spring Review Skill PMD Ruleset"
+         xmlns="http://pmd.sourceforge.net/ruleset/2.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://pmd.sourceforge.net/ruleset/2.0.0
+                             https://pmd.sourceforge.io/ruleset_2_0_0.xsd">
+    <description>
+        Spring Review Skill PMD 7.4.0 规则集。
+        只启用与规则库 tool_rule_id 对应的规则，避免噪音。
+    </description>
+
+    <!-- ===== SRS-EXC-01-001 ===== -->
+    <rule ref="category/java/errorprone.xml/EmptyCatchBlock"/>
+
+    <!-- ===== SRS-EXC-02-001 ===== -->
+    <rule ref="category/java/errorprone.xml/AvoidPrintStackTrace"/>
+
+    <!-- ===== SRS-STYLE-02-001 ===== -->
+    <rule ref="category/java/design.xml/CyclomaticComplexity">
+        <properties>
+            <property name="methodReportLevel" value="15"/>
+            <property name="classReportLevel" value="100"/>
+        </properties>
+    </rule>
+
+    <!-- ===== SRS-NULL-01-001 ===== -->
+    <rule ref="category/java/bestpractices.xml/OptionalUsedAsFieldOrParameterType"/>
+
+    <!-- ===== SRS-OBS-01-001 ===== -->
+    <rule ref="category/java/errorprone.xml/InvalidLogMessageFormat"/>
+</ruleset>

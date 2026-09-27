@@ -1,0 +1,124 @@
+rule_id: SRS-BUILD-01-001
+name: 依赖版本冲突/重复声明
+description: |
+  检测构建文件中同一依赖重复声明或版本冲突。
+  检测方式：规则引擎解析 Maven/Gradle 依赖树与声明。
+  边界：传递依赖冲突由依赖管理解决；排除测试依赖。
+category_l1: BUILD
+category_l2: "01"
+tags:
+  - build
+  - dependency-management
+status: ACTIVE
+severity: MAJOR
+confidence: MEDIUM
+detection_method: RULE_ENGINE
+tool: CUSTOM
+parameters:
+  dependency_manager:
+    - maven
+    - gradle
+  check_duplicates: true
+  check_version_conflicts: true
+enabled: true
+applies_to:
+  java_version: "17+"
+  spring_boot_version: "3.x"
+  build_tool:
+    - maven
+    - gradle
+  module_type:
+    - web
+    - api
+    - batch
+    - cloud
+    - all
+  framework:
+    - spring-boot
+  exclude:
+    - "**/test/**"
+message: "依赖 {dependency} 存在重复声明或版本冲突：{versions}。"
+remediation: "统一在 dependencyManagement/BOM 或版本目录中声明版本，移除重复声明。"
+positive_example: |
+  依赖版本由 Spring Boot BOM 统一管理。
+negative_example: |
+  同一模块多次声明同一依赖且版本不同。
+false_positive_notes: "多模块不同技术栈可有意覆盖版本；需人工确认。"
+sources:
+  - type: TOOL_RULE
+    ref: "Maven Enforcer / Gradle dependencyInsight 规则"
+    version: "1.0.0"
+rule_version: "1.0.0"
+metadata_version: "1.0.0"
+schema_version: "1.0.0"
+owner: "build-team"
+created_at: "2026-09-23"
+updated_at: "2026-09-23"
+change_log:
+  - version: "1.0.0"
+    date: "2026-09-23"
+    description: "初始版本"
+test_cases: []
+coverage: "解析构建文件与依赖树"
+---
+
+rule_id: SRS-BUILD-02-001
+name: SNAPSHOT 依赖进入生产构建
+description: |
+  检测生产构建依赖中包含 SNAPSHOT 版本。
+  检测方式：正则扫描 Maven/Gradle 构建文件与锁文件。
+  边界：开发分支和测试构建可豁免。
+category_l1: BUILD
+category_l2: "02"
+tags:
+  - build
+  - release
+  - dependency-version
+status: ACTIVE
+severity: CRITICAL
+confidence: HIGH
+detection_method: REGEX
+tool: CUSTOM
+parameters:
+  pattern: '-SNAPSHOT'
+enabled: true
+applies_to:
+  java_version: "17+"
+  spring_boot_version: "3.x"
+  build_tool:
+    - maven
+    - gradle
+  module_type:
+    - web
+    - api
+    - batch
+    - cloud
+    - all
+  framework:
+    - spring-boot
+  exclude:
+    - "**/test/**"
+    - "**/build/dev/**"
+message: "生产构建声明了 SNAPSHOT 依赖 {dependency}。"
+remediation: "替换为固定 release 版本，或通过发布流程冻结快照。"
+positive_example: |
+  生产构建仅使用已发布版本。
+negative_example: |
+  pom.xml 中依赖版本以 -SNAPSHOT 结尾。
+false_positive_notes: "仅开发 profile 或内部快照仓库可人工豁免。"
+sources:
+  - type: INTERNAL_EXPERIENCE
+    ref: "发布构建规范"
+    version: "1.0.0"
+rule_version: "1.0.0"
+metadata_version: "1.0.0"
+schema_version: "1.0.0"
+owner: "build-team"
+created_at: "2026-09-23"
+updated_at: "2026-09-23"
+change_log:
+  - version: "1.0.0"
+    date: "2026-09-23"
+    description: "初始版本"
+test_cases: []
+coverage: "正则扫描构建文件中的 SNAPSHOT"

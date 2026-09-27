@@ -1,0 +1,31 @@
+{
+  "id": "TC-DI-005",
+  "rule_id": "SRS-DI-05-001",
+  "category": "DI",
+  "subcategory": "05",
+  "title": "@Scope 与注入点生命周期不匹配-反例触发",
+  "description": "验证 request 作用域 Bean 直接注入单例 Bean 时命中目标规则。",
+  "input": {
+    "type": "fixture_ref",
+    "path": "tests/fixtures/TC-DI-005/input.java",
+    "content": null,
+    "language": "java",
+    "encoding": "utf-8"
+  },
+  "expected": {
+    "triggered": true,
+    "severity": "MAJOR",
+    "message_contains": ["@RequestScope", "作用域"],
+    "location_hint": {
+      "file": "tests/fixtures/TC-DI-005/input.java",
+      "line_start": 11,
+      "line_end": 15,
+      "symbol": "Di05NegativeService.requestBean"
+    }
+  },
+  "positive_case": "examples/DI/positive/SRS-DI-05-001_positive.java",
+  "negative_case": "examples/DI/negative/SRS-DI-05-001_negative.java",
+  "tags": ["DI", "05", "fixture", "negative"],
+  "version": "1.0.0",
+  "status": "ACTIVE"
+}

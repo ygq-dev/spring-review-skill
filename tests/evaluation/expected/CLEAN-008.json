@@ -1,0 +1,6 @@
+{
+  "case_id": "CLEAN-008",
+  "type": "clean",
+  "input": "clean/CLEAN-008.java",
+  "expected_rules": []
+}

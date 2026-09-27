@@ -1,0 +1,31 @@
+{
+  "id": "TC-I18N-001",
+  "rule_id": "SRS-I18N-01-001",
+  "category": "I18N",
+  "subcategory": "01",
+  "title": "硬编码文案未外部化",
+  "description": "检测面向用户的中文提示、错误、标签文案硬编码。",
+  "input": {
+    "type": "fixture_ref",
+    "path": "tests/fixtures/TC-I18N-001/input.java",
+    "content": null,
+    "language": "java",
+    "encoding": "utf-8"
+  },
+  "expected": {
+    "triggered": true,
+    "severity": "MINOR",
+    "message_contains": ["硬编码", "文案", "未外部化"],
+    "location_hint": {
+      "file": "tests/fixtures/TC-I18N-001/input.java",
+      "line_start": 6,
+      "line_end": 6,
+      "symbol": "LoginController.login"
+    }
+  },
+  "positive_case": "examples/I18N/positive/SRS-I18N-01-001_positive.java",
+  "negative_case": "examples/I18N/negative/SRS-I18N-01-001_negative.java",
+  "tags": ["I18N", "01", "fixture", "negative"],
+  "version": "1.0.0",
+  "status": "ACTIVE"
+}

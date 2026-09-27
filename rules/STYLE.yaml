@@ -1,0 +1,82 @@
+rule_id: "SRS-STYLE-01-001"
+name: "命名不符合 Java/Spring 约定"
+description: "覆盖 Checkstyle 命名规则族，包括 TypeName、MethodName、MemberName、ConstantName、LocalVariableName、PackageName 等；因无单一 Checkstyle 规则可完整对应，tool_rule_id 置为 null，检测范围涵盖 Java 与 Spring 项目常见命名约定。"
+category_l1: "STYLE"
+category_l2: "01"
+status: "ACTIVE"
+severity: "MINOR"
+confidence: "HIGH"
+detection_method: "STATIC_ANALYSIS"
+tool: "CHECKSTYLE"
+parameters: {}
+enabled: true
+applies_to:
+  java_version: "17+"
+  spring_boot_version: "3.x"
+  build_tool: ["maven", "gradle"]
+  module_type: ["all"]
+  framework: ["spring-boot"]
+  exclude: []
+message: "类型、方法、变量、常量和包命名应符合 Java/Spring 约定。"
+remediation: "按 Java 命名规范重命名，并保持 Spring 组件、配置和测试命名一致。"
+positive_example: "类名使用 UpperCamelCase，方法和变量使用 lowerCamelCase，常量使用 UPPER_SNAKE_CASE。"
+negative_example: "类名使用小写或下划线，方法名使用 UpperCamelCase。"
+false_positive_notes: "生成代码、外部协议 DTO、遗留接口适配层可能有意保留非标准命名。"
+sources:
+  - type: "TOOL_RULE"
+    ref: "Checkstyle Naming Rules"
+    version: "10.x"
+rule_version: "1.0.0"
+metadata_version: "1.0.0"
+schema_version: "1.0.0"
+owner: "spring-review-skill"
+created_at: "2026-09-24"
+updated_at: "2026-09-24"
+change_log:
+  - version: "1.0.0"
+    date: "2026-09-24"
+    description: "初始规则元数据"
+test_cases: []
+coverage: "覆盖 Java 包、类型、方法、成员、常量、局部变量和参数的命名约定；不覆盖架构分层命名和业务语义命名质量。"
+---
+rule_id: "SRS-STYLE-02-001"
+name: "方法过长/复杂度过高"
+description: "以 PMD CyclomaticComplexity 为代表规则，同时覆盖 ExcessiveMethodLength、NPathComplexity 等方法长度与复杂度问题；检测方法体行数、分支数量和嵌套深度是否超过约定阈值。"
+category_l1: "STYLE"
+category_l2: "02"
+status: "ACTIVE"
+severity: "MINOR"
+confidence: "HIGH"
+detection_method: "STATIC_ANALYSIS"
+tool: "PMD"
+tool_rule_id: "CyclomaticComplexity"
+parameters: {}
+enabled: true
+applies_to:
+  java_version: "17+"
+  spring_boot_version: "3.x"
+  build_tool: ["maven", "gradle"]
+  module_type: ["all"]
+  framework: ["spring-boot"]
+  exclude: []
+message: "方法应保持可读长度和可控复杂度，避免过长方法与深层分支。"
+remediation: "拆分长方法、提取私有方法、减少嵌套分支，并优先使用早返回和策略化。"
+positive_example: "方法职责单一，分支数量少，长度在团队约定阈值内。"
+negative_example: "单个方法包含大量 if/else、循环和嵌套逻辑，长度明显过长。"
+false_positive_notes: "生成代码、解析器、映射器和算法密集代码可能因领域需要而复杂度较高。"
+sources:
+  - type: "TOOL_RULE"
+    ref: "PMD Java Rules: CyclomaticComplexity / ExcessiveMethodLength / NPathComplexity"
+    version: "7.x"
+rule_version: "1.0.0"
+metadata_version: "1.0.0"
+schema_version: "1.0.0"
+owner: "spring-review-skill"
+created_at: "2026-09-24"
+updated_at: "2026-09-24"
+change_log:
+  - version: "1.0.0"
+    date: "2026-09-24"
+    description: "初始规则元数据"
+test_cases: []
+coverage: "覆盖方法长度、圈复杂度和 NPath 复杂度的静态分析模式；不覆盖认知复杂度的主观可读性评价。"

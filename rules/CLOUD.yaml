@@ -1,0 +1,122 @@
+rule_id: SRS-CLOUD-01-001
+name: 缺少优雅停机配置
+description: |
+  检测 Spring Boot 应用缺少优雅停机配置。
+  检测方式：规则引擎检查 server.shutdown=graceful 与超时配置。
+  边界：非 Web 应用或短生命周期任务可豁免。
+category_l1: CLOUD
+category_l2: "01"
+tags:
+  - cloud
+  - graceful-shutdown
+  - lifecycle
+status: ACTIVE
+severity: MAJOR
+confidence: MEDIUM
+detection_method: RULE_ENGINE
+tool: CUSTOM
+parameters:
+  required_keys:
+    - 'shutdown'
+  expected_value: 'graceful'
+enabled: true
+applies_to:
+  java_version: "17+"
+  spring_boot_version: "3.x"
+  build_tool:
+    - maven
+    - gradle
+  module_type:
+    - web
+    - api
+    - cloud
+  framework:
+    - spring-boot
+  exclude:
+    - "**/test/**"
+    - "**/batch/**"
+message: "应用缺少优雅停机配置 server.shutdown=graceful。"
+remediation: "设置 server.shutdown=graceful 并配置合理的停机超时。"
+positive_example: |
+  配置 server.shutdown=graceful 与超时。
+negative_example: |
+  未配置优雅停机，直接终止。
+false_positive_notes: "非 HTTP 服务或无状态短任务可豁免。"
+sources:
+  - type: OFFICIAL_SPEC
+    ref: "Spring Boot Graceful Shutdown 文档"
+    version: "3.x"
+rule_version: "1.0.0"
+metadata_version: "1.0.0"
+schema_version: "1.0.0"
+owner: "cloud-team"
+created_at: "2026-09-23"
+updated_at: "2026-09-23"
+change_log:
+  - version: "1.0.0"
+    date: "2026-09-23"
+    description: "初始版本"
+test_cases: []
+coverage: "规则引擎检查应用配置"
+---
+
+rule_id: SRS-CLOUD-02-001
+name: 健康检查依赖未隔离
+description: |
+  检测健康检查端点依赖未隔离，可能因外部依赖故障导致健康检查失败。
+  检测方式：规则引擎/AST 检查 HealthIndicator 与 readiness/liveness 分组。
+category_l1: CLOUD
+category_l2: "02"
+tags:
+  - cloud
+  - health-check
+  - readiness
+status: ACTIVE
+severity: MAJOR
+confidence: MEDIUM
+detection_method: HYBRID
+tool: CUSTOM
+parameters:
+  external_dependencies:
+    - 'db'
+    - 'redis'
+    - 'mq'
+enabled: true
+applies_to:
+  java_version: "17+"
+  spring_boot_version: "3.x"
+  build_tool:
+    - maven
+    - gradle
+  module_type:
+    - web
+    - api
+    - cloud
+  framework:
+    - spring-boot
+    - spring-boot-actuator
+  exclude:
+    - "**/test/**"
+message: "健康检查 {healthIndicator} 未隔离外部依赖，可能影响就绪状态。"
+remediation: "使用健康分组隔离 liveness 与 readiness，外部依赖纳入 readiness。"
+positive_example: |
+  liveness 不依赖外部服务，readiness 包含必要依赖。
+negative_example: |
+  liveness 与数据库健康检查强绑定。
+false_positive_notes: "待 B 阶段评估可检测性；启发式规则可能误报，需人工复核。"
+sources:
+  - type: FRAMEWORK_DOC
+    ref: "Spring Boot Actuator Health Groups"
+    version: "3.x"
+rule_version: "1.0.0"
+metadata_version: "1.0.0"
+schema_version: "1.0.0"
+owner: "cloud-team"
+created_at: "2026-09-23"
+updated_at: "2026-09-23"
+change_log:
+  - version: "1.0.0"
+    date: "2026-09-23"
+    description: "初始版本"
+test_cases: []
+coverage: "规则引擎/AST 检查健康检查与分组配置"

@@ -1,0 +1,31 @@
+{
+  "id": "TC-SEC-003",
+  "rule_id": "SRS-SEC-03-001",
+  "category": "SEC",
+  "subcategory": "03",
+  "title": "SQL 字符串拼接反例触发",
+  "description": "检测使用字符串拼接构造包含用户输入的 SQL。",
+  "input": {
+    "type": "fixture_ref",
+    "path": "tests/fixtures/TC-SEC-003/input.java",
+    "content": null,
+    "language": "java",
+    "encoding": "utf-8"
+  },
+  "expected": {
+    "triggered": true,
+    "severity": "BLOCKER",
+    "message_contains": ["SELECT", "userName"],
+    "location_hint": {
+      "file": "tests/fixtures/TC-SEC-003/input.java",
+      "line_start": 14,
+      "line_end": 14,
+      "symbol": "SqlConcatService.findUser"
+    }
+  },
+  "positive_case": "examples/SEC/positive/SRS-SEC-03-001_positive.java",
+  "negative_case": "examples/SEC/negative/SRS-SEC-03-001_negative.java",
+  "tags": ["SEC", "03", "fixture", "negative"],
+  "version": "1.0.0",
+  "status": "ACTIVE"
+}

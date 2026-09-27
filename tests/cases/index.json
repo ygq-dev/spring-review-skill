@@ -1,0 +1,844 @@
+{
+  "version": "1.0.0",
+  "generated_at": "2026-09-24T00:00:00Z",
+  "generated_by": "manual/1.0.0",
+  "count": 55,
+  "items": [
+    {
+      "id": "TC-AR-001",
+      "rule_id": "SRS-AR-01-001",
+      "category": "AR",
+      "file": "tests/cases/TC-AR-001.json",
+      "status": "ACTIVE",
+      "version": "1.0.0",
+      "title": "Controller 直接依赖 Repository 应触发分层依赖倒置",
+      "tags": [
+        "architecture",
+        "layering",
+        "archunit"
+      ]
+    },
+    {
+      "id": "TC-AR-002",
+      "rule_id": "SRS-AR-02-001",
+      "category": "AR",
+      "file": "tests/cases/TC-AR-002.json",
+      "status": "ACTIVE",
+      "version": "1.0.0",
+      "title": "domain 依赖 web/jdbc 应触发领域层依赖外层",
+      "tags": [
+        "architecture",
+        "layering",
+        "archunit"
+      ]
+    },
+    {
+      "id": "TC-BUILD-001",
+      "rule_id": "SRS-BUILD-01-001",
+      "category": "BUILD",
+      "file": "tests/cases/TC-BUILD-001.json",
+      "status": "ACTIVE",
+      "version": "1.0.0",
+      "title": "依赖版本冲突/重复声明",
+      "tags": [
+        "BUILD",
+        "01",
+        "fixture",
+        "negative"
+      ]
+    },
+    {
+      "id": "TC-BUILD-002",
+      "rule_id": "SRS-BUILD-02-001",
+      "category": "BUILD",
+      "file": "tests/cases/TC-BUILD-002.json",
+      "status": "ACTIVE",
+      "version": "1.0.0",
+      "title": "SNAPSHOT 依赖进入生产构建",
+      "tags": [
+        "BUILD",
+        "02",
+        "fixture",
+        "negative"
+      ]
+    },
+    {
+      "id": "TC-CF-001",
+      "rule_id": "SRS-CF-01-001",
+      "category": "CF",
+      "file": "tests/cases/TC-CF-001.json",
+      "status": "ACTIVE",
+      "version": "1.0.0",
+      "title": "生产配置启用 show-sql/devtools/debug 应触发配置风险",
+      "tags": [
+        "configuration",
+        "prod",
+        "debug"
+      ]
+    },
+    {
+      "id": "TC-CF-002",
+      "rule_id": "SRS-CF-02-001",
+      "category": "CF",
+      "file": "tests/cases/TC-CF-002.json",
+      "status": "ACTIVE",
+      "version": "1.0.0",
+      "title": "@Value 缺少默认值或配置校验",
+      "tags": [
+        "CF",
+        "02",
+        "fixture",
+        "negative"
+      ]
+    },
+    {
+      "id": "TC-CLOUD-001",
+      "rule_id": "SRS-CLOUD-01-001",
+      "category": "CLOUD",
+      "file": "tests/cases/TC-CLOUD-001.json",
+      "status": "ACTIVE",
+      "version": "1.0.0",
+      "title": "缺少优雅停机配置",
+      "tags": [
+        "CLOUD",
+        "01",
+        "fixture",
+        "negative"
+      ]
+    },
+    {
+      "id": "TC-CLOUD-002",
+      "rule_id": "SRS-CLOUD-02-001",
+      "category": "CLOUD",
+      "file": "tests/cases/TC-CLOUD-002.json",
+      "status": "ACTIVE",
+      "version": "1.0.0",
+      "title": "健康检查依赖未隔离",
+      "tags": [
+        "CLOUD",
+        "02",
+        "fixture",
+        "negative",
+        "pending-detection-evaluation"
+      ]
+    },
+    {
+      "id": "TC-CON-001",
+      "rule_id": "SRS-CON-01-001",
+      "category": "CON",
+      "file": "tests/cases/TC-CON-001.json",
+      "status": "ACTIVE",
+      "version": "1.0.0",
+      "title": "SimpleDateFormat 静态共享",
+      "tags": [
+        "CON",
+        "CON-01",
+        "SimpleDateFormat",
+        "thread-safety"
+      ]
+    },
+    {
+      "id": "TC-CON-002",
+      "rule_id": "SRS-CON-02-001",
+      "category": "CON",
+      "file": "tests/cases/TC-CON-002.json",
+      "status": "ACTIVE",
+      "version": "1.0.0",
+      "title": "非线程安全集合作为单例字段",
+      "tags": [
+        "CON",
+        "CON-02",
+        "HashMap",
+        "thread-safety"
+      ]
+    },
+    {
+      "id": "TC-CON-003",
+      "rule_id": "SRS-CON-03-001",
+      "category": "CON",
+      "file": "tests/cases/TC-CON-003.json",
+      "status": "ACTIVE",
+      "version": "1.0.0",
+      "title": "未同步的懒初始化单例",
+      "tags": [
+        "CON",
+        "CON-03",
+        "Singleton",
+        "double-checked-locking"
+      ]
+    },
+    {
+      "id": "TC-CON-004",
+      "rule_id": "SRS-CON-04-001",
+      "category": "CON",
+      "file": "tests/cases/TC-CON-004.json",
+      "status": "ACTIVE",
+      "version": "1.0.0",
+      "title": "线程池未设置拒绝策略/队列无界",
+      "tags": [
+        "CON",
+        "CON-04",
+        "ThreadPoolExecutor",
+        "rejection-policy"
+      ]
+    },
+    {
+      "id": "TC-CON-005",
+      "rule_id": "SRS-CON-05-001",
+      "category": "CON",
+      "file": "tests/cases/TC-CON-005.json",
+      "status": "ACTIVE",
+      "version": "1.0.0",
+      "title": "@Transactional 跨线程失效未处理",
+      "tags": [
+        "CON",
+        "CON-05",
+        "Transactional",
+        "cross-thread"
+      ]
+    },
+    {
+      "id": "TC-DAO-001",
+      "rule_id": "SRS-DAO-01-001",
+      "category": "DAO",
+      "file": "tests/cases/TC-DAO-001.json",
+      "status": "ACTIVE",
+      "version": "1.0.0",
+      "title": "@Transactional 标注 private 方法反例触发",
+      "tags": [
+        "DAO",
+        "01",
+        "fixture",
+        "negative"
+      ]
+    },
+    {
+      "id": "TC-DAO-002",
+      "rule_id": "SRS-DAO-02-001",
+      "category": "DAO",
+      "file": "tests/cases/TC-DAO-002.json",
+      "status": "ACTIVE",
+      "version": "1.0.0",
+      "title": "同类 this 自调用事务方法反例触发",
+      "tags": [
+        "DAO",
+        "02",
+        "fixture",
+        "negative"
+      ]
+    },
+    {
+      "id": "TC-DAO-003",
+      "rule_id": "SRS-DAO-03-001",
+      "category": "DAO",
+      "file": "tests/cases/TC-DAO-003.json",
+      "status": "ACTIVE",
+      "version": "1.0.0",
+      "title": "只读查询未设置 readOnly 反例触发",
+      "tags": [
+        "DAO",
+        "03",
+        "fixture",
+        "negative"
+      ]
+    },
+    {
+      "id": "TC-DAO-004",
+      "rule_id": "SRS-DAO-04-001",
+      "category": "DAO",
+      "file": "tests/cases/TC-DAO-004.json",
+      "status": "ACTIVE",
+      "version": "1.0.0",
+      "title": "事务内远程调用反例触发",
+      "tags": [
+        "DAO",
+        "04",
+        "fixture",
+        "negative"
+      ]
+    },
+    {
+      "id": "TC-DAO-005",
+      "rule_id": "SRS-DAO-05-001",
+      "category": "DAO",
+      "file": "tests/cases/TC-DAO-005.json",
+      "status": "ACTIVE",
+      "version": "1.0.0",
+      "title": "循环内查询 N+1 反例触发",
+      "tags": [
+        "DAO",
+        "05",
+        "fixture",
+        "negative",
+        "pending-detection-evaluation"
+      ]
+    },
+    {
+      "id": "TC-DI-001",
+      "rule_id": "SRS-DI-01-001",
+      "category": "DI",
+      "file": "tests/cases/TC-DI-001.json",
+      "status": "ACTIVE",
+      "version": "1.0.0",
+      "title": "禁止字段注入-反例触发",
+      "tags": [
+        "DI",
+        "01",
+        "fixture",
+        "negative"
+      ]
+    },
+    {
+      "id": "TC-DI-002",
+      "rule_id": "SRS-DI-02-001",
+      "category": "DI",
+      "file": "tests/cases/TC-DI-002.json",
+      "status": "ACTIVE",
+      "version": "1.0.0",
+      "title": "必需依赖应为构造器注入且 final-反例触发",
+      "tags": [
+        "DI",
+        "02",
+        "fixture",
+        "negative"
+      ]
+    },
+    {
+      "id": "TC-DI-003",
+      "rule_id": "SRS-DI-03-001",
+      "category": "DI",
+      "file": "tests/cases/TC-DI-003.json",
+      "status": "ACTIVE",
+      "version": "1.0.0",
+      "title": "检测构造器/字段循环依赖-反例触发",
+      "tags": [
+        "DI",
+        "03",
+        "fixture",
+        "negative"
+      ]
+    },
+    {
+      "id": "TC-DI-004",
+      "rule_id": "SRS-DI-04-001",
+      "category": "DI",
+      "file": "tests/cases/TC-DI-004.json",
+      "status": "ACTIVE",
+      "version": "1.0.0",
+      "title": "单例 Bean 中非线程安全可变状态-反例触发",
+      "tags": [
+        "DI",
+        "04",
+        "fixture",
+        "negative"
+      ]
+    },
+    {
+      "id": "TC-DI-005",
+      "rule_id": "SRS-DI-05-001",
+      "category": "DI",
+      "file": "tests/cases/TC-DI-005.json",
+      "status": "ACTIVE",
+      "version": "1.0.0",
+      "title": "@Scope 与注入点生命周期不匹配-反例触发",
+      "tags": [
+        "DI",
+        "05",
+        "fixture",
+        "negative"
+      ]
+    },
+    {
+      "id": "TC-DI-006",
+      "rule_id": "SRS-DI-06-001",
+      "category": "DI",
+      "file": "tests/cases/TC-DI-006.json",
+      "status": "ACTIVE",
+      "version": "1.0.0",
+      "title": "多个 @Aspect 未指定 @Order-反例触发",
+      "tags": [
+        "DI",
+        "06",
+        "fixture",
+        "negative"
+      ]
+    },
+    {
+      "id": "TC-DI-007",
+      "rule_id": "SRS-DI-07-001",
+      "category": "DI",
+      "file": "tests/cases/TC-DI-007.json",
+      "status": "ACTIVE",
+      "version": "1.0.0",
+      "title": "@Around 未调用 proceed()-反例触发",
+      "tags": [
+        "DI",
+        "07",
+        "fixture",
+        "negative"
+      ]
+    },
+    {
+      "id": "TC-EXC-001",
+      "rule_id": "SRS-EXC-01-001",
+      "category": "EXC",
+      "file": "tests/cases/TC-EXC-001.json",
+      "status": "ACTIVE",
+      "version": "1.0.0",
+      "title": "禁止捕获 Exception 后吞没异常",
+      "tags": [
+        "EXC",
+        "01",
+        "fixture",
+        "negative"
+      ]
+    },
+    {
+      "id": "TC-EXC-002",
+      "rule_id": "SRS-EXC-02-001",
+      "category": "EXC",
+      "file": "tests/cases/TC-EXC-002.json",
+      "status": "ACTIVE",
+      "version": "1.0.0",
+      "title": "禁止 catch 后仅 printStackTrace",
+      "tags": [
+        "EXC",
+        "02",
+        "fixture",
+        "negative"
+      ]
+    },
+    {
+      "id": "TC-EXC-003",
+      "rule_id": "SRS-EXC-03-001",
+      "category": "EXC",
+      "file": "tests/cases/TC-EXC-003.json",
+      "status": "ACTIVE",
+      "version": "1.0.0",
+      "title": "事务回滚异常类型配置缺失反例触发",
+      "tags": [
+        "EXC",
+        "03",
+        "fixture",
+        "negative"
+      ]
+    },
+    {
+      "id": "TC-EXC-004",
+      "rule_id": "SRS-EXC-04-001",
+      "category": "EXC",
+      "file": "tests/cases/TC-EXC-004.json",
+      "status": "ACTIVE",
+      "version": "1.0.0",
+      "title": "禁止对外异常响应暴露堆栈或内部类",
+      "tags": [
+        "EXC",
+        "04",
+        "fixture",
+        "negative"
+      ]
+    },
+    {
+      "id": "TC-EXC-005",
+      "rule_id": "SRS-EXC-05-001",
+      "category": "EXC",
+      "file": "tests/cases/TC-EXC-005.json",
+      "status": "ACTIVE",
+      "version": "1.0.0",
+      "title": "异步或定时任务异常必须兜底处理",
+      "tags": [
+        "EXC",
+        "05",
+        "fixture",
+        "negative",
+        "pending-detection-evaluation"
+      ]
+    },
+    {
+      "id": "TC-I18N-001",
+      "rule_id": "SRS-I18N-01-001",
+      "category": "I18N",
+      "file": "tests/cases/TC-I18N-001.json",
+      "status": "ACTIVE",
+      "version": "1.0.0",
+      "title": "硬编码文案未外部化",
+      "tags": [
+        "I18N",
+        "01",
+        "fixture",
+        "negative"
+      ]
+    },
+    {
+      "id": "TC-MIG-001",
+      "rule_id": "SRS-MIG-01-001",
+      "category": "MIG",
+      "file": "tests/cases/TC-MIG-001.json",
+      "status": "ACTIVE",
+      "version": "1.0.0",
+      "title": "使用 javax.* 未迁移 jakarta.*",
+      "tags": [
+        "MIG",
+        "01",
+        "fixture",
+        "negative"
+      ]
+    },
+    {
+      "id": "TC-NULL-001",
+      "rule_id": "SRS-NULL-01-001",
+      "category": "NULL",
+      "file": "tests/cases/TC-NULL-001.json",
+      "status": "ACTIVE",
+      "version": "1.0.0",
+      "title": "Optional 作为字段/参数",
+      "tags": [
+        "NULL",
+        "01",
+        "fixture",
+        "negative"
+      ]
+    },
+    {
+      "id": "TC-NULL-002",
+      "rule_id": "SRS-NULL-02-001",
+      "category": "NULL",
+      "file": "tests/cases/TC-NULL-002.json",
+      "status": "ACTIVE",
+      "version": "1.0.0",
+      "title": "可能返回 null 的集合/数组",
+      "tags": [
+        "NULL",
+        "02",
+        "fixture",
+        "negative"
+      ]
+    },
+    {
+      "id": "TC-OBS-001",
+      "rule_id": "SRS-OBS-01-001",
+      "category": "OBS",
+      "file": "tests/cases/TC-OBS-001.json",
+      "status": "ACTIVE",
+      "version": "1.0.0",
+      "title": "日志占位符拼接字符串",
+      "tags": [
+        "OBS",
+        "01",
+        "fixture",
+        "negative"
+      ]
+    },
+    {
+      "id": "TC-OBS-002",
+      "rule_id": "SRS-OBS-02-001",
+      "category": "OBS",
+      "file": "tests/cases/TC-OBS-002.json",
+      "status": "ACTIVE",
+      "version": "1.0.0",
+      "title": "Actuator 端点未授权暴露",
+      "tags": [
+        "OBS",
+        "02",
+        "fixture",
+        "negative"
+      ]
+    },
+    {
+      "id": "TC-OBS-003",
+      "rule_id": "SRS-OBS-03-001",
+      "category": "OBS",
+      "file": "tests/cases/TC-OBS-003.json",
+      "status": "ACTIVE",
+      "version": "1.0.0",
+      "title": "日志或事务切点表达式过宽",
+      "tags": [
+        "OBS",
+        "03",
+        "fixture",
+        "negative"
+      ]
+    },
+    {
+      "id": "TC-PERF-001",
+      "rule_id": "SRS-PERF-01-001",
+      "category": "PERF",
+      "file": "tests/cases/TC-PERF-001.json",
+      "status": "ACTIVE",
+      "version": "1.0.0",
+      "title": "循环内远程调用",
+      "tags": [
+        "PERF",
+        "01",
+        "fixture",
+        "negative",
+        "pending-detection-evaluation"
+      ]
+    },
+    {
+      "id": "TC-PERF-002",
+      "rule_id": "SRS-PERF-02-001",
+      "category": "PERF",
+      "file": "tests/cases/TC-PERF-002.json",
+      "status": "ACTIVE",
+      "version": "1.0.0",
+      "title": "大集合全量加载/分页缺失",
+      "tags": [
+        "PERF",
+        "02",
+        "fixture",
+        "negative"
+      ]
+    },
+    {
+      "id": "TC-RES-001",
+      "rule_id": "SRS-RES-01-001",
+      "category": "RES",
+      "file": "tests/cases/TC-RES-001.json",
+      "status": "ACTIVE",
+      "version": "1.0.0",
+      "title": "禁止未关闭 InputStream 或 Connection",
+      "tags": [
+        "RES",
+        "01",
+        "fixture",
+        "negative"
+      ]
+    },
+    {
+      "id": "TC-RES-002",
+      "rule_id": "SRS-RES-02-001",
+      "category": "RES",
+      "file": "tests/cases/TC-RES-002.json",
+      "status": "ACTIVE",
+      "version": "1.0.0",
+      "title": "事务中手动连接未释放反例触发",
+      "tags": [
+        "RES",
+        "02",
+        "fixture",
+        "negative"
+      ]
+    },
+    {
+      "id": "TC-SEC-001",
+      "rule_id": "SRS-SEC-01-001",
+      "category": "SEC",
+      "file": "tests/cases/TC-SEC-001.json",
+      "status": "ACTIVE",
+      "version": "1.0.0",
+      "title": "硬编码密钥/密码/token 反例触发",
+      "tags": [
+        "SEC",
+        "01",
+        "fixture",
+        "negative"
+      ]
+    },
+    {
+      "id": "TC-SEC-002",
+      "rule_id": "SRS-SEC-02-001",
+      "category": "SEC",
+      "file": "tests/cases/TC-SEC-002.json",
+      "status": "ACTIVE",
+      "version": "1.0.0",
+      "title": "日志输出敏感信息反例触发",
+      "tags": [
+        "SEC",
+        "02",
+        "fixture",
+        "negative"
+      ]
+    },
+    {
+      "id": "TC-SEC-003",
+      "rule_id": "SRS-SEC-03-001",
+      "category": "SEC",
+      "file": "tests/cases/TC-SEC-003.json",
+      "status": "ACTIVE",
+      "version": "1.0.0",
+      "title": "SQL 字符串拼接反例触发",
+      "tags": [
+        "SEC",
+        "03",
+        "fixture",
+        "negative"
+      ]
+    },
+    {
+      "id": "TC-SEC-004",
+      "rule_id": "SRS-SEC-04-001",
+      "category": "SEC",
+      "file": "tests/cases/TC-SEC-004.json",
+      "status": "ACTIVE",
+      "version": "1.0.0",
+      "title": "关闭 CSRF 且无豁免说明反例触发",
+      "tags": [
+        "SEC",
+        "04",
+        "fixture",
+        "negative"
+      ]
+    },
+    {
+      "id": "TC-SEC-005",
+      "rule_id": "SRS-SEC-05-001",
+      "category": "SEC",
+      "file": "tests/cases/TC-SEC-005.json",
+      "status": "ACTIVE",
+      "version": "1.0.0",
+      "title": "不安全反序列化反例触发",
+      "tags": [
+        "SEC",
+        "05",
+        "fixture",
+        "negative"
+      ]
+    },
+    {
+      "id": "TC-STYLE-001",
+      "rule_id": "SRS-STYLE-01-001",
+      "category": "STYLE",
+      "file": "tests/cases/TC-STYLE-001.json",
+      "status": "ACTIVE",
+      "version": "1.0.0",
+      "title": "命名不符合 Java/Spring 约定",
+      "tags": [
+        "STYLE",
+        "01",
+        "fixture",
+        "negative"
+      ]
+    },
+    {
+      "id": "TC-STYLE-002",
+      "rule_id": "SRS-STYLE-02-001",
+      "category": "STYLE",
+      "file": "tests/cases/TC-STYLE-002.json",
+      "status": "ACTIVE",
+      "version": "1.0.0",
+      "title": "方法过长/复杂度过高",
+      "tags": [
+        "STYLE",
+        "02",
+        "fixture",
+        "negative"
+      ]
+    },
+    {
+      "id": "TC-TEST-001",
+      "rule_id": "SRS-TEST-01-001",
+      "category": "TEST",
+      "file": "tests/cases/TC-TEST-001.json",
+      "status": "ACTIVE",
+      "version": "1.0.0",
+      "title": "测试依赖真实外部服务或数据库",
+      "tags": [
+        "TEST",
+        "01",
+        "fixture",
+        "negative"
+      ]
+    },
+    {
+      "id": "TC-TEST-002",
+      "rule_id": "SRS-TEST-02-001",
+      "category": "TEST",
+      "file": "tests/cases/TC-TEST-002.json",
+      "status": "ACTIVE",
+      "version": "1.0.0",
+      "title": "@SpringBootTest 全量上下文滥用",
+      "tags": [
+        "TEST",
+        "02",
+        "fixture",
+        "negative"
+      ]
+    },
+    {
+      "id": "TC-WEB-001",
+      "rule_id": "SRS-WEB-01-001",
+      "category": "WEB",
+      "file": "tests/cases/TC-WEB-001.json",
+      "status": "ACTIVE",
+      "version": "1.0.0",
+      "title": "Controller 中保存请求态可变字段",
+      "tags": [
+        "WEB",
+        "SRS-WEB-01-001",
+        "AST",
+        "CUSTOM",
+        "controller",
+        "mutable-field"
+      ]
+    },
+    {
+      "id": "TC-WEB-002",
+      "rule_id": "SRS-WEB-02-001",
+      "category": "WEB",
+      "file": "tests/cases/TC-WEB-002.json",
+      "status": "ACTIVE",
+      "version": "1.0.0",
+      "title": "请求参数缺少 @Valid/@Validated",
+      "tags": [
+        "WEB",
+        "SRS-WEB-02-001",
+        "AST",
+        "CUSTOM",
+        "validation",
+        "request-body"
+      ]
+    },
+    {
+      "id": "TC-WEB-003",
+      "rule_id": "SRS-WEB-03-001",
+      "category": "WEB",
+      "file": "tests/cases/TC-WEB-003.json",
+      "status": "ACTIVE",
+      "version": "1.0.0",
+      "title": "全局异常处理缺失或返回堆栈",
+      "tags": [
+        "WEB",
+        "SRS-WEB-03-001",
+        "RULE_ENGINE",
+        "CUSTOM",
+        "exception-handler",
+        "stacktrace"
+      ]
+    },
+    {
+      "id": "TC-WEB-004",
+      "rule_id": "SRS-WEB-04-001",
+      "category": "WEB",
+      "file": "tests/cases/TC-WEB-004.json",
+      "status": "ACTIVE",
+      "version": "1.0.0",
+      "title": "跨域配置过宽",
+      "tags": [
+        "WEB",
+        "SRS-WEB-04-001",
+        "AST",
+        "CUSTOM",
+        "cors",
+        "credentials"
+      ]
+    },
+    {
+      "id": "TC-WEB-005",
+      "rule_id": "SRS-WEB-05-001",
+      "category": "WEB",
+      "file": "tests/cases/TC-WEB-005.json",
+      "status": "ACTIVE",
+      "version": "1.0.0",
+      "title": "异步接口未处理超时/异常",
+      "tags": [
+        "WEB",
+        "SRS-WEB-05-001",
+        "AST",
+        "CUSTOM",
+        "async",
+        "timeout"
+      ]
+    }
+  ]
+}

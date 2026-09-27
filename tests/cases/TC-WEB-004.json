@@ -1,0 +1,31 @@
+{
+  "id": "TC-WEB-004",
+  "rule_id": "SRS-WEB-04-001",
+  "category": "WEB",
+  "subcategory": "04",
+  "title": "跨域配置过宽",
+  "description": "检测 allowedOrigins=* 且 allowCredentials=true 的过宽跨域配置。",
+  "input": {
+    "type": "fixture_ref",
+    "path": "tests/fixtures/TC-WEB-004/input.java",
+    "content": null,
+    "language": "java",
+    "encoding": "utf-8"
+  },
+  "expected": {
+    "triggered": true,
+    "severity": "CRITICAL",
+    "message_contains": ["allowedOrigins", "*", "allowCredentials"],
+    "location_hint": {
+      "file": "tests/fixtures/TC-WEB-004/input.java",
+      "line_start": 12,
+      "line_end": 13,
+      "symbol": "CorsConfig.addCorsMappings"
+    }
+  },
+  "positive_case": "examples/WEB/positive/SRS-WEB-04-001_positive.java",
+  "negative_case": "examples/WEB/negative/SRS-WEB-04-001_negative.java",
+  "tags": ["WEB", "SRS-WEB-04-001", "AST", "CUSTOM", "cors", "credentials"],
+  "version": "1.0.0",
+  "status": "ACTIVE"
+}

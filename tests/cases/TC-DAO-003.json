@@ -1,0 +1,31 @@
+{
+  "id": "TC-DAO-003",
+  "rule_id": "SRS-DAO-03-001",
+  "category": "DAO",
+  "subcategory": "03",
+  "title": "只读查询未设置 readOnly 反例触发",
+  "description": "检测只读查询方法未设置 readOnly=true。",
+  "input": {
+    "type": "fixture_ref",
+    "path": "tests/fixtures/TC-DAO-003/input.java",
+    "content": null,
+    "language": "java",
+    "encoding": "utf-8"
+  },
+  "expected": {
+    "triggered": true,
+    "severity": "MINOR",
+    "message_contains": ["readOnly", "findName"],
+    "location_hint": {
+      "file": "tests/fixtures/TC-DAO-003/input.java",
+      "line_start": 6,
+      "line_end": 6,
+      "symbol": "MissingReadOnlyService.findName"
+    }
+  },
+  "positive_case": "examples/DAO/positive/SRS-DAO-03-001_positive.java",
+  "negative_case": "examples/DAO/negative/SRS-DAO-03-001_negative.java",
+  "tags": ["DAO", "03", "fixture", "negative"],
+  "version": "1.0.0",
+  "status": "ACTIVE"
+}

@@ -1,0 +1,18 @@
+{
+  "version": "1.0.0",
+  "generated_at": "2026-09-24T00:00:00Z",
+  "generated_by": "manual/1.0.0",
+  "case_id": "TC-CON-003",
+  "rule_id": "SRS-CON-03-001",
+  "expected": {
+    "triggered": true,
+    "severity": "MAJOR",
+    "message_contains": ["双重检查锁", "volatile", "懒初始化"],
+    "location_hint": {
+      "file": "tests/fixtures/TC-CON-003/input.java",
+      "line_start": 2,
+      "line_end": 2,
+      "symbol": "Singleton.instance"
+    }
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "id": "TC-PERF-001",
+  "rule_id": "SRS-PERF-01-001",
+  "category": "PERF",
+  "subcategory": "01",
+  "title": "循环内远程调用",
+  "description": "检测 for/while 循环体内调用 RestTemplate/WebClient/Feign 等远程调用。",
+  "input": {
+    "type": "fixture_ref",
+    "path": "tests/fixtures/TC-PERF-001/input.java",
+    "content": null,
+    "language": "java",
+    "encoding": "utf-8"
+  },
+  "expected": {
+    "triggered": true,
+    "severity": "MAJOR",
+    "message_contains": ["循环", "远程调用", "RestTemplate"],
+    "location_hint": {
+      "file": "tests/fixtures/TC-PERF-001/input.java",
+      "line_start": 11,
+      "line_end": 11,
+      "symbol": "RemoteCallInLoop.fetchAll"
+    }
+  },
+  "positive_case": "examples/PERF/positive/SRS-PERF-01-001_positive.java",
+  "negative_case": "examples/PERF/negative/SRS-PERF-01-001_negative.java",
+  "tags": ["PERF", "01", "fixture", "negative", "pending-detection-evaluation"],
+  "version": "1.0.0",
+  "status": "ACTIVE"
+}

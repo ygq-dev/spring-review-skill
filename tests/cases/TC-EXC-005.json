@@ -1,0 +1,31 @@
+{
+  "id": "TC-EXC-005",
+  "rule_id": "SRS-EXC-05-001",
+  "category": "EXC",
+  "subcategory": "05",
+  "title": "异步或定时任务异常必须兜底处理",
+  "description": "@Async 方法体未使用 try-catch 或统一异常处理，异常直接抛出。",
+  "input": {
+    "type": "fixture_ref",
+    "path": "tests/fixtures/TC-EXC-005/input.java",
+    "content": null,
+    "language": "java",
+    "encoding": "utf-8"
+  },
+  "expected": {
+    "triggered": true,
+    "severity": "CRITICAL",
+    "message_contains": ["@Async", "try-catch", "异步异常"],
+    "location_hint": {
+      "file": "tests/fixtures/TC-EXC-005/input.java",
+      "line_start": 4,
+      "line_end": 7,
+      "symbol": "Input.run"
+    }
+  },
+  "positive_case": "examples/EXC/positive/SRS-EXC-05-001_positive.java",
+  "negative_case": "examples/EXC/negative/SRS-EXC-05-001_negative.java",
+  "tags": ["EXC", "05", "fixture", "negative", "pending-detection-evaluation"],
+  "version": "1.0.0",
+  "status": "ACTIVE"
+}

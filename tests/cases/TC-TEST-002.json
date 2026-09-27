@@ -1,0 +1,31 @@
+{
+  "id": "TC-TEST-002",
+  "rule_id": "SRS-TEST-02-001",
+  "category": "TEST",
+  "subcategory": "02",
+  "title": "@SpringBootTest 全量上下文滥用",
+  "description": "检测大量测试类使用 @SpringBootTest 加载全量上下文。",
+  "input": {
+    "type": "fixture_ref",
+    "path": "tests/fixtures/TC-TEST-002/input.java",
+    "content": null,
+    "language": "java",
+    "encoding": "utf-8"
+  },
+  "expected": {
+    "triggered": true,
+    "severity": "MINOR",
+    "message_contains": ["@SpringBootTest", "全量上下文", "滥用"],
+    "location_hint": {
+      "file": "tests/fixtures/TC-TEST-002/input.java",
+      "line_start": 5,
+      "line_end": 5,
+      "symbol": "FirstFullContextTest"
+    }
+  },
+  "positive_case": "examples/TEST/positive/SRS-TEST-02-001_positive.java",
+  "negative_case": "examples/TEST/negative/SRS-TEST-02-001_negative.java",
+  "tags": ["TEST", "02", "fixture", "negative"],
+  "version": "1.0.0",
+  "status": "ACTIVE"
+}

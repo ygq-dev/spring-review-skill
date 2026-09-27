@@ -1,0 +1,31 @@
+{
+  "id": "TC-CON-003",
+  "rule_id": "SRS-CON-03-001",
+  "category": "CON",
+  "subcategory": "03",
+  "title": "未同步的懒初始化单例",
+  "description": "验证双重检查锁未使用 volatile 的懒初始化单例风险。",
+  "input": {
+    "type": "fixture_ref",
+    "path": "tests/fixtures/TC-CON-003/input.java",
+    "content": null,
+    "language": "java",
+    "encoding": "utf-8"
+  },
+  "expected": {
+    "triggered": true,
+    "severity": "MAJOR",
+    "message_contains": ["双重检查锁", "volatile", "懒初始化"],
+    "location_hint": {
+      "file": "tests/fixtures/TC-CON-003/input.java",
+      "line_start": 2,
+      "line_end": 2,
+      "symbol": "Singleton.instance"
+    }
+  },
+  "positive_case": "examples/CON/positive/SRS-CON-03-001_positive.java",
+  "negative_case": "examples/CON/negative/SRS-CON-03-001_negative.java",
+  "tags": ["CON", "CON-03", "Singleton", "double-checked-locking"],
+  "version": "1.0.0",
+  "status": "ACTIVE"
+}

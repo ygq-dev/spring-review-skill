@@ -1,0 +1,250 @@
+rule_id: "SRS-SEC-01-001"
+name: "硬编码密钥/密码/token"
+description: "通过正则扫描源码、配置和资源文件，检测硬编码密码、密钥、token、API key 等敏感凭据。"
+category_l1: "SEC"
+category_l2: "01"
+status: "ACTIVE"
+severity: "BLOCKER"
+confidence: "HIGH"
+detection_method: "REGEX"
+tool: "CUSTOM"
+parameters:
+  patterns:
+    - '(?i)\b(password|passwd|pwd|secret|api[_-]?key|apikey|token|access[_-]?key)\b\s*=\s*"[^"]{3,}"'
+enabled: true
+applies_to:
+  java_version: "17+"
+  spring_boot_version: "3.x"
+  build_tool:
+    - maven
+    - gradle
+  module_type:
+    - all
+  framework:
+    - spring-boot
+  exclude: []
+message: "禁止硬编码密钥、密码或 token。"
+remediation: "改用环境变量、密钥管理服务、Spring Config 加密或外部化配置，并轮换已泄露凭据。"
+positive_example: "敏感凭据从环境变量或密钥管理服务读取。"
+negative_example: "源码或配置中直接写入密码、token、API key。"
+false_positive_notes: "测试固定假值、示例占位符或已明确标记的非敏感常量可忽略。"
+sources:
+  - type: "INTERNAL_EXPERIENCE"
+    ref: "内部安全编码基线"
+    version: "1.0"
+  - type: "OFFICIAL_SPEC"
+    ref: "OWASP ASVS 5.0 V6"
+    version: "5.0"
+coverage: "扫描 Java、YAML、properties、XML 等文件中的凭据模式。"
+rule_version: "1.0.0"
+metadata_version: "1.0.0"
+schema_version: "1.0.0"
+owner: "spring-review-skill"
+created_at: "2026-09-24"
+updated_at: "2026-09-24"
+change_log:
+  - version: "1.0.0"
+    date: "2026-09-24"
+    description: "初始版本。"
+test_cases: []
+---
+
+rule_id: "SRS-SEC-02-001"
+name: "日志输出敏感信息"
+description: "通过正则扫描日志语句和日志配置，检测输出密码、token、身份证、银行卡、手机号等敏感信息，或记录完整请求体/响应体。"
+category_l1: "SEC"
+category_l2: "02"
+status: "ACTIVE"
+severity: "CRITICAL"
+confidence: "HIGH"
+detection_method: "REGEX"
+tool: "CUSTOM"
+parameters:
+  patterns:
+    - '(?i)log\.(info|debug|warn|error|trace)\s*\([^)]*\b(password|passwd|token|idCard|cardNo)\b'
+enabled: true
+applies_to:
+  java_version: "17+"
+  spring_boot_version: "3.x"
+  build_tool:
+    - maven
+    - gradle
+  module_type:
+    - all
+  framework:
+    - spring-boot
+  exclude: []
+message: "日志不得输出敏感信息或完整凭据。"
+remediation: "脱敏后记录，使用日志白名单字段，避免打印请求体、响应体和认证头。"
+positive_example: "日志仅记录脱敏标识或非敏感摘要。"
+negative_example: "日志直接打印密码、token、完整请求体或认证头。"
+false_positive_notes: "若变量名含敏感词但实际为脱敏值或测试假值，可忽略。"
+sources:
+  - type: "INTERNAL_EXPERIENCE"
+    ref: "内部日志安全规范"
+    version: "1.0"
+  - type: "OFFICIAL_SPEC"
+    ref: "OWASP ASVS 5.0 V7"
+    version: "5.0"
+coverage: "扫描日志调用、占位符参数和日志配置文件中的敏感字段。"
+rule_version: "1.0.0"
+metadata_version: "1.0.0"
+schema_version: "1.0.0"
+owner: "spring-review-skill"
+created_at: "2026-09-24"
+updated_at: "2026-09-24"
+change_log:
+  - version: "1.0.0"
+    date: "2026-09-24"
+    description: "初始版本。"
+test_cases: []
+---
+
+rule_id: "SRS-SEC-03-001"
+name: "SQL 拼接"
+description: "检测通过字符串拼接、格式化或动态 SQL 构造 SQL 语句的代码，重点关注用户输入进入 SQL 片段的路径。"
+category_l1: "SEC"
+category_l2: "03"
+status: "ACTIVE"
+severity: "BLOCKER"
+confidence: "HIGH"
+detection_method: "AST"
+tool: "PMD"
+parameters: {}
+enabled: true
+applies_to:
+  java_version: "17+"
+  spring_boot_version: "3.x"
+  build_tool:
+    - maven
+    - gradle
+  module_type:
+    - data
+  framework:
+    - spring-boot
+  exclude: []
+message: "禁止拼接 SQL，应使用参数化查询或预编译语句。"
+remediation: "使用 JdbcTemplate/MyBatis/JPQL 参数绑定，禁止将用户输入拼入 SQL 结构。"
+positive_example: "SQL 使用占位符和参数绑定传入用户输入。"
+negative_example: "使用字符串拼接将用户输入拼入 SELECT/WHERE 等 SQL 片段。"
+false_positive_notes: "拼接常量表名/列名且值来自白名单枚举时需人工确认。"
+sources:
+  - type: "TOOL_RULE"
+    ref: "PMD Best Practices"
+    version: "7.x"
+  - type: "OFFICIAL_SPEC"
+    ref: "OWASP Top 10 2021 A03"
+    version: "2021"
+coverage: "扫描 SQL 字符串构造、Statement 执行和 MyBatis/JPA 动态查询。"
+rule_version: "1.0.0"
+metadata_version: "1.0.0"
+schema_version: "1.0.0"
+owner: "spring-review-skill"
+created_at: "2026-09-24"
+updated_at: "2026-09-24"
+change_log:
+  - version: "1.0.0"
+    date: "2026-09-24"
+    description: "初始版本。"
+test_cases: []
+---
+
+rule_id: "SRS-SEC-04-001"
+name: "关闭 CSRF 且无豁免说明"
+description: "检测 Spring Security 中 csrf().disable() 或等效关闭 CSRF 保护且缺少豁免说明、路径限制或无状态 API 依据的配置。"
+category_l1: "SEC"
+category_l2: "04"
+status: "ACTIVE"
+severity: "CRITICAL"
+confidence: "MEDIUM"
+detection_method: "AST"
+tool: "CUSTOM"
+parameters: {}
+enabled: true
+applies_to:
+  java_version: "17+"
+  spring_boot_version: "3.x"
+  build_tool:
+    - maven
+    - gradle
+  module_type:
+    - security
+  framework:
+    - spring-security
+  exclude: []
+message: "关闭 CSRF 保护需有明确豁免依据和范围。"
+remediation: "保持 CSRF 启用；确需关闭时仅限无状态 API，并添加注释、配置边界和评审记录。"
+positive_example: "CSRF 保持启用，或仅对明确无状态接口关闭并记录理由。"
+negative_example: "全局关闭 CSRF，且无注释、路径限制或风险说明。"
+false_positive_notes: "纯无状态 token API 且不依赖 Cookie 认证时，关闭 CSRF 可能合理。"
+sources:
+  - type: "OFFICIAL_SPEC"
+    ref: "OWASP ASVS 5.0 V4"
+    version: "5.0"
+  - type: "FRAMEWORK_DOC"
+    ref: "Spring Security CSRF"
+    version: "6.2.x"
+coverage: "扫描 SecurityFilterChain、WebSecurityConfigurerAdapter 及 csrf 配置。"
+rule_version: "1.0.0"
+metadata_version: "1.0.0"
+schema_version: "1.0.0"
+owner: "spring-review-skill"
+created_at: "2026-09-24"
+updated_at: "2026-09-24"
+change_log:
+  - version: "1.0.0"
+    date: "2026-09-24"
+    description: "初始版本。"
+test_cases: []
+---
+
+rule_id: "SRS-SEC-05-001"
+name: "不安全反序列化/SpEL 执行"
+description: "采用 HYBRID 检测：静态分析识别 ObjectInputStream、readObject、XStream、SnakeYAML 等反序列化入口，AST/规则引擎跟踪用户输入到 SpEL 表达式解析或反序列化调用，并结合 SpotBugs 规则告警。"
+category_l1: "SEC"
+category_l2: "05"
+status: "ACTIVE"
+severity: "BLOCKER"
+confidence: "MEDIUM"
+detection_method: "HYBRID"
+tool: "SPOTBUGS"
+parameters: {}
+enabled: true
+applies_to:
+  java_version: "17+"
+  spring_boot_version: "3.x"
+  build_tool:
+    - maven
+    - gradle
+  module_type:
+    - all
+  framework:
+    - spring-context
+  exclude: []
+message: "避免对不可信数据反序列化或执行 SpEL 表达式。"
+remediation: "使用白名单类型、安全序列化格式；禁止将用户输入传入 SpEL 解析器，必要时启用 SimpleEvaluationContext。"
+positive_example: "反序列化使用类型白名单，SpEL 不使用用户输入或使用受限上下文。"
+negative_example: "对用户输入直接 ObjectInputStream.readObject，或将用户输入拼入 SpEL 表达式。"
+false_positive_notes: "若数据来源完全可信且类型固定，仍需评审；测试代码可忽略。"
+sources:
+  - type: "CVE"
+    ref: "CVE-2015-4852"
+    version: "2015"
+  - type: "OFFICIAL_SPEC"
+    ref: "OWASP Deserialization Cheat Sheet"
+    version: "2026"
+  - type: "TOOL_RULE"
+    ref: "SpotBugs OBJECT_DESERIALIZATION"
+    version: "4.x"
+coverage: "扫描反序列化 API、SpEL 解析调用及 SpotBugs 告警。"
+rule_version: "1.0.0"
+metadata_version: "1.0.0"
+schema_version: "1.0.0"
+owner: "spring-review-skill"
+created_at: "2026-09-24"
+updated_at: "2026-09-24"
+change_log:
+  - version: "1.0.0"
+    date: "2026-09-24"
+    description: "初始版本。"
+test_cases: []

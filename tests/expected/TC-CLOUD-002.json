@@ -1,0 +1,18 @@
+{
+  "version": "1.0.0",
+  "generated_at": "2026-09-24T00:00:00Z",
+  "generated_by": "manual/1.0.0",
+  "case_id": "TC-CLOUD-002",
+  "rule_id": "SRS-CLOUD-02-001",
+  "expected": {
+    "triggered": true,
+    "severity": "MAJOR",
+    "message_contains": ["liveness", "db", "readiness"],
+    "location_hint": {
+      "file": "tests/fixtures/TC-CLOUD-002/input.yml",
+      "line_start": 5,
+      "line_end": 6,
+      "symbol": "management.endpoint.health.group.liveness"
+    }
+  }
+}

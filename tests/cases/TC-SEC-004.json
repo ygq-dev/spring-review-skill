@@ -1,0 +1,31 @@
+{
+  "id": "TC-SEC-004",
+  "rule_id": "SRS-SEC-04-001",
+  "category": "SEC",
+  "subcategory": "04",
+  "title": "关闭 CSRF 且无豁免说明反例触发",
+  "description": "检测全局 csrf().disable() 且无注释或路径限制。",
+  "input": {
+    "type": "fixture_ref",
+    "path": "tests/fixtures/TC-SEC-004/input.java",
+    "content": null,
+    "language": "java",
+    "encoding": "utf-8"
+  },
+  "expected": {
+    "triggered": true,
+    "severity": "CRITICAL",
+    "message_contains": ["csrf", "disable"],
+    "location_hint": {
+      "file": "tests/fixtures/TC-SEC-004/input.java",
+      "line_start": 11,
+      "line_end": 11,
+      "symbol": "SecurityConfig.filterChain"
+    }
+  },
+  "positive_case": "examples/SEC/positive/SRS-SEC-04-001_positive.java",
+  "negative_case": "examples/SEC/negative/SRS-SEC-04-001_negative.java",
+  "tags": ["SEC", "04", "fixture", "negative"],
+  "version": "1.0.0",
+  "status": "ACTIVE"
+}

@@ -1,0 +1,31 @@
+{
+  "id": "TC-DAO-004",
+  "rule_id": "SRS-DAO-04-001",
+  "category": "DAO",
+  "subcategory": "04",
+  "title": "事务内远程调用反例触发",
+  "description": "检测 @Transactional 方法内调用 RestTemplate。",
+  "input": {
+    "type": "fixture_ref",
+    "path": "tests/fixtures/TC-DAO-004/input.java",
+    "content": null,
+    "language": "java",
+    "encoding": "utf-8"
+  },
+  "expected": {
+    "triggered": true,
+    "severity": "CRITICAL",
+    "message_contains": ["@Transactional", "RestTemplate"],
+    "location_hint": {
+      "file": "tests/fixtures/TC-DAO-004/input.java",
+      "line_start": 9,
+      "line_end": 11,
+      "symbol": "RemoteInsideTransactionService.process"
+    }
+  },
+  "positive_case": "examples/DAO/positive/SRS-DAO-04-001_positive.java",
+  "negative_case": "examples/DAO/negative/SRS-DAO-04-001_negative.java",
+  "tags": ["DAO", "04", "fixture", "negative"],
+  "version": "1.0.0",
+  "status": "ACTIVE"
+}

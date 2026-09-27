@@ -1,0 +1,31 @@
+{
+  "id": "TC-CON-002",
+  "rule_id": "SRS-CON-02-001",
+  "category": "CON",
+  "subcategory": "02",
+  "title": "非线程安全集合作为单例字段",
+  "description": "验证单例 Bean 中可变 HashMap 字段被并发修改的风险。",
+  "input": {
+    "type": "fixture_ref",
+    "path": "tests/fixtures/TC-CON-002/input.java",
+    "content": null,
+    "language": "java",
+    "encoding": "utf-8"
+  },
+  "expected": {
+    "triggered": true,
+    "severity": "CRITICAL",
+    "message_contains": ["HashMap", "线程安全", "单例"],
+    "location_hint": {
+      "file": "tests/fixtures/TC-CON-002/input.java",
+      "line_start": 7,
+      "line_end": 7,
+      "symbol": "CacheService.cache"
+    }
+  },
+  "positive_case": "examples/CON/positive/SRS-CON-02-001_positive.java",
+  "negative_case": "examples/CON/negative/SRS-CON-02-001_negative.java",
+  "tags": ["CON", "CON-02", "HashMap", "thread-safety"],
+  "version": "1.0.0",
+  "status": "ACTIVE"
+}

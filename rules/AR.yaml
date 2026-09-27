@@ -1,0 +1,127 @@
+rule_id: SRS-AR-01-001
+name: 分层依赖倒置
+description: |
+  检测 Controller 层直接依赖 Mapper/Repository 实现的违规。
+  Spring 分层架构要求 Controller → Service → Repository 单向依赖。
+  检测方式：JavaParser 解析包/类依赖图，结合命名与注解做 HYBRID 判定。
+  边界：测试、生成代码、配置类可豁免。
+category_l1: AR
+category_l2: "01"
+tags:
+  - architecture
+  - layering
+status: ACTIVE
+severity: CRITICAL
+confidence: HIGH
+detection_method: HYBRID
+tool: CUSTOM
+parameters:
+  layers:
+    - Controller
+    - Service
+    - Repository
+  forbidden_targets:
+    - Mapper
+    - Repository
+enabled: true
+applies_to:
+  java_version: "17+"
+  spring_boot_version: "3.x"
+  build_tool:
+    - maven
+    - gradle
+  module_type:
+    - web
+    - api
+  framework:
+    - spring-mvc
+    - spring-data
+  exclude:
+    - "**/test/**"
+    - "**/generated/**"
+message: "Controller {className} 直接依赖 {repositoryName}，违反分层依赖。"
+remediation: "将 Repository 调用下沉到 Service 层；Controller 仅依赖 Service 接口。"
+positive_example: |
+  Controller 只注入 Service，通过 Service 访问数据层。
+negative_example: |
+  Controller 直接注入 Repository 并调用查询方法。
+false_positive_notes: "测试或代码生成模块可豁免；若为显式 CQRS 读模型直连需人工确认。"
+sources:
+  - type: INTERNAL_EXPERIENCE
+    ref: "团队分层架构规范"
+    version: "1.0.0"
+rule_version: "1.0.0"
+metadata_version: "1.0.0"
+schema_version: "1.0.0"
+owner: "architecture-team"
+created_at: "2026-09-23"
+updated_at: "2026-09-25"
+change_log:
+  - version: "1.0.0"
+    date: "2026-09-23"
+    description: "初始版本"
+test_cases: []
+coverage: "JavaParser 依赖图 + 规则元数据 HYBRID 判定覆盖"
+---
+rule_id: SRS-AR-02-001
+name: 领域层依赖 Web/基础设施
+description: |
+  检测领域层（domain/model）依赖 Web 或基础设施包。
+  领域层应保持隔离，仅依赖领域模型和抽象端口。
+  检测方式：JavaParser 解析包/类依赖图，结合命名与注解做 HYBRID 判定。
+  边界：应用服务、适配器不在领域层范围内。
+category_l1: AR
+category_l2: "02"
+tags:
+  - architecture
+  - domain-isolation
+status: ACTIVE
+severity: MAJOR
+confidence: HIGH
+detection_method: HYBRID
+tool: CUSTOM
+parameters:
+  layers:
+    - Domain
+    - Web
+    - Infrastructure
+  forbidden_dependencies:
+    - web
+    - infrastructure
+enabled: true
+applies_to:
+  java_version: "17+"
+  spring_boot_version: "3.x"
+  build_tool:
+    - maven
+    - gradle
+  module_type:
+    - all
+  framework:
+    - spring
+    - spring-boot
+  exclude:
+    - "**/test/**"
+message: "领域层 {className} 依赖 {targetPackage}，违反领域隔离。"
+remediation: "通过接口/端口反转依赖，将 Web 与基础设施实现放在外层。"
+positive_example: |
+  领域类仅依赖领域模型和抽象端口。
+negative_example: |
+  领域类导入 Web 注解或基础设施实现。
+false_positive_notes: "框架必需的注解若无法避免，可限定到特定包；需人工复核。"
+sources:
+  - type: FRAMEWORK_DOC
+    ref: "Spring Modulith / Hexagonal Architecture 文档"
+    version: "3.x"
+rule_version: "1.0.0"
+metadata_version: "1.0.0"
+schema_version: "1.0.0"
+owner: "architecture-team"
+created_at: "2026-09-23"
+updated_at: "2026-09-25"
+change_log:
+  - version: "1.0.0"
+    date: "2026-09-23"
+    description: "初始版本"
+test_cases: []
+coverage: "JavaParser 依赖图 + 规则元数据 HYBRID 判定覆盖"

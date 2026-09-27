@@ -1,0 +1,18 @@
+{
+  "version": "1.0.0",
+  "generated_at": "2026-09-24T00:00:00Z",
+  "generated_by": "manual/1.0.0",
+  "case_id": "TC-WEB-003",
+  "rule_id": "SRS-WEB-03-001",
+  "expected": {
+    "triggered": true,
+    "severity": "MAJOR",
+    "message_contains": ["全局异常", "堆栈", "@ControllerAdvice"],
+    "location_hint": {
+      "file": "tests/fixtures/TC-WEB-003/input.java",
+      "line_start": 13,
+      "line_end": 13,
+      "symbol": "ErrorController.error"
+    }
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "id": "TC-DI-006",
+  "rule_id": "SRS-DI-06-001",
+  "category": "DI",
+  "subcategory": "06",
+  "title": "多个 @Aspect 未指定 @Order-反例触发",
+  "description": "验证多个 @Aspect 均未指定 @Order 时命中目标规则。",
+  "input": {
+    "type": "fixture_ref",
+    "path": "tests/fixtures/TC-DI-006/input.java",
+    "content": null,
+    "language": "java",
+    "encoding": "utf-8"
+  },
+  "expected": {
+    "triggered": true,
+    "severity": "MAJOR",
+    "message_contains": ["@Aspect", "@Order"],
+    "location_hint": {
+      "file": "tests/fixtures/TC-DI-006/input.java",
+      "line_start": 5,
+      "line_end": 10,
+      "symbol": "Di06AspectA, Di06AspectB"
+    }
+  },
+  "positive_case": "examples/DI/positive/SRS-DI-06-001_positive.java",
+  "negative_case": "examples/DI/negative/SRS-DI-06-001_negative.java",
+  "tags": ["DI", "06", "fixture", "negative"],
+  "version": "1.0.0",
+  "status": "ACTIVE"
+}

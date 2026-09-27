@@ -1,0 +1,18 @@
+{
+  "version": "1.0.0",
+  "generated_at": "2026-09-24T00:00:00Z",
+  "generated_by": "manual/1.0.0",
+  "case_id": "TC-MIG-001",
+  "rule_id": "SRS-MIG-01-001",
+  "expected": {
+    "triggered": true,
+    "severity": "CRITICAL",
+    "message_contains": ["javax.servlet", "jakarta"],
+    "location_hint": {
+      "file": "tests/fixtures/TC-MIG-001/input.java",
+      "line_start": 3,
+      "line_end": 3,
+      "symbol": "LegacyServlet"
+    }
+  }
+}

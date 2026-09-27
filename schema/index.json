@@ -1,0 +1,26 @@
+{
+  "version": "1.0.0",
+  "generated_at": "2026-04-03T10:00:00Z",
+  "generated_by": "spring-review-skill-indexer/0.1.0",
+  "count": 2,
+  "items": [
+    {
+	  "id": "schema.rule-metadata",
+	  "domain": "rule-metadata",
+	  "file": "schema/rule-metadata.schema.json",
+	  "version": "0.1.0",
+	  "status": "DRAFT",
+	  "applies_to": "rules/*.yaml",
+	  "title": "规则元数据 Schema"
+	},
+	{
+	  "id": "schema.review-report",
+	  "domain": "review-report",
+	  "file": "schema/review-report.schema.json",
+	  "version": "1.0.0",
+	  "status": "DRAFT",
+	  "applies_to": "reports/json/*.json",
+	  "title": "审查报告 Schema"
+	}
+  ]
+}

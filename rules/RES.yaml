@@ -1,0 +1,88 @@
+rule_id: "SRS-RES-01-001"
+name: "禁止未关闭 InputStream 或 Connection"
+description: "通过 AST 检测创建或获取 InputStream、OutputStream、Connection 等资源后，未在 try-with-resources 或 finally 中关闭，且未移交框架托管的情况。"
+category_l1: "RES"
+category_l2: "01"
+status: "ACTIVE"
+severity: "MAJOR"
+confidence: "HIGH"
+detection_method: "AST"
+tool: "SPOTBUGS"
+tool_rule_id: "OBL_UNSATISFIED_OBLIGATION"
+parameters: {}
+enabled: true
+applies_to:
+  java_version: "17+"
+  spring_boot_version: "3.x"
+  build_tool: ["maven", "gradle"]
+  module_type: ["all"]
+  framework: ["spring-boot", "spring-jdbc"]
+  exclude: []
+message: "InputStream、Connection 等资源必须确保关闭，避免资源泄漏和连接耗尽。"
+remediation: "优先使用 try-with-resources；无法使用时在 finally 中显式关闭，并处理关闭异常；框架托管资源应确认生命周期由框架负责。"
+positive_example: "使用 try-with-resources 管理 InputStream 或 Connection，方法退出时自动关闭。"
+negative_example: "创建 InputStream 或获取 Connection 后未关闭，异常路径下资源持续占用。"
+false_positive_notes: "若资源由 Spring 事务、JdbcTemplate、连接池或框架托管，可能误报；需结合资源所有权与生命周期复核。"
+sources:
+  - type: "TOOL_RULE"
+    ref: "SpotBugs: OBL_UNSATISFIED_OBLIGATION"
+    version: "4.8.x"
+rule_version: "1.0.0"
+metadata_version: "1.0.0"
+schema_version: "1.0.0"
+owner: "spring-review-skill-team"
+created_at: "2026-09-24"
+updated_at: "2026-09-24"
+change_log:
+  - version: "1.0.0"
+    date: "2026-09-24"
+    description: "B5 初始规则元数据。"
+test_cases: []
+coverage: "覆盖 Java 17+/Spring Boot 3.x、Maven/Gradle 项目中 InputStream/Connection 未关闭检测；不覆盖框架托管资源、连接池内部实现与测试代码。"
+---
+rule_id: SRS-RES-02-001
+name: "事务中手动连接必须释放"
+description: >-
+  使用 AST 识别事务方法内手动获取数据库连接、语句或结果集的位置，
+  检查是否在正常路径与异常路径均释放资源，避免连接泄漏。
+category_l1: RES
+category_l2: "02"
+status: ACTIVE
+severity: CRITICAL
+confidence: MEDIUM
+detection_method: AST
+tool: SPOTBUGS
+tool_rule_id: "ODR_OPEN_DATABASE_RESOURCE"
+parameters: {}
+enabled: true
+applies_to:
+  java_version: "17+"
+  spring_boot_version: "3.x"
+  build_tool: ["maven", "gradle"]
+  module_type: ["data"]
+  framework: ["spring-jdbc"]
+  exclude: []
+message: "检测到事务中手动连接可能未释放。"
+remediation: "优先使用 Spring 管理连接；手动连接必须使用 try-with-resources 或 finally 确保释放。"
+positive_example: "事务中由 Spring 管理连接，手动连接使用 try-with-resources 或 finally 释放。"
+negative_example: "在事务中手动获取连接后未在异常路径和正常路径释放。"
+false_positive_notes: "若连接由框架模板管理、使用 try-with-resources 或由外层统一释放，可能为误报；需结合资源作用域确认。"
+sources:
+  - type: INTERNAL_EXPERIENCE
+    ref: "内部经验：事务中手动获取连接未释放"
+    version: "2026-09-24"
+  - type: TOOL_RULE
+    ref: "SpotBugs ODR_OPEN_DATABASE_RESOURCE"
+    version: "4.x"
+rule_version: "1.0.0"
+metadata_version: "1.0.0"
+schema_version: "1.0.0"
+owner: "spring-review-skill"
+created_at: "2026-09-24"
+updated_at: "2026-09-24"
+change_log:
+  - version: "1.0.0"
+    date: "2026-09-24"
+    description: "初始版本，继承 B0 候选 CAND-040 并补充完整元数据。"
+test_cases: []
+coverage: "覆盖事务中手动连接资源释放的 AST 检测；不覆盖运行期连接池监控与泄漏追踪。"

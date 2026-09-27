@@ -1,0 +1,48 @@
+# Spring Review Skill 默认配置示例。
+# 用户项目根放置 spring-review.yaml 或 .spring-review.yaml 时生效。
+review:
+  mode: diff
+  repoRoot: .
+  baseRef: HEAD~1
+  headRef: HEAD
+
+rules:
+  dir: rules
+  index: rules/index.json
+
+schema:
+  reviewReport: schema/review-report.schema.json
+  ruleMetadata: schema/rule-metadata.schema.json
+
+output:
+  dir: reports
+  latestDir: reports/latest
+  historyPattern: reports/history/YYYY/MM/DD/<report_id>/
+  formats:
+    - markdown
+    - json
+
+llm:
+  enabled: true
+  provider: deepseek
+  baseUrl: https://api.deepseek.com
+  model: deepseek-chat
+  timeoutMs: 60000
+  maxConcurrency: 4
+  temperature: 0.1
+  maxTokens: 4096
+
+static:
+  checkstyle:
+    enabled: true
+  pmd:
+    enabled: true
+  spotbugs:
+    enabled: false
+
+exit:
+  failOn: CRITICAL
+  strict: false
+
+logging:
+  level: INFO

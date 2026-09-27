@@ -1,0 +1,31 @@
+{
+  "id": "TC-DAO-002",
+  "rule_id": "SRS-DAO-02-001",
+  "category": "DAO",
+  "subcategory": "02",
+  "title": "同类 this 自调用事务方法反例触发",
+  "description": "检测同类 this 自调用导致事务失效。",
+  "input": {
+    "type": "fixture_ref",
+    "path": "tests/fixtures/TC-DAO-002/input.java",
+    "content": null,
+    "language": "java",
+    "encoding": "utf-8"
+  },
+  "expected": {
+    "triggered": true,
+    "severity": "CRITICAL",
+    "message_contains": ["this", "inner"],
+    "location_hint": {
+      "file": "tests/fixtures/TC-DAO-002/input.java",
+      "line_start": 7,
+      "line_end": 7,
+      "symbol": "SelfInvocationService.outer"
+    }
+  },
+  "positive_case": "examples/DAO/positive/SRS-DAO-02-001_positive.java",
+  "negative_case": "examples/DAO/negative/SRS-DAO-02-001_negative.java",
+  "tags": ["DAO", "02", "fixture", "negative"],
+  "version": "1.0.0",
+  "status": "ACTIVE"
+}

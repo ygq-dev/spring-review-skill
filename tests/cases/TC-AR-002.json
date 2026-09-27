@@ -1,0 +1,31 @@
+{
+  "id": "TC-AR-002",
+  "rule_id": "SRS-AR-02-001",
+  "category": "AR",
+  "subcategory": "02",
+  "title": "domain 依赖 web/jdbc 应触发领域层依赖外层",
+  "description": "验证 domain 包类 import web 注解或基础设施实现时命中目标规则。",
+  "input": {
+    "type": "fixture_ref",
+    "path": "tests/fixtures/TC-AR-002/input.java",
+    "content": null,
+    "language": "java",
+    "encoding": "utf-8"
+  },
+  "expected": {
+    "triggered": true,
+    "severity": "MAJOR",
+    "message_contains": ["domain", "web", "jdbc"],
+    "location_hint": {
+      "file": "tests/fixtures/TC-AR-002/input.java",
+      "line_start": 7,
+      "line_end": 7,
+      "symbol": "com.example.order.domain.OrderDomainService"
+    }
+  },
+  "positive_case": "examples/AR/positive/SRS-AR-02-001_positive.java",
+  "negative_case": "examples/AR/negative/SRS-AR-02-001_negative.java",
+  "tags": ["architecture", "layering", "archunit"],
+  "version": "1.0.0",
+  "status": "ACTIVE"
+}

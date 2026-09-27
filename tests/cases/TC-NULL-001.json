@@ -1,0 +1,31 @@
+{
+  "id": "TC-NULL-001",
+  "rule_id": "SRS-NULL-01-001",
+  "category": "NULL",
+  "subcategory": "01",
+  "title": "Optional 作为字段/参数",
+  "description": "检测 Optional 作为实体字段、方法参数、构造器参数。",
+  "input": {
+    "type": "fixture_ref",
+    "path": "tests/fixtures/TC-NULL-001/input.java",
+    "content": null,
+    "language": "java",
+    "encoding": "utf-8"
+  },
+  "expected": {
+    "triggered": true,
+    "severity": "MINOR",
+    "message_contains": ["Optional", "字段", "参数"],
+    "location_hint": {
+      "file": "tests/fixtures/TC-NULL-001/input.java",
+      "line_start": 6,
+      "line_end": 6,
+      "symbol": "UserService.userName"
+    }
+  },
+  "positive_case": "examples/NULL/positive/SRS-NULL-01-001_positive.java",
+  "negative_case": "examples/NULL/negative/SRS-NULL-01-001_negative.java",
+  "tags": ["NULL", "01", "fixture", "negative"],
+  "version": "1.0.0",
+  "status": "ACTIVE"
+}

@@ -1,0 +1,31 @@
+{
+  "id": "TC-STYLE-001",
+  "rule_id": "SRS-STYLE-01-001",
+  "category": "STYLE",
+  "subcategory": "01",
+  "title": "命名不符合 Java/Spring 约定",
+  "description": "检测类、方法、变量、常量、包命名违规。",
+  "input": {
+    "type": "fixture_ref",
+    "path": "tests/fixtures/TC-STYLE-001/input.java",
+    "content": null,
+    "language": "java",
+    "encoding": "utf-8"
+  },
+  "expected": {
+    "triggered": true,
+    "severity": "MINOR",
+    "message_contains": ["类名", "方法名", "命名约定"],
+    "location_hint": {
+      "file": "tests/fixtures/TC-STYLE-001/input.java",
+      "line_start": 3,
+      "line_end": 3,
+      "symbol": "user_service"
+    }
+  },
+  "positive_case": "examples/STYLE/positive/SRS-STYLE-01-001_positive.java",
+  "negative_case": "examples/STYLE/negative/SRS-STYLE-01-001_negative.java",
+  "tags": ["STYLE", "01", "fixture", "negative"],
+  "version": "1.0.0",
+  "status": "ACTIVE"
+}

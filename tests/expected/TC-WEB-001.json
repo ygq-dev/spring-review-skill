@@ -1,0 +1,18 @@
+{
+  "version": "1.0.0",
+  "generated_at": "2026-09-24T00:00:00Z",
+  "generated_by": "manual/1.0.0",
+  "case_id": "TC-WEB-001",
+  "rule_id": "SRS-WEB-01-001",
+  "expected": {
+    "triggered": true,
+    "severity": "CRITICAL",
+    "message_contains": ["Controller", "可变实例字段", "currentUser"],
+    "location_hint": {
+      "file": "tests/fixtures/TC-WEB-001/input.java",
+      "line_start": 8,
+      "line_end": 8,
+      "symbol": "UserController.currentUser"
+    }
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "id": "TC-WEB-001",
+  "rule_id": "SRS-WEB-01-001",
+  "category": "WEB",
+  "subcategory": "01",
+  "title": "Controller 中保存请求态可变字段",
+  "description": "检测 @Controller/@RestController 单例中的可变实例字段被请求处理方法写入。",
+  "input": {
+    "type": "fixture_ref",
+    "path": "tests/fixtures/TC-WEB-001/input.java",
+    "content": null,
+    "language": "java",
+    "encoding": "utf-8"
+  },
+  "expected": {
+    "triggered": true,
+    "severity": "CRITICAL",
+    "message_contains": ["Controller", "可变实例字段", "currentUser"],
+    "location_hint": {
+      "file": "tests/fixtures/TC-WEB-001/input.java",
+      "line_start": 8,
+      "line_end": 8,
+      "symbol": "UserController.currentUser"
+    }
+  },
+  "positive_case": "examples/WEB/positive/SRS-WEB-01-001_positive.java",
+  "negative_case": "examples/WEB/negative/SRS-WEB-01-001_negative.java",
+  "tags": ["WEB", "SRS-WEB-01-001", "AST", "CUSTOM", "controller", "mutable-field"],
+  "version": "1.0.0",
+  "status": "ACTIVE"
+}

@@ -1,0 +1,31 @@
+{
+  "id": "TC-EXC-003",
+  "rule_id": "SRS-EXC-03-001",
+  "category": "EXC",
+  "subcategory": "03",
+  "title": "事务回滚异常类型配置缺失反例触发",
+  "description": "检测未配置 rollbackFor 且抛受检异常。",
+  "input": {
+    "type": "fixture_ref",
+    "path": "tests/fixtures/TC-EXC-003/input.java",
+    "content": null,
+    "language": "java",
+    "encoding": "utf-8"
+  },
+  "expected": {
+    "triggered": true,
+    "severity": "CRITICAL",
+    "message_contains": ["rollbackFor", "Exception"],
+    "location_hint": {
+      "file": "tests/fixtures/TC-EXC-003/input.java",
+      "line_start": 6,
+      "line_end": 8,
+      "symbol": "MissingRollbackService.execute"
+    }
+  },
+  "positive_case": "examples/EXC/positive/SRS-EXC-03-001_positive.java",
+  "negative_case": "examples/EXC/negative/SRS-EXC-03-001_negative.java",
+  "tags": ["EXC", "03", "fixture", "negative"],
+  "version": "1.0.0",
+  "status": "ACTIVE"
+}

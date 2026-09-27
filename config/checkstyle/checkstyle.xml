@@ -1,0 +1,44 @@
+<?xml version="1.0"?>
+<!DOCTYPE module PUBLIC
+    "-//Checkstyle//DTD Checkstyle Configuration 1.3//EN"
+    "https://checkstyle.org/dtds/configuration_1_3.dtd">
+<!--
+  Spring Review Skill Checkstyle 规则集。
+  目标：覆盖 SRS-STYLE-01-001 的命名族规则；不引入格式/复杂度规则，
+        避免与 PMD 职责重叠。
+  版本：Checkstyle 10.17.0
+-->
+<module name="Checker">
+    <property name="charset" value="UTF-8"/>
+    <property name="severity" value="warning"/>
+    <property name="fileExtensions" value="java"/>
+
+    <!-- 文件级 -->
+    <module name="FileTabCharacter">
+        <property name="eachLine" value="true"/>
+    </module>
+
+    <module name="LineLength">
+        <property name="max" value="160"/>
+        <property name="ignorePattern" value="^\s*\*.*$"/>
+    </module>
+
+    <module name="TreeWalker">
+        <!-- ===== SRS-STYLE-01-001 命名族 ===== -->
+        <module name="PackageName"/>
+        <module name="TypeName"/>
+        <module name="MethodName"/>
+        <module name="MemberName"/>
+        <module name="ParameterName"/>
+        <module name="LocalVariableName"/>
+        <module name="ConstantName"/>
+        <module name="StaticVariableName"/>
+        <module name="MethodTypeParameterName"/>
+        <module name="ClassTypeParameterName"/>
+        <module name="InterfaceTypeParameterName"/>
+
+        <!-- ===== 少量编码规范，不计入规则库，仅供人工参考 ===== -->
+        <module name="EmptyBlock"/>
+        <module name="NeedBraces"/>
+    </module>
+</module>

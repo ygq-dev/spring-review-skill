@@ -1,0 +1,18 @@
+{
+  "version": "1.0.0",
+  "generated_at": "2026-09-24T00:00:00Z",
+  "generated_by": "manual/1.0.0",
+  "case_id": "TC-CLOUD-001",
+  "rule_id": "SRS-CLOUD-01-001",
+  "expected": {
+    "triggered": true,
+    "severity": "MAJOR",
+    "message_contains": ["server.shutdown", "graceful"],
+    "location_hint": {
+      "file": "tests/fixtures/TC-CLOUD-001/input.yml",
+      "line_start": 1,
+      "line_end": 5,
+      "symbol": "server.shutdown"
+    }
+  }
+}

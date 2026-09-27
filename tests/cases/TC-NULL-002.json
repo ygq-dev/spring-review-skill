@@ -1,0 +1,31 @@
+{
+  "id": "TC-NULL-002",
+  "rule_id": "SRS-NULL-02-001",
+  "category": "NULL",
+  "subcategory": "02",
+  "title": "可能返回 null 的集合/数组",
+  "description": "检测方法返回 null 集合或 null 数组。",
+  "input": {
+    "type": "fixture_ref",
+    "path": "tests/fixtures/TC-NULL-002/input.java",
+    "content": null,
+    "language": "java",
+    "encoding": "utf-8"
+  },
+  "expected": {
+    "triggered": true,
+    "severity": "MAJOR",
+    "message_contains": ["返回 null", "集合", "数组"],
+    "location_hint": {
+      "file": "tests/fixtures/TC-NULL-002/input.java",
+      "line_start": 6,
+      "line_end": 6,
+      "symbol": "OrderService.findOrders"
+    }
+  },
+  "positive_case": "examples/NULL/positive/SRS-NULL-02-001_positive.java",
+  "negative_case": "examples/NULL/negative/SRS-NULL-02-001_negative.java",
+  "tags": ["NULL", "02", "fixture", "negative"],
+  "version": "1.0.0",
+  "status": "ACTIVE"
+}

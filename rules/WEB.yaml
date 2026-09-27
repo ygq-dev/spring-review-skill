@@ -1,0 +1,236 @@
+rule_id: "SRS-WEB-01-001"
+name: "Controller 中保存请求态可变字段"
+description: "检测 Spring MVC Controller 单例中保存请求态可变实例字段，或请求处理方法写入非线程安全字段。重点识别非 static final 的可变字段、请求处理方法内赋值、以及依赖请求数据的字段。"
+category_l1: "WEB"
+category_l2: "01"
+status: "ACTIVE"
+severity: "CRITICAL"
+confidence: "HIGH"
+detection_method: "AST"
+tool: "CUSTOM"
+parameters: {}
+enabled: true
+applies_to:
+  java_version: "17+"
+  spring_boot_version: "3.x"
+  build_tool:
+    - maven
+    - gradle
+  module_type:
+    - web
+  framework:
+    - spring-mvc
+  exclude: []
+message: "Controller 中不应保存请求态可变字段，避免并发请求数据串扰。"
+remediation: "将请求态数据保存在方法局部变量、方法参数或请求作用域中；Controller 保持无状态。"
+positive_example: "Controller 仅使用方法参数和局部变量处理请求，不定义可变实例字段。"
+negative_example: "Controller 定义可变实例字段并在请求处理方法中写入当前请求数据。"
+false_positive_notes: "若字段为 static final 常量、不可变配置或由容器管理的只读依赖，可忽略。"
+sources:
+  - type: "FRAMEWORK_DOC"
+    ref: "Spring Framework Reference: Web MVC"
+    version: "6.2.x"
+coverage: "扫描 @Controller/@RestController 类中的实例字段、赋值点及请求映射方法调用链。"
+rule_version: "1.0.0"
+metadata_version: "1.0.0"
+schema_version: "1.0.0"
+owner: "spring-review-skill"
+created_at: "2026-09-24"
+updated_at: "2026-09-24"
+change_log:
+  - version: "1.0.0"
+    date: "2026-09-24"
+    description: "初始版本。"
+test_cases: []
+---
+rule_id: "SRS-WEB-02-001"
+name: "请求参数缺少 @Valid/@Validated"
+description: "检测 Spring MVC 控制器请求参数、请求体或方法参数缺少 @Valid/@Validated 校验注解，或校验注解未生效的场景。"
+category_l1: "WEB"
+category_l2: "02"
+status: "ACTIVE"
+severity: "MAJOR"
+confidence: "HIGH"
+detection_method: "AST"
+tool: "CUSTOM"
+parameters: {}
+enabled: true
+applies_to:
+  java_version: "17+"
+  spring_boot_version: "3.x"
+  build_tool:
+    - maven
+    - gradle
+  module_type:
+    - web
+  framework:
+    - spring-mvc
+  exclude: []
+message: "请求参数应启用 Bean Validation 校验。"
+remediation: "在需要校验的 @RequestBody、@ModelAttribute 或方法参数上添加 @Valid 或 @Validated，并处理校验错误。"
+positive_example: "控制器对请求体或模型属性使用 @Valid 或 @Validated 触发校验。"
+negative_example: "控制器直接接收请求体或参数，未添加任何校验注解。"
+false_positive_notes: "若参数已在其他层显式校验，或为无需校验的基础类型，可忽略。"
+sources:
+  - type: "OFFICIAL_SPEC"
+    ref: "Jakarta Bean Validation"
+    version: "3.0"
+  - type: "FRAMEWORK_DOC"
+    ref: "Spring MVC Validation"
+    version: "6.2.x"
+coverage: "扫描控制器方法参数上的 @RequestBody、@ModelAttribute、@RequestParam 等及其校验注解。"
+rule_version: "1.0.0"
+metadata_version: "1.0.0"
+schema_version: "1.0.0"
+owner: "spring-review-skill"
+created_at: "2026-09-24"
+updated_at: "2026-09-24"
+change_log:
+  - version: "1.0.0"
+    date: "2026-09-24"
+    description: "初始版本。"
+test_cases: []
+---
+rule_id: "SRS-WEB-03-001"
+name: "全局异常处理缺失或返回堆栈"
+description: "使用规则引擎扫描 Spring MVC 应用，检测 @ControllerAdvice/@ExceptionHandler 缺失，或异常处理器向客户端返回堆栈、内部异常信息。"
+category_l1: "WEB"
+category_l2: "03"
+status: "ACTIVE"
+severity: "MAJOR"
+confidence: "MEDIUM"
+detection_method: "RULE_ENGINE"
+tool: "CUSTOM"
+parameters: {}
+enabled: true
+applies_to:
+  java_version: "17+"
+  spring_boot_version: "3.x"
+  build_tool:
+    - maven
+    - gradle
+  module_type:
+    - web
+  framework:
+    - spring-mvc
+  exclude: []
+message: "应提供全局异常处理，且不得向客户端返回堆栈或内部异常细节。"
+remediation: "添加 @ControllerAdvice 和 @ExceptionHandler，统一映射错误响应，记录内部日志但不返回堆栈。"
+positive_example: "存在全局异常处理器，返回稳定错误码和脱敏消息。"
+negative_example: "无全局异常处理，或异常响应包含堆栈、类名、SQL 等内部信息。"
+false_positive_notes: "若框架或网关已统一处理且返回体已脱敏，可忽略。"
+sources:
+  - type: "FRAMEWORK_DOC"
+    ref: "Spring MVC Exceptions"
+    version: "6.2.x"
+  - type: "OFFICIAL_SPEC"
+    ref: "RFC 9457 Problem Details"
+    version: "RFC 9457"
+coverage: "扫描 @ControllerAdvice/@ExceptionHandler 定义及异常响应体构造。"
+rule_version: "1.0.0"
+metadata_version: "1.0.0"
+schema_version: "1.0.0"
+owner: "spring-review-skill"
+created_at: "2026-09-24"
+updated_at: "2026-09-24"
+change_log:
+  - version: "1.0.0"
+    date: "2026-09-24"
+    description: "初始版本。"
+test_cases: []
+---
+rule_id: "SRS-WEB-04-001"
+name: "跨域配置过宽"
+description: "检测 Spring Web CORS 配置中 allowedOrigins 使用通配源、allowedOriginPatterns 过宽、allowCredentials 为 true 且通配源等不安全组合。"
+category_l1: "WEB"
+category_l2: "04"
+status: "ACTIVE"
+severity: "CRITICAL"
+confidence: "HIGH"
+detection_method: "AST"
+tool: "CUSTOM"
+parameters: {}
+enabled: true
+applies_to:
+  java_version: "17+"
+  spring_boot_version: "3.x"
+  build_tool:
+    - maven
+    - gradle
+  module_type:
+    - web
+  framework:
+    - spring-web
+  exclude: []
+message: "跨域配置不应过宽，尤其禁止通配源与凭证同时启用。"
+remediation: "使用明确白名单源；如需凭证，配置具体源并限制方法、头、最大年龄。"
+positive_example: "CORS 仅允许受信来源，且凭证与通配源不共存。"
+negative_example: "CORS 允许所有来源，或允许所有来源同时携带凭证。"
+false_positive_notes: "若通配配置仅用于本地开发且通过 profile 隔离，可降低等级。"
+sources:
+  - type: "OFFICIAL_SPEC"
+    ref: "Fetch Living Standard: CORS"
+    version: "2026"
+  - type: "FRAMEWORK_DOC"
+    ref: "Spring Web CORS"
+    version: "6.2.x"
+coverage: "扫描 @CrossOrigin、CorsConfiguration、WebMvcConfigurer#addCorsMappings 等配置。"
+rule_version: "1.0.0"
+metadata_version: "1.0.0"
+schema_version: "1.0.0"
+owner: "spring-review-skill"
+created_at: "2026-09-24"
+updated_at: "2026-09-24"
+change_log:
+  - version: "1.0.0"
+    date: "2026-09-24"
+    description: "初始版本。"
+test_cases: []
+---
+rule_id: "SRS-WEB-05-001"
+name: "异步接口未处理超时/异常"
+description: "检测 @Async、WebAsyncTask、DeferredResult、Callable 等异步接口缺少超时、异常回调、线程池隔离或错误处理。边界包括异步返回值、超时配置、AsyncUncaughtExceptionHandler 和 MVC 异步异常处理。"
+category_l1: "WEB"
+category_l2: "05"
+status: "ACTIVE"
+severity: "MAJOR"
+confidence: "MEDIUM"
+detection_method: "AST"
+tool: "CUSTOM"
+parameters: {}
+enabled: true
+applies_to:
+  java_version: "17+"
+  spring_boot_version: "3.x"
+  build_tool:
+    - maven
+    - gradle
+  module_type:
+    - web
+  framework:
+    - spring-web
+  exclude: []
+message: "异步接口应显式处理超时和异常，避免请求悬挂或异常丢失。"
+remediation: "为异步任务设置超时，注册异常处理器，使用有界线程池，并在 DeferredResult/WebAsyncTask 中处理超时与错误。"
+positive_example: "异步接口配置超时、异常回调和独立线程池。"
+negative_example: "异步接口未设置超时，也未处理异常或拒绝策略。"
+false_positive_notes: "若上游网关统一超时且异步逻辑无可失败操作，可忽略。"
+sources:
+  - type: "FRAMEWORK_DOC"
+    ref: "Spring MVC Async"
+    version: "6.2.x"
+  - type: "FRAMEWORK_DOC"
+    ref: "Spring Framework Task Execution"
+    version: "6.2.x"
+coverage: "扫描 @Async、WebAsyncTask、DeferredResult、Callable 及异步配置。"
+rule_version: "1.0.0"
+metadata_version: "1.0.0"
+schema_version: "1.0.0"
+owner: "spring-review-skill"
+created_at: "2026-09-24"
+updated_at: "2026-09-24"
+change_log:
+  - version: "1.0.0"
+    date: "2026-09-24"
+    description: "初始版本。"
+test_cases: []

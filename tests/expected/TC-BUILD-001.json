@@ -1,0 +1,18 @@
+{
+  "version": "1.0.0",
+  "generated_at": "2026-09-24T00:00:00Z",
+  "generated_by": "manual/1.0.0",
+  "case_id": "TC-BUILD-001",
+  "rule_id": "SRS-BUILD-01-001",
+  "expected": {
+    "triggered": true,
+    "severity": "MAJOR",
+    "message_contains": ["jackson-databind", "version", "conflict"],
+    "location_hint": {
+      "file": "tests/fixtures/TC-BUILD-001/input.xml",
+      "line_start": 7,
+      "line_end": 18,
+      "symbol": "project.dependencies:jackson-databind"
+    }
+  }
+}

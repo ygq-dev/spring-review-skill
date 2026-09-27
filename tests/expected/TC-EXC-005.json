@@ -1,0 +1,18 @@
+{
+  "version": "1.0.0",
+  "generated_at": "2026-09-24T00:00:00Z",
+  "generated_by": "manual/1.0.0",
+  "case_id": "TC-EXC-005",
+  "rule_id": "SRS-EXC-05-001",
+  "expected": {
+    "triggered": true,
+    "severity": "CRITICAL",
+    "message_contains": ["@Async", "try-catch", "异步异常"],
+    "location_hint": {
+      "file": "tests/fixtures/TC-EXC-005/input.java",
+      "line_start": 4,
+      "line_end": 7,
+      "symbol": "Input.run"
+    }
+  }
+}

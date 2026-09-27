@@ -1,0 +1,31 @@
+{
+  "id": "TC-PERF-002",
+  "rule_id": "SRS-PERF-02-001",
+  "category": "PERF",
+  "subcategory": "02",
+  "title": "大集合全量加载/分页缺失",
+  "description": "检测 Repository 查询返回 List 且未传 Pageable/limit。",
+  "input": {
+    "type": "fixture_ref",
+    "path": "tests/fixtures/TC-PERF-002/input.java",
+    "content": null,
+    "language": "java",
+    "encoding": "utf-8"
+  },
+  "expected": {
+    "triggered": true,
+    "severity": "MAJOR",
+    "message_contains": ["List", "分页", "Pageable"],
+    "location_hint": {
+      "file": "tests/fixtures/TC-PERF-002/input.java",
+      "line_start": 7,
+      "line_end": 7,
+      "symbol": "UserRepository.findAll"
+    }
+  },
+  "positive_case": "examples/PERF/positive/SRS-PERF-02-001_positive.java",
+  "negative_case": "examples/PERF/negative/SRS-PERF-02-001_negative.java",
+  "tags": ["PERF", "02", "fixture", "negative"],
+  "version": "1.0.0",
+  "status": "ACTIVE"
+}

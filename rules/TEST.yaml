@@ -1,0 +1,81 @@
+rule_id: "SRS-TEST-01-001"
+name: "测试依赖真实外部服务或数据库"
+description: "检测使用 @SpringBootTest、@DataJpaTest、@Testcontainers 等测试入口时，是否直接连接真实外部服务或数据库；边界为静态可识别的真实连接配置、真实主机/端口、生产数据源引用和未替换的远程客户端，不覆盖运行期动态发现、反射调用和外部配置中心最终解析结果。"
+category_l1: "TEST"
+category_l2: "01"
+status: "ACTIVE"
+severity: "MAJOR"
+confidence: "MEDIUM"
+detection_method: "AST"
+tool: "CUSTOM"
+parameters: {}
+enabled: true
+applies_to:
+  java_version: "17+"
+  spring_boot_version: "3.x"
+  build_tool: ["maven", "gradle"]
+  module_type: ["test"]
+  framework: ["spring-boot", "spring-test"]
+  exclude: []
+message: "测试不应依赖真实外部服务或数据库，应使用 Mock、内存替身或隔离的 Testcontainers 配置。"
+remediation: "将外部依赖替换为 Mock、Stub、内存数据库或受控容器，并确保测试数据与外部环境隔离。"
+positive_example: "测试使用 Mock 或内存替身隔离外部服务，不直接连接真实数据库。"
+negative_example: "测试直接使用真实数据库连接或外部 HTTP 服务。"
+false_positive_notes: "集成测试有意验证真实外部服务、或 Testcontainers 仅声明未实际连接时可能误报。"
+sources:
+  - type: "INTERNAL_EXPERIENCE"
+    ref: "项目内部测试隔离经验"
+    version: "1.0"
+rule_version: "1.0.0"
+metadata_version: "1.0.0"
+schema_version: "1.0.0"
+owner: "spring-review-skill"
+created_at: "2026-09-24"
+updated_at: "2026-09-24"
+change_log:
+  - version: "1.0.0"
+    date: "2026-09-24"
+    description: "初始规则元数据"
+test_cases: []
+coverage: "覆盖 @SpringBootTest、@DataJpaTest、@Testcontainers 等测试中直接连接真实外部服务或数据库的静态可识别模式；不覆盖动态反射、运行期条件化连接和外部配置解析后的实际连接。"
+---
+rule_id: "SRS-TEST-02-001"
+name: "@SpringBootTest 全量上下文滥用"
+description: "检测测试中过度使用 @SpringBootTest 加载全量应用上下文的模式；检测策略为统计测试类或测试套件中 @SpringBootTest 的使用范围、是否缺少 webEnvironment 限定、是否可被切片测试替代、是否重复加载全量上下文；边界为不覆盖运行期上下文缓存命中、条件化配置和动态测试生成。"
+category_l1: "TEST"
+category_l2: "02"
+status: "ACTIVE"
+severity: "MINOR"
+confidence: "MEDIUM"
+detection_method: "AST"
+tool: "CUSTOM"
+parameters: {}
+enabled: true
+applies_to:
+  java_version: "17+"
+  spring_boot_version: "3.x"
+  build_tool: ["maven", "gradle"]
+  module_type: ["test"]
+  framework: ["spring-boot", "spring-test"]
+  exclude: []
+message: "@SpringBootTest 应谨慎使用，优先选择切片测试或轻量上下文。"
+remediation: "将可切片验证的测试改为 @WebMvcTest、@DataJpaTest 等；合并重复全量上下文；明确 webEnvironment 需求。"
+positive_example: "仅对确实需要完整启动流程的测试使用 @SpringBootTest，其余使用切片测试。"
+negative_example: "大量单元级测试无差别使用 @SpringBootTest 加载全量上下文。"
+false_positive_notes: "需要验证完整启动配置、自动配置或跨层集成流程时，全量上下文可能合理。"
+sources:
+  - type: "COMMUNITY"
+    ref: "Spring 测试上下文缓存与 @SpringBootTest 使用实践"
+    version: "3.x"
+rule_version: "1.0.0"
+metadata_version: "1.0.0"
+schema_version: "1.0.0"
+owner: "spring-review-skill"
+created_at: "2026-09-24"
+updated_at: "2026-09-24"
+change_log:
+  - version: "1.0.0"
+    date: "2026-09-24"
+    description: "初始规则元数据"
+test_cases: []
+coverage: "覆盖测试类级别 @SpringBootTest 使用频率、webEnvironment 缺失和可切片替代的静态模式；不覆盖运行期上下文缓存复用和条件化测试执行。"

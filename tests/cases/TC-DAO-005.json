@@ -1,0 +1,31 @@
+{
+  "id": "TC-DAO-005",
+  "rule_id": "SRS-DAO-05-001",
+  "category": "DAO",
+  "subcategory": "05",
+  "title": "循环内查询 N+1 反例触发",
+  "description": "检测 for 循环内调用 repository.findById。",
+  "input": {
+    "type": "fixture_ref",
+    "path": "tests/fixtures/TC-DAO-005/input.java",
+    "content": null,
+    "language": "java",
+    "encoding": "utf-8"
+  },
+  "expected": {
+    "triggered": true,
+    "severity": "MAJOR",
+    "message_contains": ["for", "findById"],
+    "location_hint": {
+      "file": "tests/fixtures/TC-DAO-005/input.java",
+      "line_start": 15,
+      "line_end": 16,
+      "symbol": "LoopQueryService.findUsers"
+    }
+  },
+  "positive_case": "examples/DAO/positive/SRS-DAO-05-001_positive.java",
+  "negative_case": "examples/DAO/negative/SRS-DAO-05-001_negative.java",
+  "tags": ["DAO", "05", "fixture", "negative", "pending-detection-evaluation"],
+  "version": "1.0.0",
+  "status": "ACTIVE"
+}

@@ -1,0 +1,31 @@
+{
+  "id": "TC-CLOUD-001",
+  "rule_id": "SRS-CLOUD-01-001",
+  "category": "CLOUD",
+  "subcategory": "01",
+  "title": "缺少优雅停机配置",
+  "description": "反例未配置 server.shutdown=graceful，应触发 SRS-CLOUD-01-001。",
+  "input": {
+    "type": "fixture_ref",
+    "path": "tests/fixtures/TC-CLOUD-001/input.yml",
+    "content": null,
+    "language": "yaml",
+    "encoding": "utf-8"
+  },
+  "expected": {
+    "triggered": true,
+    "severity": "MAJOR",
+    "message_contains": ["server.shutdown", "graceful"],
+    "location_hint": {
+      "file": "tests/fixtures/TC-CLOUD-001/input.yml",
+      "line_start": 1,
+      "line_end": 5,
+      "symbol": "server.shutdown"
+    }
+  },
+  "positive_case": "examples/CLOUD/positive/SRS-CLOUD-01-001_positive.yml",
+  "negative_case": "examples/CLOUD/negative/SRS-CLOUD-01-001_negative.yml",
+  "tags": ["CLOUD", "01", "fixture", "negative"],
+  "version": "1.0.0",
+  "status": "ACTIVE"
+}

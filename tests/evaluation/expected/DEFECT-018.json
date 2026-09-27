@@ -1,0 +1,8 @@
+{
+  "case_id": "DEFECT-018",
+  "type": "defect",
+  "input": "defects/DEFECT-018.java",
+  "expected_rules": [
+    "SRS-OBS-01-001"
+  ]
+}

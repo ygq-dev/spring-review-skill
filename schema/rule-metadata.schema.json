@@ -1,0 +1,396 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://spring-review-skill.dev/schema/rule-metadata.schema.json",
+  "title": "Spring Review Skill 规则元数据 Schema",
+  "type": "object",
+  "required": [
+    "rule_id",
+    "name",
+    "description",
+    "category_l1",
+    "category_l2",
+    "status",
+    "severity",
+    "confidence",
+    "detection_method",
+    "tool",
+    "enabled",
+    "applies_to",
+    "message",
+    "remediation",
+    "positive_example",
+    "negative_example",
+    "sources",
+    "rule_version",
+    "metadata_version",
+    "schema_version",
+    "owner",
+    "created_at",
+    "updated_at"
+  ],
+  "properties": {
+    "rule_id": {
+      "type": "string",
+      "pattern": "^SRS-(AR|CF|DI|WEB|DAO|SEC|CON|PERF|OBS|EXC|RES|TEST|BUILD|STYLE|NULL|I18N|MIG|CLOUD)-\\d{2}-\\d{3}$",
+      "description": "规则编号",
+      "examples": ["SRS-AR-01-001"]
+    },
+    "name": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 120,
+      "description": "规则名称",
+      "examples": ["禁止 Controller 直接依赖 Repository"]
+    },
+    "description": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 2000,
+      "description": "规则描述",
+      "examples": ["Controller 层不应直接依赖 Repository。"]
+    },
+    "category_l1": {
+      "type": "string",
+      "enum": [
+        "AR",
+        "CF",
+        "DI",
+        "WEB",
+        "DAO",
+        "SEC",
+        "CON",
+        "PERF",
+        "OBS",
+        "EXC",
+        "RES",
+        "TEST",
+        "BUILD",
+        "STYLE",
+        "NULL",
+        "I18N",
+        "MIG",
+        "CLOUD"
+      ],
+      "description": "一级分类码"
+    },
+    "category_l2": {
+      "type": "string",
+      "pattern": "^\\d{2}$",
+      "description": "二级分类码，2 位数字"
+    },
+    "tags": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "uniqueItems": true,
+      "description": "标签"
+    },
+    "status": {
+      "type": "string",
+      "enum": ["DRAFT", "REVIEW", "ACTIVE", "DEPRECATED", "REMOVED"],
+      "description": "状态"
+    },
+    "severity": {
+      "type": "string",
+      "enum": ["BLOCKER", "CRITICAL", "MAJOR", "MINOR", "INFO"],
+      "description": "严重级别"
+    },
+    "confidence": {
+      "type": "string",
+      "enum": ["HIGH", "MEDIUM", "LOW"],
+      "description": "置信度"
+    },
+    "detection_method": {
+      "type": "string",
+      "enum": [
+        "STATIC_ANALYSIS",
+        "AST",
+        "ARCH_TEST",
+        "RULE_ENGINE",
+        "REGEX",
+        "HEURISTIC",
+        "HYBRID",
+        "MANUAL"
+      ],
+      "description": "检测方式"
+    },
+    "tool": {
+      "type": "string",
+      "enum": ["CHECKSTYLE", "PMD", "ARCHUNIT", "SPOTBUGS", "CUSTOM"],
+      "description": "工具"
+    },
+    "tool_rule_id": {
+      "type": "string",
+      "minLength": 1,
+      "description": "工具规则 ID"
+    },
+    "parameters": {
+      "type": "object",
+      "additionalProperties": true,
+      "description": "工具参数"
+    },
+    "enabled": {
+      "type": "boolean",
+      "description": "是否启用"
+    },
+    "applies_to": {
+      "type": "object",
+      "required": [
+        "java_version",
+        "spring_boot_version",
+        "build_tool",
+        "module_type"
+      ],
+      "properties": {
+        "java_version": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Java 版本范围"
+        },
+        "spring_boot_version": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Spring Boot 版本范围"
+        },
+        "build_tool": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "minItems": 1,
+          "description": "构建工具"
+        },
+        "module_type": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "minItems": 1,
+          "description": "模块类型"
+        },
+        "framework": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "框架"
+        },
+        "exclude": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "排除路径"
+        }
+      },
+      "additionalProperties": false,
+      "description": "适用范围"
+    },
+    "message": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 500,
+      "description": "违规消息"
+    },
+    "remediation": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 2000,
+      "description": "修复建议"
+    },
+    "positive_example": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 5000,
+      "description": "正例"
+    },
+    "negative_example": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 5000,
+      "description": "反例"
+    },
+    "false_positive_notes": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 1000,
+      "description": "误报说明"
+    },
+    "sources": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["type", "ref", "version"],
+        "properties": {
+          "type": {
+            "type": "string",
+            "enum": [
+              "OFFICIAL_SPEC",
+              "FRAMEWORK_DOC",
+              "BOOK",
+              "COMMUNITY",
+              "CVE",
+              "INTERNAL_EXPERIENCE",
+              "TOOL_RULE"
+            ],
+            "description": "来源类型"
+          },
+          "ref": {
+            "type": "string",
+            "minLength": 1,
+            "description": "来源引用"
+          },
+          "version": {
+            "type": "string",
+            "minLength": 1,
+            "description": "来源版本"
+          },
+          "note": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 500,
+            "description": "备注"
+          }
+        },
+        "additionalProperties": false
+      },
+      "description": "来源"
+    },
+    "rule_version": {
+      "type": "string",
+      "pattern": "^\\d+\\.\\d+\\.\\d+$",
+      "description": "规则版本 semver"
+    },
+    "metadata_version": {
+      "type": "string",
+      "pattern": "^\\d+\\.\\d+\\.\\d+$",
+      "description": "元数据版本 semver"
+    },
+    "schema_version": {
+      "type": "string",
+      "pattern": "^\\d+\\.\\d+\\.\\d+$",
+      "description": "Schema 版本 semver"
+    },
+    "owner": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 64,
+      "description": "负责人"
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date",
+      "description": "创建日期 ISO 8601"
+    },
+    "updated_at": {
+      "type": "string",
+      "format": "date",
+      "description": "更新日期 ISO 8601"
+    },
+    "change_log": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["version", "date", "description"],
+        "properties": {
+          "version": {
+            "type": "string",
+            "pattern": "^\\d+\\.\\d+\\.\\d+$"
+          },
+          "date": {
+            "type": "string",
+            "format": "date"
+          },
+          "description": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 2000
+          }
+        },
+        "additionalProperties": false
+      },
+      "description": "变更日志"
+    },
+    "test_cases": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "测试用例"
+    },
+    "coverage": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 500,
+      "description": "覆盖说明"
+    },
+    "deprecated_at": {
+      "type": "string",
+      "format": "date",
+      "description": "A5 新增补充字段：废弃日期"
+    },
+    "removed_at": {
+      "type": "string",
+      "format": "date",
+      "description": "A5 新增补充字段：移除日期"
+    }
+  },
+  "additionalProperties": false,
+  "dependentRequired": {
+    "tool_rule_id": ["tool"]
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "status": {
+            "const": "DEPRECATED"
+          }
+        },
+        "required": ["status"]
+      },
+      "then": {
+        "required": ["deprecated_at"]
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "status": {
+            "const": "REMOVED"
+          }
+        },
+        "required": ["status"]
+      },
+      "then": {
+        "required": ["deprecated_at", "removed_at"]
+      }
+    },
+    {
+      "if": {
+        "required": ["deprecated_at"]
+      },
+      "then": {
+        "properties": {
+          "status": {
+            "enum": ["DEPRECATED", "REMOVED"]
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "required": ["removed_at"]
+      },
+      "then": {
+        "properties": {
+          "status": {
+            "const": "REMOVED"
+          }
+        }
+      }
+    }
+  ]
+}

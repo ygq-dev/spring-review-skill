@@ -1,0 +1,31 @@
+{
+  "id": "TC-OBS-001",
+  "rule_id": "SRS-OBS-01-001",
+  "category": "OBS",
+  "subcategory": "01",
+  "title": "日志占位符拼接字符串",
+  "description": "检测 log.info(\"x=\" + var) 而非占位符。",
+  "input": {
+    "type": "fixture_ref",
+    "path": "tests/fixtures/TC-OBS-001/input.java",
+    "content": null,
+    "language": "java",
+    "encoding": "utf-8"
+  },
+  "expected": {
+    "triggered": true,
+    "severity": "MINOR",
+    "message_contains": ["日志", "占位符", "字符串拼接"],
+    "location_hint": {
+      "file": "tests/fixtures/TC-OBS-001/input.java",
+      "line_start": 10,
+      "line_end": 10,
+      "symbol": "UserService.logUser"
+    }
+  },
+  "positive_case": "examples/OBS/positive/SRS-OBS-01-001_positive.java",
+  "negative_case": "examples/OBS/negative/SRS-OBS-01-001_negative.java",
+  "tags": ["OBS", "01", "fixture", "negative"],
+  "version": "1.0.0",
+  "status": "ACTIVE"
+}

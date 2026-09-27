@@ -1,0 +1,83 @@
+rule_id: "SRS-NULL-01-001"
+name: "Optional 作为字段/参数"
+description: "检测 Optional 被用作实体字段、DTO 字段、方法参数或构造器参数的模式；对应 PMD OptionalUsedAsFieldOrParameterType，关注 Optional 应用于返回值而非字段和参数。"
+category_l1: "NULL"
+category_l2: "01"
+status: "ACTIVE"
+severity: "MINOR"
+confidence: "MEDIUM"
+detection_method: "AST"
+tool: "PMD"
+tool_rule_id: "OptionalUsedAsFieldOrParameterType"
+parameters: {}
+enabled: true
+applies_to:
+  java_version: "17+"
+  spring_boot_version: "3.x"
+  build_tool: ["maven", "gradle"]
+  module_type: ["all"]
+  framework: ["spring-context"]
+  exclude: []
+message: "Optional 不宜作为字段或参数类型，应优先用于返回值表达可缺失结果。"
+remediation: "将字段或参数改为可空类型并在边界处理，或使用方法返回值 Optional 表达缺失。"
+positive_example: "Optional 仅用于方法返回值，字段和参数使用普通类型。"
+negative_example: "实体字段或方法参数声明为 Optional。"
+false_positive_notes: "某些框架扩展或函数式 API 可能要求 Optional 参数，需结合具体契约判断。"
+sources:
+  - type: "TOOL_RULE"
+    ref: "PMD Best Practices: OptionalUsedAsFieldOrParameterType"
+    version: "7.x"
+rule_version: "1.0.0"
+metadata_version: "1.0.0"
+schema_version: "1.0.0"
+owner: "spring-review-skill"
+created_at: "2026-09-24"
+updated_at: "2026-09-24"
+change_log:
+  - version: "1.0.0"
+    date: "2026-09-24"
+    description: "初始规则元数据"
+test_cases: []
+coverage: "覆盖 Optional 作为字段、方法参数和构造器参数的静态 AST 模式；不覆盖运行期空值传播和外部 API 契约要求。"
+---
+rule_id: "SRS-NULL-02-001"
+name: "可能返回 null 的集合/数组"
+description: "检测方法可能返回 null 集合或 null 数组的模式；主要对应 SpotBugs PZLA_PREFER_ZERO_LENGTH_ARRAYS，数组部分优先建议返回零长度数组，集合部分需结合 AST 返回路径和空值传播识别。"
+category_l1: "NULL"
+category_l2: "02"
+status: "ACTIVE"
+severity: "MAJOR"
+confidence: "MEDIUM"
+detection_method: "AST"
+tool: "SPOTBUGS"
+tool_rule_id: "PZLA_PREFER_ZERO_LENGTH_ARRAYS"
+parameters: {}
+enabled: true
+applies_to:
+  java_version: "17+"
+  spring_boot_version: "3.x"
+  build_tool: ["maven", "gradle"]
+  module_type: ["all"]
+  framework: ["spring-context"]
+  exclude: []
+message: "集合或数组返回值不应使用 null 表示空结果，应返回空集合或零长度数组。"
+remediation: "返回 Collections.emptyList/emptySet/emptyMap 或零长度数组，避免调用方额外空值判断。"
+positive_example: "无结果时返回空集合或零长度数组。"
+negative_example: "无结果时返回 null 集合或 null 数组。"
+false_positive_notes: "遗留 API 契约明确以 null 表示缺失、或外部序列化协议要求 null 时可能合理。"
+sources:
+  - type: "TOOL_RULE"
+    ref: "SpotBugs Bug Descriptions: PZLA_PREFER_ZERO_LENGTH_ARRAYS"
+    version: "4.x"
+rule_version: "1.0.0"
+metadata_version: "1.0.0"
+schema_version: "1.0.0"
+owner: "spring-review-skill"
+created_at: "2026-09-24"
+updated_at: "2026-09-24"
+change_log:
+  - version: "1.0.0"
+    date: "2026-09-24"
+    description: "初始规则元数据"
+test_cases: []
+coverage: "覆盖数组返回 null 的 SpotBugs 可识别模式，以及集合返回 null 的静态 AST 返回路径模式；不覆盖运行期动态代理和反射生成返回值。"

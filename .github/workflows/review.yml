@@ -1,0 +1,83 @@
+name: spring-review
+
+on:
+  pull_request:
+    branches: [ main, develop ]
+
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+  review:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - name: Checkout (full history for diff)
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+          cache: maven
+
+      - name: Build spring-review-skill
+        run: mvn -q -B -DskipTests package
+
+      - name: Resolve base and head refs
+        id: refs
+        run: |
+          BASE="${{ github.event.pull_request.base.sha }}"
+          HEAD="${{ github.event.pull_request.head.sha }}"
+          echo "base=$BASE" >> "$GITHUB_OUTPUT"
+          echo "head=$HEAD" >> "$GITHUB_OUTPUT"
+
+      - name: Run read-only review
+        id: review
+        continue-on-error: true
+        run: |
+          JAR=$(ls target/spring-review-skill-*.jar | head -n1)
+          java -jar "$JAR" \
+            --mode DIFF \
+            --repo . \
+            --base "${{ steps.refs.outputs.base }}" \
+            --head "${{ steps.refs.outputs.head }}" \
+            --offline \
+            --output-dir reports \
+            --log-level INFO
+          echo "exit_code=$?" >> "$GITHUB_OUTPUT"
+
+      - name: Upload review report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: review-report
+          path: |
+            reports/latest/review-report.json
+            reports/latest/review-report.md
+          if-no-files-found: warn
+          retention-days: 14
+
+      - name: Print review summary
+        if: always()
+        run: |
+          if [ -f reports/latest/review-report.md ]; then
+            echo "## Spring Review Report" >> "$GITHUB_STEP_SUMMARY"
+            echo "" >> "$GITHUB_STEP_SUMMARY"
+            head -80 reports/latest/review-report.md >> "$GITHUB_STEP_SUMMARY"
+          else
+            echo "## Spring Review Report" >> "$GITHUB_STEP_SUMMARY"
+            echo "" >> "$GITHUB_STEP_SUMMARY"
+            echo "_未生成报告（可能因范围为空或运行失败）_" >> "$GITHUB_STEP_SUMMARY"
+          fi
+
+      - name: Fail if review reached failOn
+        if: steps.review.outputs.exit_code == '1'
+        run: |
+          echo "review reached failOn; see reports/latest/review-report.md" >&2
+          exit 1

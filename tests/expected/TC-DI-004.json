@@ -1,0 +1,18 @@
+{
+  "version": "1.0.0",
+  "generated_at": "2026-09-24T00:00:00Z",
+  "generated_by": "manual/1.0.0",
+  "case_id": "TC-DI-004",
+  "rule_id": "SRS-DI-04-001",
+  "expected": {
+    "triggered": true,
+    "severity": "CRITICAL",
+    "message_contains": ["HashMap", "可变状态"],
+    "location_hint": {
+      "file": "tests/fixtures/TC-DI-004/input.java",
+      "line_start": 9,
+      "line_end": 12,
+      "symbol": "Di04NegativeService.cache"
+    }
+  }
+}

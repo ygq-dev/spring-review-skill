@@ -1,0 +1,39 @@
+# ---------- Maven / Gradle ----------
+target/
+build/
+.gradle/
+!.mvn/wrapper/maven-wrapper.jar
+
+# ---------- IDE ----------
+.idea/
+*.iml
+*.ipr
+*.iws
+.vscode/
+*.swp
+
+# ---------- OS ----------
+.DS_Store
+Thumbs.db
+
+# ---------- 输出 ----------
+reports/
+!reports/README.md
+
+# ---------- 临时 ----------
+*.tmp
+*.log
+.srs-tmp/
+
+# ---------- 密钥 ----------
+.env
+.env.local
+*.secret
+*-secrets.*
+
+# ---------- 工具本地安装 ----------
+tools/
+!tools/README.mdreal-projects.local.json
+
+# 本地配置文件
+*.local.json

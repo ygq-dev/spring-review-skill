@@ -1,0 +1,18 @@
+{
+  "version": "1.0.0",
+  "generated_at": "2026-09-24T00:00:00Z",
+  "generated_by": "manual/1.0.0",
+  "case_id": "TC-OBS-003",
+  "rule_id": "SRS-OBS-03-001",
+  "expected": {
+    "triggered": true,
+    "severity": "MAJOR",
+    "message_contains": ["Pointcut", "execution", "过宽"],
+    "location_hint": {
+      "file": "tests/fixtures/TC-OBS-003/input.java",
+      "line_start": 9,
+      "line_end": 9,
+      "symbol": "WidePointcutAspect.anyMethod"
+    }
+  }
+}

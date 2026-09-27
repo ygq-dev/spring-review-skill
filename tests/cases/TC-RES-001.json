@@ -1,0 +1,31 @@
+{
+  "id": "TC-RES-001",
+  "rule_id": "SRS-RES-01-001",
+  "category": "RES",
+  "subcategory": "01",
+  "title": "禁止未关闭 InputStream 或 Connection",
+  "description": "InputStream 未在 try-with-resources 或 finally 中关闭。",
+  "input": {
+    "type": "fixture_ref",
+    "path": "tests/fixtures/TC-RES-001/input.java",
+    "content": null,
+    "language": "java",
+    "encoding": "utf-8"
+  },
+  "expected": {
+    "triggered": true,
+    "severity": "MAJOR",
+    "message_contains": ["InputStream", "close", "资源未释放"],
+    "location_hint": {
+      "file": "tests/fixtures/TC-RES-001/input.java",
+      "line_start": 7,
+      "line_end": 8,
+      "symbol": "Input.read"
+    }
+  },
+  "positive_case": "examples/RES/positive/SRS-RES-01-001_positive.java",
+  "negative_case": "examples/RES/negative/SRS-RES-01-001_negative.java",
+  "tags": ["RES", "01", "fixture", "negative"],
+  "version": "1.0.0",
+  "status": "ACTIVE"
+}

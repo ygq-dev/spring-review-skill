@@ -1,0 +1,31 @@
+{
+  "id": "TC-EXC-004",
+  "rule_id": "SRS-EXC-04-001",
+  "category": "EXC",
+  "subcategory": "04",
+  "title": "禁止对外异常响应暴露堆栈或内部类",
+  "description": "API 异常响应直接返回 e.getMessage() 和 e.getStackTrace()，暴露堆栈信息。",
+  "input": {
+    "type": "fixture_ref",
+    "path": "tests/fixtures/TC-EXC-004/input.java",
+    "content": null,
+    "language": "java",
+    "encoding": "utf-8"
+  },
+  "expected": {
+    "triggered": true,
+    "severity": "MAJOR",
+    "message_contains": ["getStackTrace", "getMessage", "堆栈"],
+    "location_hint": {
+      "file": "tests/fixtures/TC-EXC-004/input.java",
+      "line_start": 10,
+      "line_end": 12,
+      "symbol": "Input.handle"
+    }
+  },
+  "positive_case": "examples/EXC/positive/SRS-EXC-04-001_positive.java",
+  "negative_case": "examples/EXC/negative/SRS-EXC-04-001_negative.java",
+  "tags": ["EXC", "04", "fixture", "negative"],
+  "version": "1.0.0",
+  "status": "ACTIVE"
+}

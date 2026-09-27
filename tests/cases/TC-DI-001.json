@@ -1,0 +1,31 @@
+{
+  "id": "TC-DI-001",
+  "rule_id": "SRS-DI-01-001",
+  "category": "DI",
+  "subcategory": "01",
+  "title": "禁止字段注入-反例触发",
+  "description": "验证 @Autowired 字段注入时命中目标规则。",
+  "input": {
+    "type": "fixture_ref",
+    "path": "tests/fixtures/TC-DI-001/input.java",
+    "content": null,
+    "language": "java",
+    "encoding": "utf-8"
+  },
+  "expected": {
+    "triggered": true,
+    "severity": "MAJOR",
+    "message_contains": ["@Autowired", "字段注入"],
+    "location_hint": {
+      "file": "tests/fixtures/TC-DI-001/input.java",
+      "line_start": 8,
+      "line_end": 9,
+      "symbol": "Di01NegativeService.dependency"
+    }
+  },
+  "positive_case": "examples/DI/positive/SRS-DI-01-001_positive.java",
+  "negative_case": "examples/DI/negative/SRS-DI-01-001_negative.java",
+  "tags": ["DI", "01", "fixture", "negative"],
+  "version": "1.0.0",
+  "status": "ACTIVE"
+}

@@ -1,0 +1,31 @@
+{
+  "id": "TC-CON-005",
+  "rule_id": "SRS-CON-05-001",
+  "category": "CON",
+  "subcategory": "05",
+  "title": "@Transactional 跨线程失效未处理",
+  "description": "验证 @Transactional 方法内启动新线程导致事务失效的风险。",
+  "input": {
+    "type": "fixture_ref",
+    "path": "tests/fixtures/TC-CON-005/input.java",
+    "content": null,
+    "language": "java",
+    "encoding": "utf-8"
+  },
+  "expected": {
+    "triggered": true,
+    "severity": "CRITICAL",
+    "message_contains": ["@Transactional", "跨线程", "事务失效"],
+    "location_hint": {
+      "file": "tests/fixtures/TC-CON-005/input.java",
+      "line_start": 6,
+      "line_end": 10,
+      "symbol": "UserService.update"
+    }
+  },
+  "positive_case": "examples/CON/positive/SRS-CON-05-001_positive.java",
+  "negative_case": "examples/CON/negative/SRS-CON-05-001_negative.java",
+  "tags": ["CON", "CON-05", "Transactional", "cross-thread"],
+  "version": "1.0.0",
+  "status": "ACTIVE"
+}

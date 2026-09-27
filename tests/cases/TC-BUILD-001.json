@@ -1,0 +1,31 @@
+{
+  "id": "TC-BUILD-001",
+  "rule_id": "SRS-BUILD-01-001",
+  "category": "BUILD",
+  "subcategory": "01",
+  "title": "依赖版本冲突/重复声明",
+  "description": "反例在 dependencies 与 dependencyManagement 中对同一依赖声明不同版本，应触发 SRS-BUILD-01-001。",
+  "input": {
+    "type": "fixture_ref",
+    "path": "tests/fixtures/TC-BUILD-001/input.xml",
+    "content": null,
+    "language": "xml",
+    "encoding": "utf-8"
+  },
+  "expected": {
+    "triggered": true,
+    "severity": "MAJOR",
+    "message_contains": ["jackson-databind", "version", "conflict"],
+    "location_hint": {
+      "file": "tests/fixtures/TC-BUILD-001/input.xml",
+      "line_start": 7,
+      "line_end": 18,
+      "symbol": "project.dependencies:jackson-databind"
+    }
+  },
+  "positive_case": "examples/BUILD/positive/SRS-BUILD-01-001_positive.xml",
+  "negative_case": "examples/BUILD/negative/SRS-BUILD-01-001_negative.xml",
+  "tags": ["BUILD", "01", "fixture", "negative"],
+  "version": "1.0.0",
+  "status": "ACTIVE"
+}
