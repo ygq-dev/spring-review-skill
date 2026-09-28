@@ -97,7 +97,7 @@ applies_to:
     - spring-boot-actuator
   exclude:
     - "**/test/**"
-message: "健康检查 {healthIndicator} 未隔离外部依赖，可能影响就绪状态。"
+message: "健康检查未隔离外部依赖，可能影响就绪状态。"
 remediation: "使用健康分组隔离 liveness 与 readiness，外部依赖纳入 readiness。"
 positive_example: |
   liveness 不依赖外部服务，readiness 包含必要依赖。

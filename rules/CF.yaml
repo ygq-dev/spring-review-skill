@@ -38,7 +38,7 @@ applies_to:
     - "**/src/test/**"
     - "**/application-dev.*"
     - "**/application-test.*"
-message: "生产配置 {file} 包含开发/调试项 {key}。"
+message: "生产配置 {file} 包含开发/调试项。"
 remediation: "移除生产配置中的调试开关，使用 profile 隔离开发配置。"
 positive_example: |
   生产配置仅包含生产连接与安全参数。
@@ -102,7 +102,7 @@ applies_to:
     - spring-context
   exclude:
     - "**/test/**"
-message: "@Value 注入 {field} 缺少默认值或配置校验。"
+message: "@Value 注入缺少默认值或配置校验。"
 remediation: "使用 @ConfigurationProperties + @Validated，或为 @Value 提供默认值并校验。"
 positive_example: |
   配置属性类使用 @ConfigurationProperties 和校验注解。

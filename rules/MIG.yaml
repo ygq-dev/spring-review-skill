@@ -17,7 +17,7 @@ detection_method: REGEX
 tool: CUSTOM
 parameters:
   patterns:
-    - 'import\s+javax\.(servlet|persistence|validation|annotation|transaction)\b'
+    - 'import\s+javax\.(?<importName>(servlet|persistence|validation|annotation|transaction)[a-zA-Z0-9_.]*)'
 enabled: true
 applies_to:
   java_version: "17+"

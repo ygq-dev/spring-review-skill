@@ -601,7 +601,10 @@ public final class AstPreciseDetector implements Detector {
         out.add(new IssueCandidate(
             rule.id(), rule.severity(), rule.confidence(),
             "AST", file, Math.max(1, line), Math.max(1, col),
-            evidence, rule.message(), rule.remediation(),
+            evidence,
+            // 纵深防御：即便未来 AstPrecise 规则引入占位符也不会泄漏原始 token
+            MessageTemplates.render(rule.message(), Map.of("file", file)),
+            rule.remediation(),
             "CUSTOM", rule.toolRuleId(),
             "ast:" + evidence));
     }

@@ -37,7 +37,7 @@ applies_to:
     - spring-boot
   exclude:
     - "**/test/**"
-message: "依赖 {dependency} 存在重复声明或版本冲突：{versions}。"
+message: "依赖 {dependency} 存在重复声明或版本冲突。"
 remediation: "统一在 dependencyManagement/BOM 或版本目录中声明版本，移除重复声明。"
 positive_example: |
   依赖版本由 Spring Boot BOM 统一管理。
