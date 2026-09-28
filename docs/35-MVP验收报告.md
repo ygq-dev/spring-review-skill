@@ -29,7 +29,7 @@
 | S8      | 审查超时率       | ≤ 5%    | 0%（0/12）                                                   | PASS     |
 | S9      | 问题可追溯性     | 100%    | A6 必填字段强制校验                                          | PASS     |
 | S11     | 评测集规模       | ≥ 30    | 30（20 缺陷 + 10 干净）                                      | PASS     |
-| S12     | 评测回归通过率   | ≥ 90%   | 102 单元/集成测试 + 55 测试用例                              | PASS     |
+| S12     | 评测回归通过率   | ≥ 90%   | 120 单元/集成测试 + 55 测试用例（CI run #5~#9 连绿）         | PASS     |
 | S13     | 版本管理覆盖     | 100%    | 语义化版本全覆盖                                             | PASS     |
 | S14     | 文档完备率       | 100%    | docs/00～35 + handoff A～H                                   | PASS     |
 | **S16** | **真实项目验证** | **≥ 3** | **3 个项目**（seckill 82 文件、feedly 40 文件、supercv-backend 24 文件） | **PASS** |
@@ -83,7 +83,7 @@
 ### 3.4 代码
 
 - src/main/java/dev/springreview/（19 个模块 M01～M19）
-- src/test/java/dev/springreview/（102 个测试）
+- src/test/java/dev/springreview/（120 个测试）
 - pom.xml
 
 ### 3.5 CI 与脚本
@@ -93,6 +93,23 @@
 - scripts/（含 split、build-index、patch、strip、ci-review、gen-eval、run-eval、gen-perf、run-perf、metrics-summary）
 
 ## 4. 关键能力
+
+### 4.0 检测精度基线（2026-09-28，MODULE 自审查口径）
+
+对工具自身源码（src，120 文件）运行 MODULE 模式自审查，修复检测引擎前后的对比：
+
+| 指标                                  | 修复前  | 修复后                             |
+| ------------------------------------- | ------- | ---------------------------------- |
+| 总发现数                              | 91      | 96（含新测试代码自身命中，非回归） |
+| CRITICAL 误报（BUILD 规则误扫 .java） | 1       | 0                                  |
+| 消息占位符泄漏                        | 1       | 0                                  |
+| SEC 测试夹具置信度                    | HIGH ×4 | MEDIUM ×4（附人工确认提示）        |
+| EXC 注释型空 catch 置信度             | HIGH ×7 | MEDIUM ×7                          |
+| blocking（BLOCKER+CRITICAL）          | 5       | 4                                  |
+
+修复内容：message 占位符插值（缺变量剥离兜底）、规则类别→文件类型绑定、
+SKILL.md §8 边界策略（生成代码/vendor 跳过、测试路径豁免与降级）、
+注释型空 catch 降档。口径：`java -jar target/spring-review-skill-*.jar --mode MODULE --repo . --module src --offline`。
 
 ### 4.1 三种审查模式
 

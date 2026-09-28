@@ -160,16 +160,17 @@ python scripts/run-metrics-summary.py   # 汇总 S1～S18
 
 ## 文档
 
-| 主题               | 文档                                                         |
-| ------------------ | ------------------------------------------------------------ |
-| 项目目标           | [docs/00-项目目标.md](docs/00-项目目标.md)                   |
-| 规则分类与模板     | [docs/01-规则分类与元数据模板.md](docs/01-规则分类与元数据模板.md) |
-| 目录结构           | [docs/02-目录结构.md](docs/02-目录结构.md)                   |
-| 规则元数据 Schema  | [docs/04-规则元数据Schema.md](docs/04-规则元数据Schema.md)   |
-| 输出报告 Schema    | [docs/05-输出报告Schema.md](docs/05-输出报告Schema.md)       |
-| 技术选型           | [docs/23-技术选型.md](docs/23-技术选型.md)                   |
-| 模块划分与接口契约 | [docs/24-模块划分与接口契约.md](docs/24-模块划分与接口契约.md) |
-| MVP 验收报告       | [docs/35-MVP验收报告.md](docs/35-MVP验收报告.md)             |
+| 主题                   | 文档                                                         |
+| ---------------------- | ------------------------------------------------------------ |
+| 项目目标               | [docs/00-项目目标.md](docs/00-项目目标.md)                   |
+| 规则分类与模板         | [docs/01-规则分类与元数据模板.md](docs/01-规则分类与元数据模板.md) |
+| 目录结构               | [docs/02-目录结构.md](docs/02-目录结构.md)                   |
+| 规则元数据 Schema      | [docs/04-规则元数据Schema.md](docs/04-规则元数据Schema.md)   |
+| 输出报告 Schema        | [docs/05-输出报告Schema.md](docs/05-输出报告Schema.md)       |
+| 技术选型               | [docs/23-技术选型.md](docs/23-技术选型.md)                   |
+| 模块划分与接口契约     | [docs/24-模块划分与接口契约.md](docs/24-模块划分与接口契约.md) |
+| 能力样例（自审查报告） | [docs/demo/self-review.md](docs/demo/self-review.md)         |
+| MVP 验收报告           | [docs/35-MVP验收报告.md](docs/35-MVP验收报告.md)             |
 
 ## 目录结构
 
